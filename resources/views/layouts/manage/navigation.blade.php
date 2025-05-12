@@ -3,20 +3,20 @@
         <x-nav-link :href="route('manageuser.index')" :active="request()->routeIs('manageuser.index')">
             {{ __('Users') }}
         </x-nav-link>
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <x-nav-link :href="route('managerequesters.index')" :active="request()->routeIs('managerequesters.index')">
             {{ __('Requesters') }}
         </x-nav-link>
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <x-nav-link :href="route('managesupplies.index')" :active="request()->routeIs('managesupplies.index')">
+            {{ __('Supplies') }}
+        </x-nav-link>
+        <x-nav-link :href="route('managedepartment.index')" :active="request()->routeIs('managedepartment.index')">
             {{ __('Department') }}
         </x-nav-link>
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <x-nav-link :href="route('manageaccess.index')" :active="request()->routeIs('manageaccess.index')">
             {{ __('Access') }}
         </x-nav-link>
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+        <x-nav-link :href="route('manageworkclass.index')" :active="request()->routeIs('manageworkclass.index')">
             {{ __('Work Class') }}
-        </x-nav-link>
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Supplies') }}
         </x-nav-link>
     </ul>
 </div>

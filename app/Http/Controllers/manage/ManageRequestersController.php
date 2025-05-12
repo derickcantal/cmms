@@ -5,12 +5,11 @@ namespace App\Http\Controllers\manage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use \Carbon\Carbon; 
 
-class ManageUsersController extends Controller
+class ManageRequestersController extends Controller
 {
     public function search(Request $request)
     {
@@ -33,17 +32,7 @@ class ManageUsersController extends Controller
      */
     public function index()
     {
-        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
-
-        $user = User::orderBy('status','asc')
-                    ->paginate(5);
-
-        // $notes = 'Users';
-        // $status = 'Success';
-        // $this->userlog($notes,$status);
-
-        return view('manage.users.index',compact('user'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('manage.requesters.index');
     }
 
     /**

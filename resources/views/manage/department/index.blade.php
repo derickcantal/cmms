@@ -14,7 +14,7 @@
                         <nav class="flex px-5 py-3 text-gray-700  bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
                             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                                 <li class="inline-flex items-center">
-                                <a href="{{ route('manageuser.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                <a href="{{ route('managedepartment.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
                                     <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                                     </svg>
@@ -27,19 +27,20 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                                        Users</span>
+                                        Department</span>
                                 </div>
                                 </li>
                             </ol>
-                        </nav> 
+                        </nav>
+
                         <!-- searchbar -->
                         <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                             <div class="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
                                 <x-primary-button class="ms-4">
-                                    <a class="btn btn-primary" href="{{ route('manageuser.create') }}"> Create New user</a>
+                                    <a class="btn btn-primary" href="{{ route('managedepartment.create') }}"> Create New Department</a>
                                 </x-primary-button>
                                 
-                                <form class="flex items-center" action="{{ route('manageuser.search') }}" method="get">
+                                <form class="flex items-center" action="{{ route('managedepartment.search') }}" method="get">
                                     @csrf
                                     <div class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
                                         
@@ -75,7 +76,7 @@
                                 </form>
                             </div>
                         </div>
-                            
+
                         <!-- Error & Success Notification -->
                         @include('layouts.notifications') 
 
@@ -89,13 +90,13 @@
                                             No
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Profile
+                                            1
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Access Type
+                                            2
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Status
+                                            3
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Action
@@ -103,77 +104,39 @@
                                         
                                     </tr>
                                 </thead>
-                                    @forelse ($user as $users)
                                     
                                 <tbody>
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     
                                         <td class="px-6 py-4">
-                                            <x-input-label>{{ ++$i }}</x-input-label>
+
                                         </td>
                                         <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-10 h-10 rounded-full" src="{{ asset("/storage/$users->avatar") }}" alt="avatar">
-                                            <div class="ps-3">
-                                                
-                                                <x-input-label>{{ $users->lastname }}, {{ $users->firstname }} {{ $users->middlename }}</x-input-label>
-                                                <x-input-label for="email" :value="$users->email"/>
+                                          
                                         </th>
                                         <td class="px-6 py-4">
-                                            <x-input-label for="accessname" :value="$users->accessname"/>
+
                                         </td>
                                         <td class="px-6 py-4">
-                                            <div class="flex items-center">
-                                            @php
-                                                $color = '';
-                                                if ($users->status == 'Active'):
-                                                    $color = 'green';
-                                                elseif ($users->status == 'Inactive'):
-                                                    $color = 'red';
-                                                endif;
-                                            @endphp
-                                                    <div class="h-2.5 w-2.5 rounded-full bg-{{ $color; }}-500 me-2"></div> <x-input-label for="status" :value="$users->status"/>
-                                            </div>
+                                          
                                         </td>
                                         <td class="px-6 py-4">
-                                            
-                                            <form action="{{ route('manageuser.destroy',$users->userid) }}" method="POST">
-                                            <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="{{ route('manageuser.edit',$users->userid) }}">Modify</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                @php
-                                                $txtbutton = '';
-                                                $colorbutton = '';
-                                                
-                                                if ($users->status == 'Active'):
-                                                    $txtbutton = 'Decativate';
-                                                    
-                                                elseif ($users->status == 'Inactive'):
-                                                    $txtbutton = 'Activate';
-                                                    $colorbutton = 'dark:text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800';
-                                                endif
-                                                
-                                                @endphp
-                                                
-                                                <x-danger-button class="ms-3 {{ $colorbutton }}">
-                                                    {{ $txtbutton }}
-                                                </x-danger-button>
-                                            </form>
+                                           
                                         </td>
                                     </tr>
                                 
-                                    @empty
                                     <td scope="row" class="px-6 py-4">
                                         No Records Found.
                                     </td>	
-                                    @endforelse
                                         
                                 </tbody>
                                 
                             </table>
                         </div>
                         <div class="mt-4">
-                        {{ $user->appends(request()->query())->links() }}
+                            
                         </div>
+                        
                     </div>
                 </div>
             </div>
