@@ -28,7 +28,9 @@
                                     <svg class="rtl:rotate-180  w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Create New User</span>
+                                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
+                                        Create New User
+                                    </span>
                                 </div>
                                 </li>
                             </ol>
@@ -45,14 +47,7 @@
                             </div>
                             <!-- Modal body -->
                             <div class="grid gap-4 mb-4 grid-cols-2">
-                                <div class="col-span-2 sm:col-span-1 ">
-                                    <!-- username -->
-                                    <div class="form-group mt-4">
-                                        <x-input-label for="username" :value="__('Username')" />
-                                        <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
-                                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
-                                    </div>
-                                </div>
+
                                 <div class="col-span-2 sm:col-span-1">
                                     <!-- Email Address -->
                                     <div class="form-group mt-4">
@@ -67,14 +62,6 @@
                                         <x-input-label for="firstname" :value="__('First Name')" />
                                         <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="given-name" />
                                         <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
-                                    </div>
-                                </div>
-                                <div class="col-span-2 sm:col-span-1">
-                                    <!-- middlename -->
-                                    <div class="form-group mt-4">
-                                        <x-input-label for="middlename" :value="__('Middle Name')" />
-                                        <x-text-input id="middlename" class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename')" required autofocus autocomplete="additional-name" />
-                                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
@@ -94,16 +81,37 @@
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
-                                    <!-- branchname -->
+                                        <!-- mobile -->
+                                        <div class="form-group mt-4">
+                                        <x-input-label for="mobile" :value="__('Mobile No.')" />
+                                        <x-text-input id="mobile" class="block mt-1 w-full" type="text" name="mobile" :value="old('mobile')" required autofocus />
+                                        <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <!-- accesstype -->
                                     <div class="form-group mt-4">
-                                        <x-input-label for="branchname" :value="__('Branch Name')" />
-                                        <!-- <x-text-input id="branchname" class="block mt-1 w-full" type="text" name="branchname" :value="old('branchname')" required autofocus autocomplete="off" /> -->
-                                        <select id="branchname" name="branchname" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('branchname')">
-                                            @foreach($branch as $branches)    
-                                                <option value = "{{ $branches->branchname}}">{{ $branches->branchname}}</option>
+                                        <x-input-label for="access" :value="__('Access Type')" />
+                                        <!-- <x-text-input id="access" class="block mt-1 w-full" type="text" name="access" :value="old('access')" required autofocus autocomplete="off" /> -->
+                                        <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
+                                            @foreach($access as $accesses)    
+                                                <option value = "{{ $accesses->accesid}}">{{ $accesses->accessname}}</option>
                                             @endforeach
                                         </select>
-                                        <x-input-error :messages="$errors->get('branchname')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('access')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <!-- department -->
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="department" :value="__('Department Name')" />
+                                        <!-- <x-text-input id="department" class="block mt-1 w-full" type="text" name="department" :value="old('branchname')" required autofocus autocomplete="off" /> -->
+                                        <select id="department" name="department" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('department')">
+                                            @foreach($department as $departments)    
+                                                <option value = "{{ $departments->deptid}}">{{ $departments->deptname}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('department')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
@@ -112,7 +120,7 @@
                                         <x-input-label for="accesstype" :value="__('Access Type')" />
                                         <!-- <x-text-input id="accesstype" class="block mt-1 w-full" type="text" name="accesstype" :value="old('accesstype')" required autofocus autocomplete="off" /> -->
                                         <select id="accesstype" name="accesstype" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('accesstype')">
-                                            @if(auth()->user()->accesstype == 'Administrator')
+                                            @if(auth()->user()->accessname == 'Administrator')
                                             <option value ="Administrator">Administrator</option>
                                             <option value ="Supervisor">Supervisor</option>
                                             @endif
@@ -120,6 +128,14 @@
                                             <option value ="Crew">Crew</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('accesstype')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                        <!-- notes -->
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="notes" :value="__('Notes')" />
+                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes')" required autofocus />
+                                        <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between col-span-2 sm:col-span-2">
