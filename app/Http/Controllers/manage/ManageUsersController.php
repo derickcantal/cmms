@@ -164,7 +164,98 @@ class ManageUsersController extends Controller
      */
     public function update(Request $request, $userid)
     {
-        //
+        $user = User::where('userid', $userid)->first();
+
+        $access = access::where('accessid',$user->accessid)->first();
+        $department = department::where('deptid',$user->deptid)->first();
+
+        $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
+
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $mod = 0;
+        $mod = $user->mod;
+
+        if(auth()->user()->accesstype == 'Supervisor')
+        {
+            if($request->accesstype == 'Administrator')
+            {
+                return redirect()->route('manageuser.index')
+                        ->with('failed','User update failed');
+            }
+            elseif($request->accesstype == 'Supervisor')
+            {
+       
+                return redirect()->route('manageuser.index')
+                        ->with('failed','User update failed');
+            }
+        }
+
+        if(!empty($request->password) != !empty($request->password_confirmation)){
+            return redirect()->route('manageuser.index')
+                    ->with('failed','User update failed');
+        }
+        if(empty($request->password)){
+            $user =User::where('userid',$user->userid)->update([
+                'username' => $request->email,
+                'email' => $request->email,
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'birthdate' => $request->birthdate,
+                'accessid' => $access->accessid,
+                'accessname' => $access->accessname,
+                'deptid' => $department->deptid,
+                'deptname' => $department->deptname,
+                'mobile_primary' => $request->mobile,
+                'notes' => $request->notes,
+                'updated_by' => auth()->user()->email,
+                'mod' => $mod + 1,
+                'status' => $request->status,
+            ]);
+            if($user){
+               
+                return redirect()->route('manageuser.index')
+                            ->with('success','User updated successfully');
+            }else{
+
+                return redirect()->route('manageuser.index')
+                            ->with('failed','User update failed');
+            }
+        }elseif($request->password == $request->password_confirmation){
+            $user =User::where('userid',$user->userid)->update([
+                'username' => $request->email,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'lastname' => $request->lastname,
+                'birthdate' => $request->birthdate,
+                'accessid' => $access->accessid,
+                'accessname' => $access->accessname,
+                'deptid' => $department->deptid,
+                'deptname' => $department->deptname,
+                'mobile_primary' => $request->mobile,
+                'notes' => $request->notes,
+                'updated_by' => auth()->user()->email,
+                'mod' => $mod + 1,
+                'status' => $request->status,
+            ]);
+            if($user){
+                return redirect()->route('manageuser.index')
+                            ->with('success','User updated successfully');
+            }else{
+                $notes = 'Users. Update.';
+                $status = 'Failed';
+                $this->userlog($notes,$status);
+                
+                return redirect()->route('manageuser.index')
+                            ->with('failed','User update failed');
+            }
+        }else{
+            return redirect()->back()
+                    ->with('failed','User update failed. Password Mismatched');
+        }
+
     }
 
     /**

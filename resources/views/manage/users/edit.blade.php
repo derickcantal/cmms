@@ -37,7 +37,7 @@
                                     <svg class="rtl:rotate-180  w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
-                                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ $user->username }}</span>
+                                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{{ $user->lastname }}, {{ $user->firstname }} {{ $user->middlename }}</span>
                                 </div>
                                 </li>
                             </ol>
@@ -55,16 +55,17 @@
                             <!-- Modal body -->
                             <img width="100" height="100" class="rounded-full mt-4" src="{{ asset("/storage/$user->avatar") }}" alt="user avatar" />
                                 <div class="grid gap-4 mb-4 grid-cols-2">
+                                    <!-- Email Address -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- Email Address -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="email" :value="__('Email')" />
-                                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $user->email)" required />
+                                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $user->email)" readonly />
                                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- Password -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- Password -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="password" :value="__('Password')" />
 
@@ -76,8 +77,9 @@
                                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- Confirm Password -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- Confirm Password -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
@@ -88,35 +90,47 @@
                                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                         </div>                    
                                     </div>
+
+                                    <!-- firstname -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- firstname -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="firstname" :value="__('First Name')" />
                                             <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname', $user->firstname)" required autofocus/>
                                             <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- lastname -->
                                     <div class="col-span-2 sm:col-span-1">
-                                            <!-- lastname -->
-                                            <div class="form-group mt-4">
+                                        <div class="form-group mt-4">
                                             <x-input-label for="lastname" :value="__('Last Name')" />
                                             <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname', $user->lastname)" required />
                                             <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- birthdate -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- birthdate -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="birthdate" :value="__('Birth Date')" />
                                             <x-text-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="date('Y-m-d',strtotime(old('birthdate', $user->birthdate)))" required autofocus autocomplete="bday" />
                                             <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- mobile -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- department -->
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="mobile" :value="__('Mobile No.')" />
+                                            <x-text-input id="mobile" class="block mt-1 w-full" type="text" name="mobile" :value="old('mobile', $user->mobile_primary)" required autofocus />
+                                            <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
+                                        </div>
+                                    </div>
+
+                                    <!-- department -->
+                                    <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
                                             <x-input-label for="department" :value="__('Department')" />
-                                            <!-- <x-text-input id="branchname" class="block mt-1 w-full" type="text" name="branchname" :value="old('branchname')" required autofocus autocomplete="off" /> -->
                                             <select id="department" name="department" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('department')">
                                             @foreach($department as $departments)   
                                                 @php
@@ -126,18 +140,18 @@
                                                         $selected_option = 'selected = "selected"';
                                                     endif;
                                                 @endphp 
-                                                <option value = "{{ $departments->deptid}} {{ $selected_option }}">{{ $departments->deptname}}</option>
+                                                <option value = "{{ $departments->deptid}}" {{ $selected_option; }}>{{ $departments->deptname}}</option>
                                             @endforeach
                                             </select>
                                             
                                             <x-input-error :messages="$errors->get('department')" class="mt-2" />
                                         </div>
                                     </div>
+
+                                    <!-- accesstype -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- accesstype -->
                                         <div class="form-group mt-4">
                                             <x-input-label for="access" :value="__('Access Type')" />
-                                            <!-- <x-text-input id="accesstype" class="block mt-1 w-full" type="text" name="accesstype" :value="old('accesstype')" required autofocus autocomplete="off" /> -->
                                             <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
                                                 @foreach($access as $accesses)   
                                                     @php
@@ -147,15 +161,16 @@
                                                             $selected_option1 = 'selected = "selected"';
                                                         endif;
                                                     @endphp 
-                                                    <option value = "{{ $accesses->accessid }} {{ $selected_option1 }}">{{ $accesses->accessname}}</option>
+                                                    <option  value = "{{ $accesses->accessid }}" {{ $selected_option1; }}>{{ $accesses->accessname}}</option>
                                                 @endforeach
                                             </select>
                                             <x-input-error :messages="$errors->get('accesstype')" class="mt-2" />
                                             
                                         </div>
                                     </div>
+
+                                    <!-- status -->
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- status -->
                                         @php
                                         
                                             $op1 = '';
@@ -176,8 +191,8 @@
                                             <x-input-error :messages="$errors->get('status')" class="mt-2" />
                                         </div>
                                     </div>
+
                                     <div class="flex items-center justify-between col-span-2 sm:col-span-2">
-                                        
                                         <x-primary-button class="ms-4">
                                             <a class="btn btn-primary" > Update</a>
                                         </x-primary-button>
