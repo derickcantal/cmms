@@ -66,6 +66,10 @@ class ManageUsersController extends Controller
      */
     public function store(Request $request)
     {
+        $access = access::where('accessid',$request->access)->first();
+        $department = department::where('deptid',$request->department)->first();
+
+        // dd($request, $access, $department);
         $n1 = strtoupper($request->firstname[0]);
         // $n2 = strtoupper($request->middlename[0]);
         $n3 = strtoupper($request->lastname[0]);
@@ -93,21 +97,20 @@ class ManageUsersController extends Controller
         }
         $user = User::create([
             'avatar' => 'avatars/avatar-default.jpg',
-            'username' => $request->username,
+            'username' => $request->email,
             'email' => $request->email,
             'password' => Hash::make($newpassword),
             'firstname' => $request->firstname,
-            'middlename' => $request->middlename,
             'lastname' => $request->lastname,
             'birthdate' => $request->birthdate,
-            'branchid' => $br->branchid,
-            'branchname' => $br->branchname,
-            'cabid' => 0,
-            'cabinetname' => 'Null',
-            'accesstype' => $request->accesstype,
+            'accessid' => $access->accessid,
+            'accessname' => $access->accessname,
+            'deptid' => $department->deptid,
+            'deptname' => $department->deptname,
             'created_by' => auth()->user()->email,
             'updated_by' => 'Null',
             'timerecorded' => $timenow,
+            'modifiedid' => 0,
             'mod' => 0,
             'status' => 'Active',
         ]);
@@ -136,7 +139,20 @@ class ManageUsersController extends Controller
      */
     public function edit($userid)
     {
-        //
+        $user = User::where('userid',$userid)->first();
+
+        $accessid = access::where('accessid', $user->accessid)->first();
+        $departmentid = department::where('deptid', $user->deptid)->first();
+
+        $access = access::get();
+        $department = department::get();
+
+       return view('manage.users.edit')
+                    ->with(['user' => $user])
+                    ->with(['access' => $access])
+                    ->with(['department' => $department])
+                    ->with(['accessid' => $accessid])
+                    ->with(['departmentid' => $departmentid]);
     }
 
     /**
@@ -185,7 +201,7 @@ class ManageUsersController extends Controller
             'status' => 'Inactive',
         ]);
 
-        $user = User::all()->get();
+        $user = User::get();
 
 
         return redirect()->route('manageuser.index')
@@ -198,7 +214,7 @@ class ManageUsersController extends Controller
             'status' => 'Active',
         ]);
 
-        $user = User::all()->get();
+        $user = User::get();
 
         return redirect()->route('manageuser.index')
             ->with('success','User Activated successfully');

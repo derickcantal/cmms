@@ -55,15 +55,6 @@
                             <!-- Modal body -->
                             <img width="100" height="100" class="rounded-full mt-4" src="{{ asset("/storage/$user->avatar") }}" alt="user avatar" />
                                 <div class="grid gap-4 mb-4 grid-cols-2">
-
-                                    <div class="col-span-2 sm:col-span-1 ">
-                                        <!-- username -->
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="username" :value="__('Username')" />
-                                            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username', $user->username)" required autofocus />
-                                            <x-input-error :messages="$errors->get('username')" class="mt-2" />
-                                        </div>
-                                    </div>
                                     <div class="col-span-2 sm:col-span-1">
                                         <!-- Email Address -->
                                         <div class="form-group mt-4">
@@ -106,14 +97,6 @@
                                         </div>
                                     </div>
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- middlename -->
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="middlename" :value="__('Middle Name')" />
-                                            <x-text-input id="middlename" class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename', $user->middlename)" required autofocus />
-                                            <x-input-error :messages="$errors->get('username')" class="mt-2" />
-                                        </div>
-                                    </div>
-                                    <div class="col-span-2 sm:col-span-1">
                                             <!-- lastname -->
                                             <div class="form-group mt-4">
                                             <x-input-label for="lastname" :value="__('Last Name')" />
@@ -130,70 +113,42 @@
                                         </div>
                                     </div>
                                     <div class="col-span-2 sm:col-span-1">
-                                        <!-- branchname -->
-                                        @php
-                                            $op1_b = '';
-                                            $op2_b = '';
-                                            $op3_b = '';
-                                            $op4_b = '';
-                                            $op5_b = '';
-                                            $op6_b = '';
-                                            if ($user->branchname == 'CB Main'):
-                                                $op1_b = 'selected = "selected"';
-                                            elseif ($user->branchname == 'CB Annex'):
-                                                $op2_b = 'selected = "selected"';
-                                            elseif ($user->branchname == 'CB Complex'):
-                                                $op3_b = 'selected = "selected"';
-                                            elseif ($user->branchname == 'CB Plus 1'):
-                                                $op4_b = 'selected = "selected"';
-                                            elseif ($user->branchname == 'CB Plus 2'):
-                                                $op5_b = 'selected = "selected"';  
-                                            elseif ($user->branchname == 'CB Plus 3'):
-                                                $op6_b = 'selected = "selected"'; 
-                                            endif;
-                                        @endphp
+                                        <!-- department -->
                                         <div class="form-group mt-4">
-                                            <x-input-label for="branchname" :value="__('Branch Name')" />
+                                            <x-input-label for="department" :value="__('Department')" />
                                             <!-- <x-text-input id="branchname" class="block mt-1 w-full" type="text" name="branchname" :value="old('branchname')" required autofocus autocomplete="off" /> -->
-                                            <select id="branchname" name="branchname" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('branchname', $user->branchname))">
-                                                <option value = "CB Main" {{ $op1_b; }}">CB Main</option>
-                                                <option value = "CB Annex" {{ $op2_b; }}">CB Annex</option>
-                                                <option value = "CB Complex" {{ $op3_b; }}}">CB Complex</option>
-                                                <option value = "CB Plus 1" {{ $op4_b; }}">CB Plus 1</option>
-                                                <option value = "CB Plus 2" {{ $op5_b; }}">CB Plus 2</option>
-                                                <option value = "CB Plus 3" {{ $op6_b; }}">CB Plus 3</option>
+                                            <select id="department" name="department" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('department')">
+                                            @foreach($department as $departments)   
+                                                @php
+                                                    $selected_option = '';
+
+                                                    if($departments->deptid == $departmentid->deptid):
+                                                        $selected_option = 'selected = "selected"';
+                                                    endif;
+                                                @endphp 
+                                                <option value = "{{ $departments->deptid}} {{ $selected_option }}">{{ $departments->deptname}}</option>
+                                            @endforeach
                                             </select>
-                                            <x-input-error :messages="$errors->get('branchname')" class="mt-2" />
+                                            
+                                            <x-input-error :messages="$errors->get('department')" class="mt-2" />
                                         </div>
                                     </div>
                                     <div class="col-span-2 sm:col-span-1">
                                         <!-- accesstype -->
-                                        @php
-                                            $op1_a = '';
-                                            $op2_a = '';
-                                            $op3_a = '';
-                                            $op4_a = '';
-                                            if ($user->accesstype == 'Administrator'):
-                                                $op1_a = 'selected = "selected"';
-                                            elseif ($user->accesstype == 'Supervisor'):
-                                                $op2_a = 'selected = "selected"';
-                                            elseif ($user->accesstype == 'Cashier'):
-                                                $op3_a = 'selected = "selected"';
-                                            elseif ($user->accesstype == 'Crew'):
-                                                $op4_a = 'selected = "selected"';
-                                            endif;
-                                            
-                                        @endphp
                                         <div class="form-group mt-4">
-                                            <x-input-label for="accesstype" :value="__('Access Type')" />
+                                            <x-input-label for="access" :value="__('Access Type')" />
                                             <!-- <x-text-input id="accesstype" class="block mt-1 w-full" type="text" name="accesstype" :value="old('accesstype')" required autofocus autocomplete="off" /> -->
-                                            <select id="accesstype" name="accesstype" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('accesstype', $user->accesstype)">
-                                                @if($user->accesstype == 'Administrator')
-                                                <option value ="Administrator" {{ $op1_a; }}">Administrator</option>
-                                                <option value ="Supervisor" {{ $op2_a; }}">Supervisor</option>
-                                                @endif
-                                                <option value ="Cashier" {{ $op3_a; }}">Cashier</option>
-                                                <option value ="Crew" {{ $op4_a; }}">Crew</option>
+                                            <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
+                                                @foreach($access as $accesses)   
+                                                    @php
+                                                        $selected_option1 = '';
+                                            
+                                                        if($accesses->deptid == $accessid->deptid):
+                                                            $selected_option1 = 'selected = "selected"';
+                                                        endif;
+                                                    @endphp 
+                                                    <option value = "{{ $accesses->accessid }} {{ $selected_option1 }}">{{ $accesses->accessname}}</option>
+                                                @endforeach
                                             </select>
                                             <x-input-error :messages="$errors->get('accesstype')" class="mt-2" />
                                             

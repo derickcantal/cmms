@@ -95,7 +95,7 @@
                                         <!-- <x-text-input id="access" class="block mt-1 w-full" type="text" name="access" :value="old('access')" required autofocus autocomplete="off" /> -->
                                         <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
                                             @foreach($access as $accesses)    
-                                                <option value = "{{ $accesses->accesid}}">{{ $accesses->accessname}}</option>
+                                                <option value = "{{ $accesses->accessid}}">{{ $accesses->accessname}}</option>
                                             @endforeach
                                         </select>
                                         <x-input-error :messages="$errors->get('access')" class="mt-2" />
@@ -134,7 +134,7 @@
                                         <!-- notes -->
                                     <div class="form-group mt-4">
                                         <x-input-label for="notes" :value="__('Notes')" />
-                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes')" required autofocus />
+                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes')" autofocus />
                                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                                     </div>
                                 </div>
