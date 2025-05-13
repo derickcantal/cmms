@@ -131,7 +131,11 @@ class ManageUsersController extends Controller
      */
     public function show($userid)
     {
-        //
+        $user = User::where('userid',$userid)->first();
+
+        return view('manage.users.show')
+                    ->with(['user' => $user]);
+
     }
 
     /**
@@ -170,7 +174,7 @@ class ManageUsersController extends Controller
     {
         $user = User::where('userid', $userid)->first();
         $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
-
+        // dd($userid,$fullname,$user);
         if($user->userid == auth()->user()->userid){
             $notes = 'Users. Activation. Self Account. ' . $fullname;
 
@@ -201,7 +205,6 @@ class ManageUsersController extends Controller
             'status' => 'Inactive',
         ]);
 
-        $user = User::get();
 
 
         return redirect()->route('manageuser.index')
@@ -214,7 +217,6 @@ class ManageUsersController extends Controller
             'status' => 'Active',
         ]);
 
-        $user = User::get();
 
         return redirect()->route('manageuser.index')
             ->with('success','User Activated successfully');
