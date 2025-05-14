@@ -1,1 +1,1 @@
-<img width="50" height="50" class="rounded-sm mt-4" src="{{ asset("/storage/logo/slsu-logo.jpg") }}" alt="logo" />
+<img width="50" height="50" class="rounded-full" src="{{ asset("/storage/logo/slsu-logo.jpg") }}" alt="logo" />
