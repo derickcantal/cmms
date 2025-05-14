@@ -37,7 +37,7 @@ class ManageUsersController extends Controller
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
-        $user = User::orderBy('status','asc')
+        $user = User::orderBy('status','asc') 
                     ->paginate(5);
 
         // $notes = 'Users';

@@ -13,18 +13,15 @@ class ManageWorkClassController extends Controller
 {
     public function search(Request $request)
     {
-        $user = User::orderBy('lastname',$request->orderrow)
+        $workclass = workclass::orderBy('workclassid',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('username','like',"%{$request->search}%")
-                            ->orWhere('firstname','like',"%{$request->search}%")
-                            ->orWhere('lastname','like',"%{$request->search}%")
-                            ->orWhere('middlename','like',"%{$request->search}%")
-                            ->orWhere('email','like',"%{$request->search}%")
+                    $builder->where('workclassdesc','like',"%{$request->search}%")
+                            ->orWhere('notes','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                             
                 })->paginate($request->pagerow);
     
-        return view('manage.users.index',compact('user'))
+        return view('manage.workclass.index',compact('workclass'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**
@@ -32,7 +29,11 @@ class ManageWorkClassController extends Controller
      */
     public function index()
     {
-        return view('manage.workclass.index');
+        $workclass = workclass::paginate(5);
+
+        return view('manage.workclass.index')
+                        ->with(['workclass' => $workclass])
+                        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

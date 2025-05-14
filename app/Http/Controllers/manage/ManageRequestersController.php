@@ -13,9 +13,10 @@ class ManageRequestersController extends Controller
 {
     public function search(Request $request)
     {
-        $user = User::orderBy('lastname',$request->orderrow)
+        $user = User::where('accessname','Requester')
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('username','like',"%{$request->search}%")
+                    $builder->orderBy('lastname',$request->orderrow)
+                            ->where('username','like',"%{$request->search}%")
                             ->orWhere('firstname','like',"%{$request->search}%")
                             ->orWhere('lastname','like',"%{$request->search}%")
                             ->orWhere('middlename','like',"%{$request->search}%")
@@ -24,7 +25,7 @@ class ManageRequestersController extends Controller
                             
                 })->paginate($request->pagerow);
     
-        return view('manage.users.index',compact('user'))
+        return view('manage.requesters.index',compact('user'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**
@@ -32,7 +33,18 @@ class ManageRequestersController extends Controller
      */
     public function index()
     {
-        return view('manage.requesters.index');
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $user = User::where('accessname','Requester')
+                    ->orderBy('status','asc')
+                    ->paginate(5);
+
+        // $notes = 'Users';
+        // $status = 'Success';
+        // $this->userlog($notes,$status);
+
+        return view('manage.requesters.index',compact('user'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

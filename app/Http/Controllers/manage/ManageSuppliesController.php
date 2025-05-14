@@ -13,18 +13,19 @@ class ManageSuppliesController extends Controller
 {
     public function search(Request $request)
     {
-        $user = User::orderBy('lastname',$request->orderrow)
+        $supplies = supplies::orderBy('suppliesdesc',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('username','like',"%{$request->search}%")
-                            ->orWhere('firstname','like',"%{$request->search}%")
-                            ->orWhere('lastname','like',"%{$request->search}%")
-                            ->orWhere('middlename','like',"%{$request->search}%")
-                            ->orWhere('email','like',"%{$request->search}%")
+                    $builder->where('suppliesdesc','like',"%{$request->search}%")
+                            ->orWhere('workorderid','like',"%{$request->search}%")
+                            ->orWhere('particulars','like',"%{$request->search}%")
+                            ->orWhere('remarks','like',"%{$request->search}%")
+                            ->orWhere('fullname','like',"%{$request->search}%")
+                            ->orWhere('notes','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                             
                 })->paginate($request->pagerow);
     
-        return view('manage.users.index',compact('user'))
+        return view('manage.supplies.index',compact('supplies'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**
@@ -32,7 +33,11 @@ class ManageSuppliesController extends Controller
      */
     public function index()
     {
-        return view('manage.supplies.index');
+        $supplies = supplies::paginate(5);
+
+        return view('manage.supplies.index')
+                        ->with(['supplies' => $supplies])
+                        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

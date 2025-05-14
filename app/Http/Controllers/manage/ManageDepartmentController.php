@@ -13,13 +13,9 @@ class ManageDepartmentController extends Controller
 {
     public function search(Request $request)
     {
-        $user = User::orderBy('lastname',$request->orderrow)
+        $department = department::orderBy('deptname',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('username','like',"%{$request->search}%")
-                            ->orWhere('firstname','like',"%{$request->search}%")
-                            ->orWhere('lastname','like',"%{$request->search}%")
-                            ->orWhere('middlename','like',"%{$request->search}%")
-                            ->orWhere('email','like',"%{$request->search}%")
+                    $builder->where('deptname','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                             
                 })->paginate($request->pagerow);
@@ -32,7 +28,11 @@ class ManageDepartmentController extends Controller
      */
     public function index()
     {
-        return view('manage.department.index');
+        $department = department::paginate(5);
+
+        return view('manage.department.index')
+                        ->with(['department' => $department])
+                        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

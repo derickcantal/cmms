@@ -13,18 +13,14 @@ class ManageAccessController extends Controller
 {
     public function search(Request $request)
     {
-        $user = User::orderBy('lastname',$request->orderrow)
+        $access = access::orderBy('accessname',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('username','like',"%{$request->search}%")
-                            ->orWhere('firstname','like',"%{$request->search}%")
-                            ->orWhere('lastname','like',"%{$request->search}%")
-                            ->orWhere('middlename','like',"%{$request->search}%")
-                            ->orWhere('email','like',"%{$request->search}%")
+                    $builder->where('deptname','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                             
                 })->paginate($request->pagerow);
     
-        return view('manage.access.index',compact('user'))
+        return view('manage.access.index',compact('access'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**
@@ -32,7 +28,11 @@ class ManageAccessController extends Controller
      */
     public function index()
     {
-        return view('manage.access.index');
+        $access = access::paginate(5);
+
+        return view('manage.access.index')
+                        ->with(['access' => $access])
+                        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
