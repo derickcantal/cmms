@@ -10,7 +10,6 @@
                     <a href="{{ route('dashboard') }}" class="flex items-center">
                         <x-application-logo class=" w-10 h-10 rounded-full fill-current text-gray-800 dark:text-gray-200" />
                     </a>
-
                 </div>
                 <div class="hidden px-2 space-x-8 sm:-my-px sm:ms-5 sm:flex">
                     <span class="self-center text-xl font-semibold dark:text-white">GSO</span>
@@ -91,6 +90,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('manageuser.index')" :active="request()->routeIs('manageuser.index')">
+                {{ __('Manage') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Transaction') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Reports') }}
             </x-responsive-nav-link>
         </div>
 
