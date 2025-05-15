@@ -15,7 +15,7 @@ class ManageAccessController extends Controller
     {
         $access = access::orderBy('accessname',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('deptname','like',"%{$request->search}%")
+                    $builder->where('accessname','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                             
                 })->paginate($request->pagerow);
@@ -40,7 +40,7 @@ class ManageAccessController extends Controller
      */
     public function create()
     {
-        //
+        return view('manage.access.create');
     }
 
     /**
@@ -48,38 +48,114 @@ class ManageAccessController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $access = access::create([
+            'accessname' => $request->access,
+            'deptid' => 0,
+            'deptname' => 'Null',
+            'notes' => $request->notes,
+            'created_by' => auth()->user()->email,
+            'updated_by' => 'Null',
+            'timerecorded' => $timenow,
+            'modifiedid' => 0,
+            'mod' => 0,
+            'status' => 'Active',
+        ]);
+    
+        if ($access) {
+    
+            return redirect()->route('manageaccess.index')
+                        ->with('success','Department created successfully.');
+        }else{
+
+            return redirect()->route('manageaccess.index')
+                        ->with('failed','Department creation failed');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($accessid)
     {
-        //
+        $access = access::where('accessid',$accessid)->first();
+
+        return view('manage.access.show')
+                    ->with(['access' => $access]); 
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($accessid)
     {
-        //
+        $access = access::where('accessid',$accessid)->first();
+
+        return view('manage.access.edit')
+                    ->with(['access' => $access]); 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $accessid)
     {
-        //
+        $accessid = access::where('accessid',$accessid)->first();
+
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $mod = 0;
+        $mod = $accessid->mod;
+
+            $access = access::where('accessid',$accessid->deptid)->update([
+                'accessname' => $request->access,
+                'notes' => $request->notes,
+                'updated_by' => auth()->user()->email,
+                'mod' => $mod + 1,
+                'status' => $request->status,
+            ]);
+            if($access){
+               
+                return redirect()->route('manageaccess.index')
+                            ->with('success','User updated successfully');
+            }else{
+
+                return redirect()->route('manageaccess.index')
+                            ->with('failed','User update failed');
+            }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($accessid)
     {
-        //
+        $access = access::where('accessid', $accessid)->first();
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        if($access->status == 'Active')
+        {
+            access::where('accessid', $access->deptid)
+            ->update([
+            'status' => 'Inactive',
+        ]);
+
+
+
+        return redirect()->route('manageaccess.index')
+            ->with('success','Access Decativated successfully');
+        }
+        elseif($access->status == 'Inactive')
+        {
+            access::where('accessid', $access->deptid)
+            ->update([
+            'status' => 'Active',
+        ]);
+
+
+        return redirect()->route('manageaccess.index')
+            ->with('success','Access Activated successfully');
+        }
     }
 }

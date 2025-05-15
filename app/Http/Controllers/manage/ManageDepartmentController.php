@@ -40,7 +40,8 @@ class ManageDepartmentController extends Controller
      */
     public function create()
     {
-        //
+        
+       return view('manage.department.create');
     }
 
     /**
@@ -48,38 +49,114 @@ class ManageDepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $department = department::create([
+            'deptname' => $request->department,
+            'notes' => $request->notes,
+            'created_by' => auth()->user()->email,
+            'updated_by' => 'Null',
+            'timerecorded' => $timenow,
+            'modifiedid' => 0,
+            'mod' => 0,
+            'status' => 'Active',
+        ]);
+    
+        if ($department) {
+    
+            return redirect()->route('managedepartment.index')
+                        ->with('success','Department created successfully.');
+        }else{
+
+            return redirect()->route('managedepartment.index')
+                        ->with('failed','Department creation failed');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($deptid)
     {
-        //
+        $department = department::where('deptid',$deptid)->first();
+
+        return view('manage.department.show')
+                    ->with(['department' => $department]); 
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($deptid)
     {
-        //
+        $department = department::where('deptid',$deptid)->first();
+
+        return view('manage.department.edit')
+                    ->with(['department' => $department]); 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $deptid)
     {
-        //
+
+        $departmentid = department::where('deptid',$deptid)->first();
+
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $mod = 0;
+        $mod = $departmentid->mod;
+
+            $department = department::where('deptid',$departmentid->deptid)->update([
+                'deptname' => $request->department,
+                'notes' => $request->notes,
+                'updated_by' => auth()->user()->email,
+                'mod' => $mod + 1,
+                'status' => $request->status,
+            ]);
+            if($department){
+               
+                return redirect()->route('managedepartment.index')
+                            ->with('success','User updated successfully');
+            }else{
+
+                return redirect()->route('managedepartment.index')
+                            ->with('failed','User update failed');
+            }
+      
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($deptid)
     {
-        //
+        $department = department::where('deptid', $deptid)->first();
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        if($department->status == 'Active')
+        {
+            department::where('deptid', $department->deptid)
+            ->update([
+            'status' => 'Inactive',
+        ]);
+
+
+
+        return redirect()->route('managedepartment.index')
+            ->with('success','Department Decativated successfully');
+        }
+        elseif($department->status == 'Inactive')
+        {
+            department::where('deptid', $department->deptid)
+            ->update([
+            'status' => 'Active',
+        ]);
+
+
+        return redirect()->route('managedepartment.index')
+            ->with('success','Department Activated successfully');
+        }
     }
 }

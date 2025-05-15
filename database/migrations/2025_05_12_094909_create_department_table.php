@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('department', function (Blueprint $table) {
             $table->increments('deptid')->primary();
             $table->string('deptname');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->timestamps();
             $table->integer('modifiedid');
             $table->dateTime('timerecorded');

@@ -17,11 +17,11 @@ return new class extends Migration
             $table->integer('workorderid');
             $table->string('particulars');
             $table->integer('qty');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->integer('userid');
             $table->string('fullname');
             $table->timestamps();
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->integer('modifiedid');
             $table->dateTime('timerecorded');
             $table->string('created_by');

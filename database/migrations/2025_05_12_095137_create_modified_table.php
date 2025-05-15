@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('middesc');
             $table->string('midclass');
             $table->timestamps();
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->dateTime('timerecorded');
             $table->string('created_by');
             $table->string('updated_by');

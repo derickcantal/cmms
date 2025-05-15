@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('deptid');
             $table->string('deptname');
             $table->timestamps();
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->integer('modifiedid');
             $table->dateTime('timerecorded');
             $table->string('created_by');

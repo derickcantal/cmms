@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('workclassid')->primary();
             $table->string('workclassdesc');
             $table->timestamps();
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->integer('modifiedid');
             $table->dateTime('timerecorded');
             $table->string('created_by');
