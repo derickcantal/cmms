@@ -66,11 +66,11 @@ class ManageAccessController extends Controller
         if ($access) {
     
             return redirect()->route('manageaccess.index')
-                        ->with('success','Department created successfully.');
+                        ->with('success','Access created successfully.');
         }else{
 
             return redirect()->route('manageaccess.index')
-                        ->with('failed','Department creation failed');
+                        ->with('failed','Access creation failed');
         }
     }
 
@@ -118,11 +118,11 @@ class ManageAccessController extends Controller
             if($access){
                
                 return redirect()->route('manageaccess.index')
-                            ->with('success','User updated successfully');
+                            ->with('success','Access updated successfully');
             }else{
 
                 return redirect()->route('manageaccess.index')
-                            ->with('failed','User update failed');
+                            ->with('failed','Access update failed');
             }
     }
 

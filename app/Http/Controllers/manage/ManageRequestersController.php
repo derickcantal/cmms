@@ -88,13 +88,13 @@ class ManageRequestersController extends Controller
             if($request->accesstype == 'Adminstrator')
             {
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User creation failed');
+                        ->with('failed','Requester creation failed');
             }
             elseif($request->accesstype == 'Supervisor')
             {
 
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User creation failed');
+                        ->with('failed','Requester creation failed');
             }
         }
         $user = User::create([
@@ -120,11 +120,11 @@ class ManageRequestersController extends Controller
         if ($user) {
     
             return redirect()->route('managerequesters.index')
-                        ->with('success','User created successfully.');
+                        ->with('success','Requester created successfully.');
         }else{
 
             return redirect()->route('managerequesters.index')
-                        ->with('failed','User creation failed');
+                        ->with('failed','Requester creation failed');
         }  
     }
 
@@ -167,8 +167,8 @@ class ManageRequestersController extends Controller
     {
         $user = User::where('userid', $userid)->first();
 
-        $access = access::where('accessid',$user->accessid)->first();
-        $department = department::where('deptid',$user->deptid)->first();
+        $access = access::where('accessid',$request->access)->first();
+        $department = department::where('deptid',$request->department)->first();
 
         $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
 
@@ -182,13 +182,13 @@ class ManageRequestersController extends Controller
             if($request->accesstype == 'Administrator')
             {
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User update failed');
+                        ->with('failed','Requester update failed');
             }
             elseif($request->accesstype == 'Supervisor')
             {
        
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User update failed');
+                        ->with('failed','Requester update failed');
             }
         }
 
@@ -214,11 +214,11 @@ class ManageRequestersController extends Controller
             if($user){
                
                 return redirect()->route('managerequesters.index')
-                            ->with('success','User updated successfully');
+                            ->with('success','Requester updated successfully');
             }else{
 
                 return redirect()->route('managerequesters.index')
-                            ->with('failed','User update failed');
+                            ->with('failed','Requester update failed');
             }
         }elseif($request->password == $request->password_confirmation){
             $user =User::where('userid',$user->userid)->update([
@@ -239,16 +239,16 @@ class ManageRequestersController extends Controller
             ]);
             if($user){
                 return redirect()->route('managerequesters.index')
-                            ->with('success','User updated successfully');
+                            ->with('success','Requester updated successfully');
             }else{
                
                 
                 return redirect()->route('managerequesters.index')
-                            ->with('failed','User update failed');
+                            ->with('failed','Requester update failed');
             }
         }else{
             return redirect()->back()
-                    ->with('failed','User update failed. Password Mismatched');
+                    ->with('failed','Requester update failed. Password Mismatched');
         }
     }
 
@@ -261,10 +261,10 @@ class ManageRequestersController extends Controller
         $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
         // dd($userid,$fullname,$user);
         if($user->userid == auth()->user()->userid){
-            $notes = 'Users. Activation. Self Account. ' . $fullname;
+            $notes = 'Requester. Activation. Self Account. ' . $fullname;
 
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User Update on own account not allowed.');
+                        ->with('failed','Requester Update on own account not allowed.');
         }
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
         if(auth()->user()->accesstype == 'Supervisor')
@@ -273,13 +273,13 @@ class ManageRequestersController extends Controller
             {
 
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User update failed');
+                        ->with('failed','Requester update failed');
             }
             elseif($user->accesstype == 'Supervisor')
             {
 
                 return redirect()->route('managerequesters.index')
-                        ->with('failed','User update failed');
+                        ->with('failed','Requester update failed');
             }
         }
 
@@ -293,7 +293,7 @@ class ManageRequestersController extends Controller
 
 
         return redirect()->route('managerequesters.index')
-            ->with('success','User Decativated successfully');
+            ->with('success','Requester Decativated successfully');
         }
         elseif($user->status == 'Inactive')
         {
@@ -304,7 +304,7 @@ class ManageRequestersController extends Controller
 
 
         return redirect()->route('managerequesters.index')
-            ->with('success','User Activated successfully');
+            ->with('success','Requester Activated successfully');
         }
     }
 }

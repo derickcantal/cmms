@@ -118,11 +118,11 @@ class ManageDepartmentController extends Controller
             if($department){
                
                 return redirect()->route('managedepartment.index')
-                            ->with('success','User updated successfully');
+                            ->with('success','Department updated successfully');
             }else{
 
                 return redirect()->route('managedepartment.index')
-                            ->with('failed','User update failed');
+                            ->with('failed','Department update failed');
             }
       
     }

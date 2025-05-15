@@ -95,7 +95,10 @@
                                             No
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Department Name
+                                            Supply Desc
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Stocks
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Status
@@ -115,7 +118,10 @@
                                             <x-input-label>{{ ++$i }}</x-input-label>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <x-input-label>{{ $suppliess->deptname }}</x-input-label>
+                                            <x-input-label>{{ $suppliess->suppliesdesc }}</x-input-label>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <x-input-label>{{ $suppliess->stocks }}</x-input-label>
                                         </td>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">

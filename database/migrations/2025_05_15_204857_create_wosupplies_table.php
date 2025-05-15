@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('supplies', function (Blueprint $table) {
-            $table->increments('suppliesid')->primary();
-            $table->string('suppliesdesc');
-            $table->string('particulars')->nullable();
+        Schema::create('wosupplies', function (Blueprint $table) {
+            $table->increments('wosuppliesid')->primary();
+            $table->string('wosuppliesdesc');
+            $table->integer('workorderid');
+            $table->string('particulars');
             $table->integer('qty');
-            $table->integer('stocks');
-            $table->decimal('price', $precision = 8, $scale = 2);
-            $table->decimal('srp', $precision = 8, $scale = 2);
+            $table->string('remarks')->nullable();
+            $table->integer('userid');
+            $table->string('fullname');
             $table->timestamps();
             $table->string('notes')->nullable();
             $table->integer('modifiedid');
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('supplies');
+        Schema::dropIfExists('wosupplies');
     }
 };

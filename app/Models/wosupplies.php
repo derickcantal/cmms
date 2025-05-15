@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 use \Carbon\Carbon;
 
-class supplies extends Model
+class wosupplies extends Model
 {
     use HasFactory, Notifiable;
 
     protected $connection = 'mysql';
-    protected $table = 'cmms.supplies';  
-    protected $primaryKey = 'suppliesid';
+    protected $table = 'cmms.wosupplies';  
+    protected $primaryKey = 'wosuppliesid';
 
     protected $dates = [
         'timerecorded',
@@ -24,11 +24,12 @@ class supplies extends Model
 
     protected $fillable = [
         'suppliesdesc',
+        'workorderid',
         'particulars',
         'qty',
-        'stocks',
-        'price',
-        'srp',
+        'remarks',
+        'userid',
+        'fullname',
         'notes',
         'modifiedid',
         'timerecorded',
@@ -38,5 +39,4 @@ class supplies extends Model
         'copied',
         'status',
     ];
-        
 }

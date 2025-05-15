@@ -168,8 +168,8 @@ class ManageUsersController extends Controller
     {
         $user = User::where('userid', $userid)->first();
 
-        $access = access::where('accessid',$user->accessid)->first();
-        $department = department::where('deptid',$user->deptid)->first();
+        $access = access::where('accessid',$request->access)->first();
+        $department = department::where('deptid',$request->department)->first();
 
         $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
 
