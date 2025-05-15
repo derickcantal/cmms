@@ -136,7 +136,7 @@ class ManageAccessController extends Controller
 
         if($access->status == 'Active')
         {
-            access::where('accessid', $access->deptid)
+            access::where('accessid', $access->accessid)
             ->update([
             'status' => 'Inactive',
         ]);
@@ -148,7 +148,7 @@ class ManageAccessController extends Controller
         }
         elseif($access->status == 'Inactive')
         {
-            access::where('accessid', $access->deptid)
+            access::where('accessid', $access->accessid)
             ->update([
             'status' => 'Active',
         ]);
