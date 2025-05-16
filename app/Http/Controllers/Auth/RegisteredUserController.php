@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $access = access::get();
+        $access = access::where('accessname','!=','Administrator')->get();
         $department = department::get();
 
         return view('auth.register')
@@ -77,7 +77,7 @@ class RegisteredUserController extends Controller
             'timerecorded' => $timenow,
             'modifiedid' => 0,
             'mod' => 0,
-            'status' => 'Active',
+            'status' => 'For Approval',
         ]);
         if($temp_users){
             return redirect()->route('register')
