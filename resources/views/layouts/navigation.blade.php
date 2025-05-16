@@ -94,7 +94,7 @@
             <x-responsive-nav-link :href="route('manageuser.index')" :active="request()->routeIs('manageuser.index')">
                 {{ __('Manage') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('transactionworkorder.index')" :active="request()->routeIs('transactionworkorder.index')">
                 {{ __('Transaction') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
