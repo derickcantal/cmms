@@ -9,10 +9,7 @@
                     <x-nav-link :href="route('transactionsupplydelivery.index')" :active="request()->routeIs('transactionsupplydelivery.index')">
                         {{ __('Supply Delivery') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('managesupplies.index')" :active="request()->routeIs('managesupplies.index')">
-                        <!-- {{ __('Supplies') }} -->
-                    </x-nav-link>
-                    <x-nav-link :href="route('managedepartment.index')" :active="request()->routeIs('managedepartment.index')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         <!-- {{ __('Department') }} -->
                     </x-nav-link>
                     <x-nav-link :href="route('manageaccess.index')" :active="request()->routeIs('manageaccess.index')">

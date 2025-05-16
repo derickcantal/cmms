@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workorder', function (Blueprint $table) {
-            $table->increments('workorderid')->primary();
+        Schema::create('temp_workorder', function (Blueprint $table) {
+            $table->increments('tworkorderid')->primary();
             $table->integer('requesterid');
             $table->string('rfullname');
             $table->integer('rdeptid');
@@ -66,6 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workorder');
+        Schema::dropIfExists('temp_workorder');
     }
 };
