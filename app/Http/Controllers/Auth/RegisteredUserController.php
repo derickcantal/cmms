@@ -68,6 +68,7 @@ class RegisteredUserController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'birthdate' => $request->birthdate,
+            'mobile_primary' => $request->mobile,
             'accessid' => $access->accessid,
             'accessname' => $access->accessname,
             'deptid' => $department->deptid,
@@ -77,6 +78,7 @@ class RegisteredUserController extends Controller
             'timerecorded' => $timenow,
             'modifiedid' => 0,
             'mod' => 0,
+            'notes' => $request->notes,
             'status' => 'For Approval',
         ]);
         if($temp_users){

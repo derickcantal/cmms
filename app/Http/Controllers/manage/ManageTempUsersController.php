@@ -79,7 +79,7 @@ class ManageTempUsersController extends Controller
      */
     public function edit($userid)
     {
-        $user = User::where('userid',$userid)->first();
+        $user = temp_users::where('userid',$userid)->first();
 
         $accessid = access::where('accessid', $user->accessid)->first();
         $departmentid = department::where('deptid', $user->deptid)->first();
@@ -100,7 +100,89 @@ class ManageTempUsersController extends Controller
      */
     public function update(Request $request, $userid)
     {
-        //
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $user = temp_users::where('userid', $userid)->first();
+
+        $access = access::where('accessid',$request->access)->first();
+        $department = department::where('deptid',$request->department)->first();
+
+        $fullname = $user->lastname . ', ' . $user->firstname . ' ' . $user->middlename;
+
+        $n1 = strtoupper($request->firstname[0]);
+        $n3 = strtoupper($request->lastname[0]);
+        $n4 = preg_replace('/[-]+/', '', $request->birthdate);
+
+        $newpassword = $n1 . $n3 . $n4;
+
+
+        if($request->input('action') == "updateaccept") {
+            // $this->show($userid);
+            $user = temp_users::where('userid',$user->userid)->update([
+                'username' => $request->email,
+                'email' => $request->email,
+                'password' => Hash::make($newpassword),
+                'firstname' => $request->firstname,
+                'middlename' => $request->middlename,
+                'lastname' => $request->lastname,
+                'birthdate' => $request->birthdate,
+                'accessid' => $access->accessid,
+                'accessname' => $access->accessname,
+                'deptid' => $department->deptid,
+                'deptname' => $department->deptname,
+                'mobile_primary' => $request->mobile,
+                'notes' => $request->notes,
+                'updated_by' => auth()->user()->email,
+                'mod' => 0,
+                'status' => 'Active',
+            ]);
+
+            $moveuser = temp_users::query()
+                            ->where('userid', $userid)
+                            ->each(function ($oldRecord) {
+                                $newRecord = $oldRecord->replicate();
+                                $newRecord->setTable('users');
+                                $newRecord->save();
+                                $oldRecord->delete();
+                            });
+
+            if($moveuser){
+                return redirect()->route('managetempusers.index')
+                            ->with('success','User Updated and Moved successfully');
+            }
+        }elseif($request->input('action') ==  "update") {
+
+            $mod = 0;
+            $mod = $user->mod;
+            
+            $user =temp_users::where('userid',$user->userid)->update([
+                    'username' => $request->email,
+                    'email' => $request->email,
+                    'password' => Hash::make($newpassword),
+                    'firstname' => $request->firstname,
+                    'middlename' => $request->middlename,
+                    'lastname' => $request->lastname,
+                    'birthdate' => $request->birthdate,
+                    'accessid' => $access->accessid,
+                    'accessname' => $access->accessname,
+                    'deptid' => $department->deptid,
+                    'deptname' => $department->deptname,
+                    'mobile_primary' => $request->mobile,
+                    'notes' => $request->notes,
+                    'updated_by' => auth()->user()->email,
+                    'mod' => $mod + 1,
+                ]);
+                
+                if($user){
+                    return redirect()->route('managetempusers.index')
+                                ->with('success','User updated successfully');
+                }else{
+                    
+                    return redirect()->route('managetempusers.index')
+                                ->with('failed','User update failed');
+                }
+  
+        }
     }
 
     /**
