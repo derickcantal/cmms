@@ -87,18 +87,6 @@
                                         <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
                                     </div>
                                 </div>
-                                <!-- accesstype -->
-                                <div class="col-span-2 sm:col-span-1">
-                                    <div class="form-group mt-4">
-                                        <x-input-label for="access" :value="__('Access Type')" />
-                                        <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
-                                            @foreach($access as $accesses)    
-                                                <option value = "{{ $accesses->accessid }}">{{ $accesses->accessname}}</option>
-                                            @endforeach
-                                        </select>
-                                        <x-input-error :messages="$errors->get('access')" class="mt-2" />
-                                    </div>
-                                </div>
                                 <!-- department -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">

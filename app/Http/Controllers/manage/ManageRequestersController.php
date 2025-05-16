@@ -68,9 +68,9 @@ class ManageRequestersController extends Controller
      */
     public function store(Request $request)
     {
-        $access = access::where('accessid',$request->access)->first();
+        $access = access::where('accessname','Requester')->first();
         $department = department::where('deptid',$request->department)->first();
-
+        // dd($access);
         // dd($request, $access, $department);
         $n1 = strtoupper($request->firstname[0]);
         // $n2 = strtoupper($request->middlename[0]);
@@ -83,20 +83,6 @@ class ManageRequestersController extends Controller
 
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
-        if(auth()->user()->accesstype == 'Supervisor')
-        {
-            if($request->accesstype == 'Adminstrator')
-            {
-                return redirect()->route('managerequesters.index')
-                        ->with('failed','Requester creation failed');
-            }
-            elseif($request->accesstype == 'Supervisor')
-            {
-
-                return redirect()->route('managerequesters.index')
-                        ->with('failed','Requester creation failed');
-            }
-        }
         $user = User::create([
             'avatar' => 'avatars/avatar-default.jpg',
             'username' => $request->email,
@@ -105,8 +91,8 @@ class ManageRequestersController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'birthdate' => $request->birthdate,
-            'accessid' => '0',
-            'accessname' => 'Requester',
+            'accessid' => $access->accessid,
+            'accessname' => $access->accessname,
             'deptid' => $department->deptid,
             'deptname' => $department->deptname,
             'created_by' => auth()->user()->email,

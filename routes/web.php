@@ -7,6 +7,9 @@ use App\Http\Controllers\manage\ManageDepartmentController;
 use App\Http\Controllers\manage\ManageRequestersController;
 use App\Http\Controllers\manage\ManageSuppliesController;
 use App\Http\Controllers\manage\ManageWorkClassController;
+use App\Http\Controllers\transaction\TransactionWorkOrderController;
+use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -82,7 +85,23 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/transaction/work/order', [TransactionWorkOrderController::class, 'index'])->name('transactionworkorder.index');
+    Route::post('/transaction/work/order', [TransactionWorkOrderController::class, 'store'])->name('transactionworkorder.store');
+    Route::get('/transaction/work/order/create', [TransactionWorkOrderController::class, 'create'])->name('transactionworkorder.create');
+    Route::get('/transaction/work/order/search', [TransactionWorkOrderController::class, 'search'])->name('transactionworkorder.search');
+    Route::get('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'show'])->name('transactionworkorder.show');
+    Route::patch('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'update'])->name('transactionworkorder.update');
+    Route::delete('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'destroy'])->name('transactionworkorder.destroy');
+    Route::get('/transaction/work/order/{workorder}/edit', [TransactionWorkOrderController::class, 'edit'])->name('transactionworkorder.edit');
 
+    Route::get('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'index'])->name('transactionsupplydelivery.index');
+    Route::post('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'store'])->name('transactionsupplydelivery.store');
+    Route::get('/transaction/supply/delivery/create', [TransactionSupplyDeliveryController::class, 'create'])->name('transactionsupplydelivery.create');
+    Route::get('/transaction/supply/delivery/search', [TransactionSupplyDeliveryController::class, 'search'])->name('transactionsupplydelivery.search');
+    Route::get('/transaction/supply/delivery/{supplydelivery}', [TransactionSupplyDeliveryController::class, 'show'])->name('transactionsupplydelivery.show');
+    Route::patch('/transaction/supply/delivery/{supplydelivery}', [TransactionSupplyDeliveryController::class, 'update'])->name('transactionsupplydelivery.update');
+    Route::delete('/transaction/supply/delivery/{supplydelivery}', [TransactionSupplyDeliveryController::class, 'destroy'])->name('transactionsupplydelivery.destroy');
+    Route::get('/transaction/supply/delivery/{supplydelivery}/edit', [TransactionSupplyDeliveryController::class, 'edit'])->name('transactionsupplydelivery.edit');
 });
 
 Route::middleware('auth')->group(function () {

@@ -50,9 +50,9 @@
                                 <!-- workclass -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="workclass" :value="__('Work Classification')" />
-                                        <x-text-input id="workclass" class="block mt-1 w-full" type="text" name="workclass" :value="old('workclass')" autofocus />
-                                        <x-input-error :messages="$errors->get('workclass')" class="mt-2" />
+                                        <x-input-label for="workclassdesc" :value="__('Work Classification')" />
+                                        <x-text-input id="workclassdesc" class="block mt-1 w-full" type="text" name="workclassdesc" :value="old('workclassdesc')" autofocus />
+                                        <x-input-error :messages="$errors->get('workclassdesc')" class="mt-2" />
                                     </div>
                                 </div>
                                 <!-- notes -->

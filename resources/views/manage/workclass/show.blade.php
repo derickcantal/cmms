@@ -39,7 +39,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                                        {{ $workclass->workclassname }}
+                                        {{ $workclass->workclassdesc }}
                                     </span>
                                 </div>
                                 </li>
@@ -65,7 +65,7 @@
                                         <div class="form-group mt-4">
                                             <x-input-label for="workclassname" :value="__('Work Classification')" />
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $workclass->workclassname }}
+                                                {{ $workclass->workclassdesc }}
                                             </h5>
                                         </div>
                                     </div>

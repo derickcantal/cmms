@@ -115,7 +115,7 @@
                                             <x-input-label>{{ ++$i }}</x-input-label>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <x-input-label>{{ $workclasses->deptname }}</x-input-label>
+                                            <x-input-label>{{ $workclasses->workclassdesc }}</x-input-label>
                                         </td>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
