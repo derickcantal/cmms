@@ -7,6 +7,7 @@ use App\Http\Controllers\manage\ManageDepartmentController;
 use App\Http\Controllers\manage\ManageRequestersController;
 use App\Http\Controllers\manage\ManageSuppliesController;
 use App\Http\Controllers\manage\ManageWorkClassController;
+use App\Http\Controllers\manage\ManageTempUsersController;
 use App\Http\Controllers\transaction\TransactionWorkOrderController;
 use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
 
@@ -78,6 +79,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/manage/work/class/{workclass}', [ManageWorkClassController::class, 'update'])->name('manageworkclass.update');
     Route::delete('/manage/work/class/{workclass}', [ManageWorkClassController::class, 'destroy'])->name('manageworkclass.destroy');
     Route::get('/manage/work/class/{workclass}/edit', [ManageWorkClassController::class, 'edit'])->name('manageworkclass.edit');
+
+    Route::get('/manage/users/temp', [ManageTempUsersController::class, 'index'])->name('managetempusers.index');
+    Route::post('/manage/users/temp', [ManageTempUsersController::class, 'store'])->name('managetempusers.store');
+    Route::get('/manage/users/temp/create', [ManageTempUsersController::class, 'create'])->name('managetempusers.create');
+    Route::get('/manage/users/temp/search', [ManageTempUsersController::class, 'search'])->name('managetempusers.search');
+    Route::get('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'show'])->name('managetempusers.show');
+    Route::patch('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'update'])->name('managetempusers.update');
+    Route::delete('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'destroy'])->name('managetempusers.destroy');
+    Route::get('/manage/users/temp/{tempusers}/edit', [ManageTempUsersController::class, 'edit'])->name('managetempusers.edit');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -9,6 +9,9 @@
                     <x-nav-link :href="route('managerequesters.index')" :active="request()->routeIs('managerequesters.index')">
                         {{ __('Requesters') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('managetempusers.index')" :active="request()->routeIs('managetempusers.index')">
+                        {{ __('Temporary Users') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('managedepartment.index')" :active="request()->routeIs('managedepartment.index')">
                         {{ __('Department') }}
                     </x-nav-link>
