@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('hdeptid')->nullable();
             $table->string('hdeptname')->nullable();
             $table->string('workclassid');
-            $table->string('workclassname');
+            $table->string('workclassdesc');
             $table->string('workorderdesc');
             $table->string('woimage')->nullable();
             $table->string('email');

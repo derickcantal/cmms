@@ -11,7 +11,10 @@ use App\Models\workclass;
 use App\Models\workorder;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use \Carbon\Carbon; 
+use \Carbon\Carbon;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
@@ -46,7 +49,10 @@ class TransactionWorkOrderController extends Controller
      */
     public function create()
     {
-        return view('transaction.workorder.create');
+        $workclass = workclass::get();
+
+        return view('transaction.workorder.create')
+                     ->with(['workclass' => $workclass]);
     }
 
     /**
@@ -56,10 +62,42 @@ class TransactionWorkOrderController extends Controller
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
+        $workclass = workclass::where('workclassid', $request->workclass)->first();
+
+        $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
+
+        $validated = $request->validate([
+            'imagep'=>'required|image|file',
+        ]);
+        $ipath = 'workorder/';
+
+        // if(!File::exists($ipath)) {
+        //      dd('path does not exist');
+
+        // }
+        if(!Storage::disk('public')->exists($ipath)){
+            Storage::disk('public')->makeDirectory($ipath);
+            dd('path created');
+        }
+        
+        $manager = ImageManager::imagick();
+        $name_gen = hexdec(uniqid()).'.'.$request->file('imagep')->getClientOriginalExtension();
+        
+        $image = $manager->read($request->file('imagep'));
+       
+        $encoded = $image->toWebp()->save(storage_path('app/public/workorder/'.$name_gen.'.webp'));
+        $path = 'workorder/'.$name_gen.'.webp';
+        
         $workorder = workorder::create([
+            'woimage' => $path,
             'workorderdesc' => $request->workorderdesc,
-            'deptid' => 0,
-            'deptname' => 'Null',
+            'requesterid' => auth()->user()->userid,
+            'rfullname' => $fullname,
+            'email' => auth()->user()->email,
+            'rdeptid' => auth()->user()->deptid,
+            'rdeptname' => auth()->user()->deptname,
+            'workclassid' => $workclass->workclassid,
+            'workclassdesc' => $workclass->workclassdesc,
             'notes' => $request->notes,
             'created_by' => auth()->user()->email,
             'updated_by' => 'Null',

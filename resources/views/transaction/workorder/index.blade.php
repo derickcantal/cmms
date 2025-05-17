@@ -94,7 +94,13 @@
                                             No
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Access Type
+                                            W.O. No.
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Description
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Priority
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Status
@@ -114,7 +120,16 @@
                                             <x-input-label>{{ ++$i }}</x-input-label>
                                         </td>
                                         <td class="px-6 py-4">
-                                                <x-input-label>{{ $workorders->accessname }}</x-input-label>
+                                            <x-input-label>{{ $workorders->workorderid }}</x-input-label>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            <img class="w-10 h-10 rounded-sm" src="{{ asset("/storage/$workorders->woimage") }}" alt="avatar">
+                                        </th>
+                                         <td class="px-6 py-4">
+                                                <x-input-label>{{ $workorders->workorderdesc }}</x-input-label>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                                <x-input-label>{{ $workorders->prioritydesc }}</x-input-label>
                                         </th>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">

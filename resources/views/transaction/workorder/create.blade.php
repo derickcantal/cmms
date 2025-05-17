@@ -8,7 +8,7 @@
 	<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('transactionworkorder.store') }}" method="POST" class="p-4 md:p-5">
+                <form action="{{ route('transactionworkorder.store') }}" enctype="multipart/form-data" method="POST" class="p-4 md:p-5">
                     @csrf   
                     <div class="relative p-4 w-full max-w-full max-h-full">
                         <!-- Breadcrumb -->
@@ -55,12 +55,16 @@
                                         <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
                                     </div>
                                 </div>
-                                <!-- workorder -->
+                                 <!-- workclass -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="workorderdesc" :value="__('Work Classification')" />
-                                        <x-text-input id="workorderdesc" class="block mt-1 w-full" type="text" name="workorderdesc" :value="old('workorderdesc')" autofocus />
-                                        <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
+                                        <x-input-label for="workclass" :value="__('Work Classification')" />
+                                        <select id="workclass" name="workclass" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('workclass')">
+                                            @foreach($workclass as $workclass)    
+                                                <option value = "{{ $workclass->workclassid }}">{{ $workclass->workclassdesc}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('workclass')" class="mt-2" />
                                     </div>
                                 </div>
                                 <!-- notes -->
@@ -71,21 +75,11 @@
                                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                                     </div>
                                 </div>
-                                <!-- notes -->
-                                <div class="col-span-2 sm:col-span-1">
-                                    <div class="form-group mt-4">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="multiple_files">
-                                            Upload multiple files
-                                        </label>
-                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="multiple_files" type="file" multiple>
-                                    </div>
-                                </div>
                                 <!-- img -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-
                                         <x-input-label for="imagep" value="Upload Image" />
-                                        <x-text-input id="imagep" name="imagep" type="file"  class="mt-1 block w-full mt-1" :value="old('imagep')" autofocus autocomplete="off" required/>
+                                        <x-text-input id="imagep" name="imagep" type="file"  class="block mt-1 w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" :value="old('imagep')" autofocus autocomplete="off" required/>
                                         <x-input-error class="mt-2" :messages="$errors->get('imagep')" />
                                     </div>
                                 </div>
