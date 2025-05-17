@@ -55,12 +55,38 @@
                                         <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
                                     </div>
                                 </div>
+                                <!-- workorder -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="workorderdesc" :value="__('Work Classification')" />
+                                        <x-text-input id="workorderdesc" class="block mt-1 w-full" type="text" name="workorderdesc" :value="old('workorderdesc')" autofocus />
+                                        <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
+                                    </div>
+                                </div>
                                 <!-- notes -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
                                         <x-input-label for="notes" :value="__('Notes')" />
                                         <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes')" autofocus />
                                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <!-- notes -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="multiple_files">
+                                            Upload multiple files
+                                        </label>
+                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="multiple_files" type="file" multiple>
+                                    </div>
+                                </div>
+                                <!-- img -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+
+                                        <x-input-label for="imagep" value="Upload Image" />
+                                        <x-text-input id="imagep" name="imagep" type="file"  class="mt-1 block w-full mt-1" :value="old('imagep')" autofocus autocomplete="off" required/>
+                                        <x-input-error class="mt-2" :messages="$errors->get('imagep')" />
                                     </div>
                                 </div>
                                 

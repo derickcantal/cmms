@@ -8,7 +8,7 @@
 	<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <form action="{{ route('transactionsupplydelivery.update',$workorder->workorderid) }}" method="POST" class="p-4 md:p-5">
+                <form action="{{ route('transactionsupplydelivery.update',$supplies_delivery->sdeliveryid) }}" method="POST" class="p-4 md:p-5">
                     @csrf
                     @method('PATCH')   
                     <div class="relative p-4 w-full max-w-full max-h-full">
@@ -40,7 +40,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                                        {{ $workorder->workorderid }}
+                                        {{ $supplies_delivery->sdeliveryid }}
                                     </span>
                                 </div>
                                 </li>
@@ -54,50 +54,46 @@
                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                     Supply Delivery Information
-                                </h3>
+                                </h3>1
                             </div>
                             <!-- Modal body -->
                                 <div class="grid gap-4 mb-4 grid-cols-2">
-                                    <!-- workorder -->
+                               <!-- Supply Delivery ID -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="workorderdesc" :value="__('Work Order Description')" />
-                                        <x-text-input id="workorderdesc" class="block mt-1 w-full" type="text" name="workorderdesc" :value="old('workorderdesc',$workorder->workorderdesc)" autofocus />
-                                        <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
+                                        <x-input-label for="sdid" :value="__('Supply Delivery ID')" />
+                                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {{ $supplies_delivery->sdeliveryid }}
+                                        </h5>
                                     </div>
                                 </div>
+                               <!-- Supply Description -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="suppliesdesc" :value="__('Supply Description')" />
+                                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {{ $supplies_delivery->suppliesdesc }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Date Time Deliver -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="datetimer" :value="__('Date Time Delivered')" />
+                                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            {{ $supplies_delivery->timerecorded }}
+                                        </h5>
+                                    </div>
+                                </div>
+                               
                                 <!-- notes -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
                                         <x-input-label for="notes" :value="__('Notes')" />
-                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes',$workorder->notes)" autofocus />
+                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes',$supplies_delivery->notes)" autofocus />
                                         <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                                     </div>
                                 </div>
-
-
-                                    <!-- status -->
-                                    <div class="col-span-2 sm:col-span-1">
-                                        @php
-                                        
-                                            $op1 = '';
-                                            $op2 = '';
-                                            if ($workorder->status == 'Active'):
-                                                $op1 = 'selected = "selected"';
-                                            elseif ($workorder->status == 'Inactive'):
-                                                $op2 = 'selected = "selected"';
-                                            endif;
-                                        @endphp
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="status" :value="__('Status')" />
-                                            <!-- <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="old('status')" required autofocus autocomplete="off" /> -->
-                                            <select id="status" name="status" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('status', $workorder->status)">
-                                                <option value ="Active"  {{ $op1; }}>Active</option>
-                                                <option value ="Inactive"  {{ $op2; }}">Inactive</option>
-                                            </select>
-                                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

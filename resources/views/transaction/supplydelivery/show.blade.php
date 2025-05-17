@@ -39,7 +39,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                                        {{ $workorder->workorderid }}
+                                        {{ $supplies_delivery->sdeliveryid }}
                                     </span>
                                 </div>
                                 </li>
@@ -55,7 +55,7 @@
                                 <!-- Modal header -->
                                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                        Work Order Information
+                                        Supply Delivery Information
                                     </h3>
                                 </div>
                                 <!-- Modal body -->
@@ -63,9 +63,29 @@
                                     <!-- Department Name -->
                                     <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
-                                            <x-input-label for="workorderdesc" :value="__('Work Order Description')" />
+                                            <x-input-label for="suppliesdesc" :value="__('Supply Description')" />
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $workorder->workorderdesc }}
+                                                {{ $supplies_delivery->suppliesdesc }}
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <!-- particulars -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="particulars" :value="__('Particulars')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $supplies_delivery->particulars }}
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                      <!-- Delivered -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="qty" :value="__('Delivered(Qty)')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $supplies_delivery->qty }}
                                             </h5>
                                         </div>
                                     </div>
@@ -73,9 +93,9 @@
                                     <!-- createdby -->
                                     <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
-                                            <x-input-label for="created_by" :value="__('Registered By')" />
+                                            <x-input-label for="created_by" :value="__('Created By')" />
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $workorder->created_by }}
+                                                {{ $supplies_delivery->created_by }}
                                             </h5>
                                         </div>
                                     </div>
@@ -85,21 +105,20 @@
                                         <div class="form-group mt-4">
                                             <x-input-label for="timerecorded" :value="__('Registered Date')" />
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $workorder->timerecorded }}
+                                                {{ $supplies_delivery->timerecorded }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                     <!-- TimeDate -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="notes" :value="__('Notes')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $supplies_delivery->notes }}
                                             </h5>
                                         </div>
                                     </div>
 
-                                    <!-- status -->
-                                    <div class="col-span-2 sm:col-span-1">
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="status" :value="__('Status')" />
-                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                {{ $workorder->status }}
-                                            </h5>
-                                        </div>
-                                    </div>
-                                    
                                     
                                 </div>
                                 <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

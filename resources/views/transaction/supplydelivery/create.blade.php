@@ -47,12 +47,40 @@
                             </div>
                             <!-- Modal body -->
                             <div class="grid gap-4 mb-4 grid-cols-2">
-                                <!-- workorder -->
+                                <!-- supplies -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="workorderdesc" :value="__('Work Order Description')" />
-                                        <x-text-input id="workorderdesc" class="block mt-1 w-full" type="text" name="workorderdesc" :value="old('workorderdesc')" autofocus />
-                                        <x-input-error :messages="$errors->get('workorderdesc')" class="mt-2" />
+                                        <x-input-label for="supplies" :value="__('Supplies Description')" />
+                                        <select id="supplies" name="supplies" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('supplies')">
+                                            @foreach($supplies as $supplies)    
+                                                <option value = "{{ $supplies->suppliesid }}">{{ $supplies->suppliesdesc}}</option>
+                                            @endforeach
+                                        </select>
+                                        <x-input-error :messages="$errors->get('supplies')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <!-- particulars -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="particulars" :value="__('Particulars')" />
+                                        <x-text-input id="particulars" class="block mt-1 w-full" type="text" name="particulars" :value="old('particulars')" autofocus />
+                                        <x-input-error :messages="$errors->get('particulars')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <!-- qty -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="qty" :value="__('Qty')" />
+                                        <x-text-input id="qty" class="block mt-1 w-full" type="number" name="qty" :value="old('qty')" autofocus />
+                                        <x-input-error :messages="$errors->get('qty')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <!-- price -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="price" :value="__('Price')" />
+                                        <x-text-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price')" autofocus required/>
+                                        <x-input-error :messages="$errors->get('price')" class="mt-2" />
                                     </div>
                                 </div>
                                 <!-- notes -->

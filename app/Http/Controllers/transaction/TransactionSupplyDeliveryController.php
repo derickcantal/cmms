@@ -43,7 +43,10 @@ class TransactionSupplyDeliveryController extends Controller
      */
     public function create()
     {
-        return view('transaction.supplydelivery.create');
+        $supplies = supplies::get();
+
+        return view('transaction.supplydelivery.create')
+                        ->with(['supplies' => $supplies]);
     }
 
     /**
@@ -53,10 +56,20 @@ class TransactionSupplyDeliveryController extends Controller
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
+        $supplies = supplies::where('suppliesid',$request->supplies)->first();
+        
+        $stocks = $supplies->stocks + $request->qty;
+
+
         $supplies_delivery = supplies_delivery::create([
-            'workorderdesc' => $request->workorderdesc,
-            'deptid' => 0,
-            'deptname' => 'Null',
+            'suppliesid' => $supplies->suppliesid,
+            'suppliesdesc' => $supplies->suppliesdesc,
+            'particulars' => $request->particulars,
+            'qty' => $request->qty,
+            'stocks' => $stocks,
+            'price' => $request->price,
+            'srp' => 0,
+            'total' => 0,
             'notes' => $request->notes,
             'created_by' => auth()->user()->email,
             'updated_by' => 'Null',
@@ -66,14 +79,18 @@ class TransactionSupplyDeliveryController extends Controller
             'status' => 'Active',
         ]);
     
-        if ($workorder) {
+        $updatestocks = supplies::where('suppliesid',$supplies->suppliesid)->update([
+                'stocks' => $stocks,
+            ]);
+
+        if ($supplies_delivery) {
     
-            return redirect()->route('transactionworkorder.index')
-                        ->with('success','Work Order created successfully.');
+            return redirect()->route('transactionsupplydelivery.index')
+                        ->with('success','Supplies Delivery created successfully.');
         }else{
 
-            return redirect()->route('transactionworkorder.index')
-                        ->with('failed','Work Order creation failed');
+            return redirect()->route('transactionsupplydelivery.index')
+                        ->with('failed','Supplies Delivery creation failed');
         }
     }
 
@@ -109,23 +126,21 @@ class TransactionSupplyDeliveryController extends Controller
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
         $mod = 0;
-        $mod = $workorder->mod;
+        $mod = $supplies_delivery->mod;
 
             $supplies_delivery = supplies_delivery::where('sdeliveryid',$supplies_delivery->sdeliveryid)->update([
-                'workorderdesc' => $request->workorderdesc,
                 'notes' => $request->notes,
                 'updated_by' => auth()->user()->email,
                 'mod' => $mod + 1,
-                'status' => $request->status,
             ]);
-            if($workorder){
+            if($supplies_delivery){
                
-                return redirect()->route('transactionworkorder.index')
-                            ->with('success','Work Order updated successfully');
+                return redirect()->route('transactionsupplydelivery.index')
+                            ->with('success','Supplies Delivery updated successfully');
             }else{
 
-                return redirect()->route('transactionworkorder.index')
-                            ->with('failed','Work Order update failed');
+                return redirect()->route('transactionsupplydelivery.index')
+                            ->with('failed','Supplies Delivery update failed');
             }
     }
 
@@ -146,8 +161,8 @@ class TransactionSupplyDeliveryController extends Controller
 
 
 
-        return redirect()->route('transactionworkorder.index')
-            ->with('success','Work Order Decativated successfully');
+        return redirect()->route('transactionsupplydelivery.index')
+            ->with('success','Supplies Delivery Decativated successfully');
         }
         elseif($workorder->status == 'Inactive')
         {
@@ -157,8 +172,8 @@ class TransactionSupplyDeliveryController extends Controller
         ]);
 
 
-        return redirect()->route('transactionworkorder.index')
-            ->with('success','Work Order Activated successfully');
+        return redirect()->route('transactionsupplydelivery.index')
+            ->with('success','Supplies Delivery Activated successfully');
         }
     }
 }
