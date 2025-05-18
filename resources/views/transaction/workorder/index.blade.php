@@ -96,11 +96,17 @@
                                         <th scope="col" class="px-6 py-3">
                                             W.O. No.
                                         </th>
+                                         <th scope="col" class="px-6 py-3">
+                                            W.O. Image
+                                        </th>
                                         <th scope="col" class="px-6 py-3">
                                             Description
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Priority
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Date Time Requested
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Status
@@ -129,7 +135,14 @@
                                                 <x-input-label>{{ $workorders->workorderdesc }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
-                                                <x-input-label>{{ $workorders->prioritydesc }}</x-input-label>
+                                            <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
+                                                 Uncategorized 
+                                            </span>
+
+                                                <!-- <x-input-label>{{ $workorders->prioritydesc }}</x-input-label> -->
+                                        </th>
+                                        <td class="px-6 py-4">
+                                                <x-input-label>{{ $workorders->timerecorded }}</x-input-label>
                                         </th>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
