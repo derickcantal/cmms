@@ -99,8 +99,15 @@
                                          <th scope="col" class="px-6 py-3">
                                             W.O. Image
                                         </th>
+                                        
                                         <th scope="col" class="px-6 py-3">
                                             Description
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Work Class
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Department
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Priority
@@ -131,8 +138,14 @@
                                         <td class="px-6 py-4">
                                             <img class="w-10 h-10 rounded-sm" src="{{ asset("/storage/$workorders->woimage") }}" alt="avatar">
                                         </th>
-                                         <td class="px-6 py-4">
+                                        <td class="px-6 py-4">
                                                 <x-input-label>{{ $workorders->workorderdesc }}</x-input-label>
+                                        </th>
+                                        <td class="px-6 py-4">
+                                                <x-input-label>{{ $workorders->workclassdesc }}</x-input-label>
+                                        </th>
+                                         <td class="px-6 py-4">
+                                                <x-input-label>{{ $workorders->rdeptname }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
                                             <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
