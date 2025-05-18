@@ -20,14 +20,49 @@ class TransactionWorkOrderController extends Controller
 {
     public function search(Request $request)
     {
-        $workorder = workorder::orderBy('priorityid',$request->orderrow)
+        if(auth()->user()->accessname == 'Administrator' or
+            auth()->user()->accessname == 'Director' or
+            auth()->user()->accessname == 'Supervisor'
+        ){
+            $workorder = workorder::orderBy('priorityid',$request->orderrow)
                 ->where(function(Builder $builder) use($request){
                     $builder->where('workorderdesc','like',"%{$request->search}%")
                             ->where('prioritydesc','like',"%{$request->search}%")
                             ->where('notes','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
-                            
                 })->paginate($request->pagerow);
+
+        }elseif(auth()->user()->accessname == 'Dept. Head'){
+            $workorder = workorder::where('rdeptname',auth()->user()->deptname)
+                ->where(function(Builder $builder) use($request){
+                    $builder->where('workorderdesc','like',"%{$request->search}%")
+                            ->where('prioritydesc','like',"%{$request->search}%")
+                            ->where('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%"); 
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+
+        }elseif(auth()->user()->accessname == 'Requester'){
+            $workorder = workorder::where('requesterid',auth()->user()->userid)
+                ->where(function(Builder $builder) use($request){
+                    $builder->where('workorderdesc','like',"%{$request->search}%")
+                            ->where('prioritydesc','like',"%{$request->search}%")
+                            ->where('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%"); 
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+                
+        }elseif(auth()->user()->accessname == 'Personnel'){
+            $workorder = workorder::where('startedbyid',auth()->user()->userid)
+                ->where(function(Builder $builder) use($request){
+                    $builder->where('workorderdesc','like',"%{$request->search}%")
+                            ->where('prioritydesc','like',"%{$request->search}%")
+                            ->where('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%"); 
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+        }
+        
     
         return view('transaction.workorder.index',compact('workorder'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
@@ -37,7 +72,18 @@ class TransactionWorkOrderController extends Controller
      */
     public function index()
     {
-        $workorder = workorder::paginate(5);
+        if(auth()->user()->accessname == 'Administrator' or
+            auth()->user()->accessname == 'Director' or
+            auth()->user()->accessname == 'Supervisor'
+        ){
+            $workorder = workorder::paginate(5);
+        }elseif(auth()->user()->accessname == 'Dept. Head'){
+            $workorder = workorder::where('rdeptname',auth()->user()->deptname)->paginate(5);
+        }elseif(auth()->user()->accessname == 'Requester'){
+            $workorder = workorder::where('requesterid',auth()->user()->userid)->paginate(5);
+        }elseif(auth()->user()->accessname == 'Personnel'){
+            $workorder = workorder::where('startedbyid',auth()->user()->userid)->paginate(5);
+        }
 
         return view('transaction.workorder.index')
                         ->with(['workorder' => $workorder])
@@ -71,13 +117,9 @@ class TransactionWorkOrderController extends Controller
         ]);
         $ipath = 'workorder/';
 
-        // if(!File::exists($ipath)) {
-        //      dd('path does not exist');
-
-        // }
         if(!Storage::disk('public')->exists($ipath)){
             Storage::disk('public')->makeDirectory($ipath);
-            dd('path created');
+            // dd('path created');
         }
         
         $manager = ImageManager::imagick();

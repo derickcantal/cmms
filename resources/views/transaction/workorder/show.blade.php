@@ -63,12 +63,139 @@
                                     <!-- Department Name -->
                                     <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Department')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->rdeptname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Work Class Description')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->workclassdesc }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
                                             <x-input-label for="workorderdesc" :value="__('Work Order Description')" />
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                 {{ $workorder->workorderdesc }}
                                             </h5>
                                         </div>
                                     </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Requested By:')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->rfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Mobile No.')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->mobile_primary }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('email')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->email }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Department Head')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->hfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Noted By:')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->nfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Verified By')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->vfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Estimated Work Days')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->eworkdays }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->dtstarted }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->dtended }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Asssigned Personnel')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->sfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Monitored By')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->mfullname }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- Department Name -->
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <div class="form-group mt-4">
+                                            <x-input-label for="workorderdesc" :value="__('Priority')" />
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->prioritydesc }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    
              
                                     <!-- createdby -->
                                     <div class="col-span-2 sm:col-span-1">

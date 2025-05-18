@@ -22,11 +22,21 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+               @if(auth()->user()->accessname == 'Administrator' or
+                    auth()->user()->accessname == 'Supervisor' or
+                    auth()->user()->accessname == 'Director')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('manageuser.index')" :active="request()->routeIs('manageuser.index')">
                         {{ __('Manage') }}
                     </x-nav-link>
                 </div>
+                @else
+                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Manage') }}
+                    </x-nav-link>
+                </div>
+                @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('transactionworkorder.index')" :active="request()->routeIs('transactionworkorder.index')">
                         {{ __('Transaction') }}
@@ -91,9 +101,15 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+             @if(auth()->user()->accessname != 'Personnel')
             <x-responsive-nav-link :href="route('manageuser.index')" :active="request()->routeIs('manageuser.index')">
                 {{ __('Manage') }}
             </x-responsive-nav-link>
+            @else
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Manage') }}
+            </x-responsive-nav-link>
+            @endif
             <x-responsive-nav-link :href="route('transactionworkorder.index')" :active="request()->routeIs('transactionworkorder.index')">
                 {{ __('Transaction') }}
             </x-responsive-nav-link>

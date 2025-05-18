@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('workorder', function (Blueprint $table) {
             $table->increments('workorderid')->primary();
+            $table->string('worfid');
             $table->integer('requesterid');
             $table->string('rfullname');
             $table->integer('rdeptid');
@@ -21,6 +22,8 @@ return new class extends Migration
             $table->string('hfullname')->nullable();
             $table->integer('hdeptid')->nullable();
             $table->string('hdeptname')->nullable();
+            $table->dateTime('hdtsigned')->nullable();
+            $table->string('hstatus')->nullable();
             $table->string('workclassid');
             $table->string('workclassdesc');
             $table->string('workorderdesc');
@@ -33,10 +36,14 @@ return new class extends Migration
             $table->string('nfullname')->nullable();
             $table->integer('ndeptid')->nullable();
             $table->string('ndeptname')->nullable();
+            $table->dateTime('ndtsigned')->nullable();
+            $table->string('nstatus')->nullable();
             $table->integer('verifybyid')->nullable();
             $table->string('vfullname')->nullable();
             $table->integer('vdeptid')->nullable();
             $table->string('vdeptname')->nullable();
+            $table->dateTime('vdtsigned')->nullable();
+            $table->string('vstatus')->nullable();
             $table->integer('suppliesID')->nullable();
             $table->string('eworkdays')->nullable();
             $table->datetime('dtstarted')->nullable();
@@ -47,6 +54,8 @@ return new class extends Migration
             $table->string('cfullname')->nullable();
             $table->integer('monitoredbyid')->nullable();
             $table->string('mfullname')->nullable();
+            $table->dateTime('mdtsigned')->nullable();
+            $table->string('mstatus')->nullable();
             $table->integer('priorityid')->nullable();
             $table->string('prioritydesc')->nullable();
             $table->timestamps();

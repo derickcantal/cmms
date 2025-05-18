@@ -20,7 +20,7 @@ class ManageDepartmentController extends Controller
                             
                 })->paginate($request->pagerow);
     
-        return view('manage.users.index',compact('user'))
+        return view('manage.department.index',compact('department'))
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**

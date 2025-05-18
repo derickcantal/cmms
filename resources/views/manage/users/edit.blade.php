@@ -140,7 +140,7 @@
                                                         $selected_option = 'selected = "selected"';
                                                     endif;
                                                 @endphp 
-                                                <option value = "{{ $departments->deptid}}" {{ $selected_option; }}>{{ $departments->deptname}}</option>
+                                                <option value = "{{ $departments->deptid}}" @selected(old('department',$departments->deptid) == $departmentid->deptid)>{{ $departments->deptname}}</option>
                                             @endforeach
                                             </select>
                                             
@@ -154,17 +154,10 @@
                                             <x-input-label for="access" :value="__('Access Type')" />
                                             <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
                                                 @foreach($access as $accesses)   
-                                                    @php
-                                                        $selected_option1 = '';
-                                            
-                                                        if($accesses->deptid == $accessid->deptid):
-                                                            $selected_option1 = 'selected = "selected"';
-                                                        endif;
-                                                    @endphp 
-                                                    <option  value = "{{ $accesses->accessid }}" {{ $selected_option1; }}>{{ $accesses->accessname}}</option>
+                                                    <option  value = "{{ $accesses->accessid }}"  @selected(old('access',$accesses->accessid) == $accessid->accessid)>{{ $accesses->accessname}}</option>
                                                 @endforeach
                                             </select>
-                                            <x-input-error :messages="$errors->get('accesstype')" class="mt-2" />
+                                            <x-input-error :messages="$errors->get('access')" class="mt-2" />
                                             
                                         </div>
                                     </div>

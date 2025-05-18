@@ -81,11 +81,15 @@ class ManageTempUsersController extends Controller
     {
         $user = temp_users::where('userid',$userid)->first();
 
-        $accessid = access::where('accessid', $user->accessid)->first();
-        $departmentid = department::where('deptid', $user->deptid)->first();
+        $accessidsearch = access::where('accessid', $user->accessid)->first();
+        $departmentidsearch = department::where('deptid', $user->deptid)->first();
 
+        $accessid = $accessidsearch->accessname;
+        $departmentid = $departmentidsearch->deptname;
+
+        // dd($accessid,$departmentid);
         $access = access::where('accessname','!=','Administrator')->get();
-        $department = department::get();
+        $department = department::get(); 
 
        return view('manage.tempusers.edit')
                     ->with(['user' => $user])

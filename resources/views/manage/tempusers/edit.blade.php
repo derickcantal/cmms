@@ -64,33 +64,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Password -->
-                                    <div class="col-span-2 sm:col-span-1">
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="password" :value="__('Password')" />
-
-                                            <x-text-input id="password" class="block mt-1 w-full"
-                                                            type="password"
-                                                            name="password"
-                                                                />
-
-                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Confirm Password -->
-                                    <div class="col-span-2 sm:col-span-1">
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                                            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                                            type="password"
-                                                            name="password_confirmation"  />
-
-                                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                                        </div>                    
-                                    </div>
-
                                     <!-- firstname -->
                                     <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
@@ -133,14 +106,7 @@
                                             <x-input-label for="department" :value="__('Department')" />
                                             <select id="department" name="department" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('department')">
                                             @foreach($department as $departments)   
-                                                @php
-                                                    $selected_option = '';
-
-                                                    if($departments->deptid == $departmentid->deptid):
-                                                        $selected_option = 'selected = "selected"';
-                                                    endif;
-                                                @endphp 
-                                                <option value = "{{ $departments->deptid}}" {{ $selected_option; }}>{{ $departments->deptname}}</option>
+                                                <option value = "{{ $departments->deptid}}" @selected(old('department',$departments->deptname) == $departmentid)>{{ $departments->deptname }}</option>
                                             @endforeach
                                             </select>
                                             
@@ -152,19 +118,12 @@
                                     <div class="col-span-2 sm:col-span-1">
                                         <div class="form-group mt-4">
                                             <x-input-label for="access" :value="__('Access Type')" />
-                                            <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('access')">
+                                            <select id="access" name="access" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                                                 @foreach($access as $accesses)   
-                                                    @php
-                                                        $selected_option1 = '';
-                                            
-                                                        if($accesses->deptid == $accessid->deptid):
-                                                            $selected_option1 = 'selected = "selected"';
-                                                        endif;
-                                                    @endphp 
-                                                    <option  value = "{{ $accesses->accessid }}" {{ $selected_option1; }}>{{ $accesses->accessname}}</option>
+                                                    <option  value = "{{ $accesses->accessid }}" @selected(old('access',$accesses->accessname) == $accessid)>{{ $accesses->accessname}}</option>
                                                 @endforeach
                                             </select>
-                                            <x-input-error :messages="$errors->get('accesstype')" class="mt-2" />
+                                            <x-input-error :messages="$errors->get('access')" class="mt-2" />
                                             
                                         </div>
                                     </div>
