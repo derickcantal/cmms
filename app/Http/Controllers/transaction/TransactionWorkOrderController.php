@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
+    public function verify(Request $request,$workorderid){
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        
+
+        dd($request,$workorder);
+    }
+
     public function approve(Request $request,$workorderid)
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
@@ -59,6 +67,12 @@ class TransactionWorkOrderController extends Controller
                 return redirect()->back()
                         ->with('failed','Work Order Need Head Deparment Approval');
             }elseif(empty($workorder->worfid)){
+
+                $personnel = User::where('accessname','Personnel')->get();
+
+                return view('transaction.workorder.verify',compact('workorder'))
+                            ->with(['personnel' => $personnel]);
+
                 return redirect()->back()
                         ->with('failed','Work Order Need Work Order Referrence ID');
             }

@@ -47,8 +47,6 @@
                                     </li>
                                 </ol>
                             </nav>
-
-                            @csrf
                             <div class="relative p-4 w-full max-w-full max-h-full">
                                 <!-- Error & Success Notification -->
                                 @include('layouts.notifications') 

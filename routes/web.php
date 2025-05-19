@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/transaction/work/order', [TransactionWorkOrderController::class, 'index'])->name('transactionworkorder.index');
     Route::post('/transaction/work/order/approval/{workorder}', [TransactionWorkOrderController::class, 'approve'])->name('transactionworkorder.approve');
+    Route::post('/transaction/work/order/verify/{workorder}', [TransactionWorkOrderController::class, 'verify'])->name('transactionworkorder.verify');
     Route::post('/transaction/work/order', [TransactionWorkOrderController::class, 'store'])->name('transactionworkorder.store');
     Route::get('/transaction/work/order/create', [TransactionWorkOrderController::class, 'create'])->name('transactionworkorder.create');
     Route::get('/transaction/work/order/search', [TransactionWorkOrderController::class, 'search'])->name('transactionworkorder.search');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('wosuppliesid')->primary();
             $table->string('wosuppliesdesc');
             $table->integer('workorderid');
+            $table->string('worfid');
             $table->string('particulars');
             $table->integer('qty');
             $table->string('remarks')->nullable();
