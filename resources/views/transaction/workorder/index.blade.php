@@ -145,19 +145,36 @@
                                             <img class="w-10 h-10 rounded-sm" src="{{ asset("/storage/$workorders->woimage") }}" alt="avatar">
                                         </th>
                                         <td class="px-6 py-4">
-                                                <x-input-label>{{ $workorders->workorderdesc }}</x-input-label>
+                                            <x-input-label>{{ $workorders->workorderdesc }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
-                                                <x-input-label>{{ $workorders->workclassdesc }}</x-input-label>
+                                            <x-input-label>{{ $workorders->workclassdesc }}</x-input-label>
                                         </th>
                                          <td class="px-6 py-4">
-                                                <x-input-label>{{ $workorders->rdeptname }}</x-input-label>
+                                            <x-input-label>{{ $workorders->rdeptname }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
+                                            @if(empty($workorders->prioritydesc))
                                             <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
                                                  Uncategorized 
                                             </span>
-
+                                            @elseif($workorders->prioritydesc == 'Immediate')
+                                             <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
+                                                 Immediate 
+                                            </span>
+                                            @elseif($workorders->prioritydesc == 'High')
+                                             <span class="bg-orange-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-900 dark:text-primary-300">
+                                                 High 
+                                            </span>
+                                            @elseif($workorders->prioritydesc == 'Medium')
+                                             <span class="bg-yellow-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900 dark:text-primary-300">
+                                                 Medium 
+                                            </span>
+                                            @elseif($workorders->prioritydesc == 'Low')
+                                             <span class="bg-green-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900 dark:text-primary-300">
+                                                 Low 
+                                            </span>
+                                            @endif
                                                 <!-- <x-input-label>{{ $workorders->prioritydesc }}</x-input-label> -->
                                         </th>
                                         <td class="px-6 py-4">
@@ -168,7 +185,7 @@
                                                 @if($workorders->status == 'For Approval')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-700"></div>
                                                 @elseif($workorders->status == 'Open')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-500"></div>
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-500"></div>
                                                 @elseif($workorders->status == 'On Progress')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-700"></div>
                                                 @elseif($workorders->status == 'Inactive')

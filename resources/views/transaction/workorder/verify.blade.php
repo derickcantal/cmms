@@ -9,7 +9,7 @@
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('transactionworkorder.verify',$workorder->workorderid) }}" enctype="multipart/form-data" method="POST" class="p-4 md:p-5">
-                    @csrf   
+                    @csrf
                     <div class="relative p-4 w-full max-w-full max-h-full">
                         <!-- Breadcrumb -->
                         <nav class="flex px-5 py-3 text-gray-700  bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
@@ -128,19 +128,36 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <!-- Supply Needed -->
-                            <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                <!-- Supplies List -->
+                                <!-- schedule -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="supplieslist" :value="__('Supplies Needed')" />
-                                        <x-input-error :messages="$errors->get('supplieslist')" class="mt-2" />
+                                        <x-input-label for="schedule" :value="__('Scheduled On')" />
+                                        <x-text-input id="schedule" class="block mt-1 w-full" type="date" name="schedule" :value="old('schedule',$workorder->schedule)" required autofocus />
+                                        <x-input-error :messages="$errors->get('schedule')" class="mt-2" />
+                                    </div>
+                                </div>
+
+                                <!-- eworkdays -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="eworkdays" :value="__('Estimated Work Days')" />
+                                        <x-text-input id="eworkdays" class="block mt-1 w-full" type="text" name="eworkdays" :value="old('eworkdays',$workorder->eworkdays)" required autofocus />
+                                        <x-input-error :messages="$errors->get('eworkdays')" class="mt-2" />
+                                    </div>
+                                </div>
+
+                                <!-- notes -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="notes" :value="__('Notes')" />
+                                        <x-text-input id="notes" class="block mt-1 w-full" type="text" name="notes" :value="old('notes',$workorder->notes)" required autofocus />
+                                        <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                                     </div>
                                 </div>
 
                             </div>
+
+                            
                             
                         </div>
                         <!-- Button -->
@@ -150,7 +167,7 @@
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                 </svg>
-                                Verify
+                                Save
                             </button>
                             <a href="{{ route('transactionworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

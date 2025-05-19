@@ -151,6 +151,30 @@
                                         </div>
                                     </div>
                                     
+                                    <!-- Personnel -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
+                                        <!-- Department Name -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Assigned Personnel')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->sfullname }}
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                         <!-- Schedule -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="Schedule" :value="__('Scheduled On')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->schedule }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
                                     <!-- Completed By -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
                                         <!-- Department Name -->
@@ -158,7 +182,7 @@
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Completed By')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->sfullname }}
+                                                    {{ $workorder->cfullname }}
                                                 </h5>
                                             </div>
                                         </div>

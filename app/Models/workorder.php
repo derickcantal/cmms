@@ -48,6 +48,7 @@ class workorder extends Model
         'vdeptid',
         'vdeptname',
         'suppliesID',
+        'schedule',
         'eworkdays',
         'dtstarted',
         'dtended',

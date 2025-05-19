@@ -18,12 +18,42 @@ use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
-    public function verify(Request $request,$workorderid){
+    public function verify(Request $request,$workorderid)
+    {
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
+
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
-        
+        $personnel = User::where('userid',$request->personnel)->first();
 
-        dd($request,$workorder);
+        // dd($request,$workorder,$personnel);
+
+        $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
+                'worfid' => $request->worfid,
+                'verifybyid' => auth()->user()->userid,
+                'vfullname' => $fullname,
+                'vdeptid' => auth()->user()->deptid,
+                'vdeptname' => auth()->user()->deptname,
+                'vdtsigned' => $timenow,
+                'vstatus' => 'Verified',
+                'schedule' => $request->schedule,
+                'startedbyid' => $personnel->userid,
+                'sfullname' => $personnel->lastname .', '. $personnel->firstname .' '. $personnel->middlename,
+                'priorityid' => 0,
+                'prioritydesc' => $request->priority,
+                'eworkdays' => $request->eworkdays,
+                'notes' => $request->notes,
+                'status' => 'On Process',
+                ]);
+        if($workorders){
+            return redirect()->route('transactionworkorder.index')
+                ->with('success','Work Order Verified. On Process.');
+        }else{
+            return redirect()->route('transactionworkorder.index')
+                ->with('failed','Work Order Verification Error');
+        }
     }
 
     public function approve(Request $request,$workorderid)
@@ -66,7 +96,7 @@ class TransactionWorkOrderController extends Controller
             if(empty($workorder->headid)){
                 return redirect()->back()
                         ->with('failed','Work Order Need Head Deparment Approval');
-            }elseif(empty($workorder->worfid)){
+            }else{
 
                 $personnel = User::where('accessname','Personnel')->get();
 

@@ -46,6 +46,7 @@ return new class extends Migration
             $table->string('vstatus')->nullable();
             $table->integer('suppliesID')->nullable();
             $table->string('eworkdays')->nullable();
+            $table->datetime('schedule')->nullable();
             $table->datetime('dtstarted')->nullable();
             $table->datetime('dtended')->nullable();
             $table->integer('startedbyid')->nullable();
