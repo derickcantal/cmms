@@ -138,8 +138,7 @@
                                             <x-input-label>{{ ++$i }}</x-input-label>
                                         </td>
                                         <td class="px-6 py-4">
-                                            
-                                            <x-input-label>{{ $workorders->worfid }}</x-input-label>
+                                            <x-input-label>{{ $workorders->workorderid }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
                                             <img class="w-10 h-10 rounded-sm" src="{{ asset("/storage/$workorders->woimage") }}" alt="avatar">
@@ -165,11 +164,7 @@
                                         </th>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
-                                                @if($workorders->status == 'For Approval')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-700"></div>
-                                                @elseif($workorders->status == 'Open')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-500"></div>
-                                                @elseif($workorders->status == 'On Progress')
+                                                @if($workorders->status == 'Active')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-700"></div>
                                                 @elseif($workorders->status == 'Inactive')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
@@ -194,7 +189,29 @@
                                                     </svg>
                                                     Show
                                                 </a>
-                                         
+                                                <form action="{{ route('transactionworkorder.destroy',$workorders->workorderid) }}" method="POST" >
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    @php
+                                                    $txtbutton = '';
+                                                    $colorbutton = '';
+                                                    
+                                                    if ($workorders->status == 'Active'):
+                                                        $txtbutton = 'Decativate'; 
+                                                        $colorbutton = 'flex items-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900';
+                                                        
+                                                    elseif ($workorders->status == 'Inactive'):
+                                                        $txtbutton = 'Activate';
+                                                        $colorbutton = 'flex items-center text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-900';
+                                                    endif
+                                                    
+                                                    @endphp
+                                                    
+                                                    <button type="submit" class="{{ $colorbutton }}">
+                                                        {{ $txtbutton }}
+                                                    </button>
+                                                    
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

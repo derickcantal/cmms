@@ -75,30 +75,6 @@
                                     </div>
                                 </div>
 
-
-                                    <!-- status -->
-                                    <div class="col-span-2 sm:col-span-1">
-                                        @php
-                                        
-                                            $op1 = '';
-                                            $op2 = '';
-                                            if ($workorder->status == 'Active'):
-                                                $op1 = 'selected = "selected"';
-                                            elseif ($workorder->status == 'Inactive'):
-                                                $op2 = 'selected = "selected"';
-                                            endif;
-                                        @endphp
-                                        <div class="form-group mt-4">
-                                            <x-input-label for="status" :value="__('Status')" />
-                                            <!-- <x-text-input id="status" class="block mt-1 w-full" type="text" name="status" :value="old('status')" required autofocus autocomplete="off" /> -->
-                                            <select id="status" name="status" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('status', $workorder->status)">
-                                                <option value ="Active"  {{ $op1; }}>Active</option>
-                                                <option value ="Inactive"  {{ $op2; }}">Inactive</option>
-                                            </select>
-                                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
-                                        </div>
-                                    </div>
-
                                 </div>
                                 <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button type="submit" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">

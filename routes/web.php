@@ -8,6 +8,7 @@ use App\Http\Controllers\manage\ManageRequestersController;
 use App\Http\Controllers\manage\ManageSuppliesController;
 use App\Http\Controllers\manage\ManageWorkClassController;
 use App\Http\Controllers\manage\ManageTempUsersController;
+use App\Http\Controllers\manage\ManageMyProfileController;
 use App\Http\Controllers\transaction\TransactionWorkOrderController;
 use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
 
@@ -88,6 +89,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'update'])->name('managetempusers.update');
     Route::delete('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'destroy'])->name('managetempusers.destroy');
     Route::get('/manage/users/temp/{tempusers}/edit', [ManageTempUsersController::class, 'edit'])->name('managetempusers.edit');
+
+        Route::get('/manage/myprofile', [ManageMyProfileController::class, 'index'])->name('managemyprofile.index');
+    Route::post('/manage/myprofile', [ManageMyProfileController::class, 'store'])->name('managemyprofile.store');
+    Route::get('/manage/myprofile/create', [ManageMyProfileController::class, 'create'])->name('managemyprofile.create');
+    Route::get('/manage/myprofile/search', [ManageMyProfileController::class, 'search'])->name('managemyprofile.search');
+    Route::get('/manage/myprofile/{myprofile}', [ManageMyProfileController::class, 'show'])->name('managemyprofile.show');
+    Route::patch('/manage/myprofile/{myprofile}', [ManageMyProfileController::class, 'update'])->name('managemyprofile.update');
+    Route::delete('/manage/myprofile/{myprofile}', [ManageMyProfileController::class, 'destroy'])->name('managemyprofile.destroy');
+    Route::get('/manage/myprofile/{myprofile}/edit', [ManageMyProfileController::class, 'edit'])->name('managemyprofile.edit');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

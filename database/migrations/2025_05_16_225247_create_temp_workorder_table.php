@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('temp_workorder', function (Blueprint $table) {
             $table->increments('tworkorderid')->primary();
-            $table->string('worfid');
+            $table->string('worfid')->nullable();
             $table->integer('requesterid');
             $table->string('rfullname');
             $table->integer('rdeptid');

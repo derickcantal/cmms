@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('workorder', function (Blueprint $table) {
             $table->increments('workorderid')->primary();
-            $table->string('worfid');
+            $table->string('worfid')->nullable();
             $table->integer('requesterid');
             $table->string('rfullname');
             $table->integer('rdeptid');

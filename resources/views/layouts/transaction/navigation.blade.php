@@ -9,9 +9,9 @@
                     @if(auth()->user()->accessname == 'Administrator' or
                         auth()->user()->accessname == 'Supervisor' or
                         auth()->user()->accessname == 'Director')
-                    <x-nav-link :href="route('transactionsupplydelivery.index')" :active="request()->routeIs('transactionsupplydelivery.index')">
+                    <!-- <x-nav-link :href="route('transactionsupplydelivery.index')" :active="request()->routeIs('transactionsupplydelivery.index')">
                         {{ __('Supply Delivery') }}
-                    </x-nav-link>
+                    </x-nav-link> -->
                     @endif
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         <!-- {{ __('Department') }} -->

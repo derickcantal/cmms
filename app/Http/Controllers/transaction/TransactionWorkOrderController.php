@@ -146,7 +146,7 @@ class TransactionWorkOrderController extends Controller
             'timerecorded' => $timenow,
             'modifiedid' => 0,
             'mod' => 0,
-            'status' => 'Active',
+            'status' => 'For Approval',
         ]);
     
         if ($workorder) {
