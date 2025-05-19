@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/manage/users/temp/{tempusers}', [ManageTempUsersController::class, 'destroy'])->name('managetempusers.destroy');
     Route::get('/manage/users/temp/{tempusers}/edit', [ManageTempUsersController::class, 'edit'])->name('managetempusers.edit');
 
-        Route::get('/manage/myprofile', [ManageMyProfileController::class, 'index'])->name('managemyprofile.index');
+    Route::get('/manage/myprofile', [ManageMyProfileController::class, 'index'])->name('managemyprofile.index');
     Route::post('/manage/myprofile', [ManageMyProfileController::class, 'store'])->name('managemyprofile.store');
     Route::get('/manage/myprofile/create', [ManageMyProfileController::class, 'create'])->name('managemyprofile.create');
     Route::get('/manage/myprofile/search', [ManageMyProfileController::class, 'search'])->name('managemyprofile.search');
@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/transaction/work/order', [TransactionWorkOrderController::class, 'index'])->name('transactionworkorder.index');
+    Route::post('/transaction/work/order/approval/{workorder}', [TransactionWorkOrderController::class, 'approve'])->name('transactionworkorder.approve');
     Route::post('/transaction/work/order', [TransactionWorkOrderController::class, 'store'])->name('transactionworkorder.store');
     Route::get('/transaction/work/order/create', [TransactionWorkOrderController::class, 'create'])->name('transactionworkorder.create');
     Route::get('/transaction/work/order/search', [TransactionWorkOrderController::class, 'search'])->name('transactionworkorder.search');

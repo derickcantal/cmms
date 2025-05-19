@@ -18,6 +18,54 @@ use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
+    public function approve(Request $request,$workorderid)
+    {
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+        $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
+
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        // dd($workorder);
+        if($request->input('action') == "personnel"){
+            dd('I am a personnel');
+        }elseif($request->input('action') == "depthead"){
+            
+            if(empty($workorder->headid)){
+                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
+                'headid' => auth()->user()->userid,
+                'hfullname' => $fullname,
+                'hdeptid' => auth()->user()->deptid,
+                'hdeptname' => auth()->user()->deptname,
+                'hdtsigned' => $timenow,
+                'hstatus' => 'Approved',
+                'status' => 'For GSO Approval',
+                ]);
+                if($workorders){
+                    return redirect()->back()
+                        ->with('success','Work Order Approved');
+                }else{
+                    return redirect()->back()
+                        ->with('failed','Work Order Approval Error');
+                }
+                
+            }elseif(empty($workorder->completedbyid)){
+                return redirect()->back()
+                        ->with('failed','Work Order Not signed by Personnel');
+            }
+
+            
+        }elseif($request->input('action') == "supervisor"){
+            if(empty($workorder->headid)){
+                return redirect()->back()
+                        ->with('failed','Work Order Need Head Deparment Approval');
+            }elseif(empty($workorder->worfid)){
+                return redirect()->back()
+                        ->with('failed','Work Order Need Work Order Referrence ID');
+            }
+        }
+
+    }
+
     public function search(Request $request)
     {
         if(auth()->user()->accessname == 'Administrator' or
@@ -187,6 +235,7 @@ class TransactionWorkOrderController extends Controller
      */
     public function update(Request $request, $workorderid)
     {
+
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
