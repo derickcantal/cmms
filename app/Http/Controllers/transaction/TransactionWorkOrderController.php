@@ -45,6 +45,7 @@ class TransactionWorkOrderController extends Controller
                 'prioritydesc' => $request->priority,
                 'eworkdays' => $request->eworkdays,
                 'notes' => $request->notes,
+                'mstatus' => 'Monitoring',
                 'status' => 'On Process',
                 ]);
         if($workorders){
@@ -64,10 +65,27 @@ class TransactionWorkOrderController extends Controller
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
         // dd($workorder);
-        if($request->input('action') == "personnel"){
-            dd('I am a personnel');
-        }elseif($request->input('action') == "depthead"){
-            
+        if($request->input('action') == "personnel")
+        {
+            // dd('I am a personnel');
+            if(empty($workorder->dtstarted) and empty($workorder->dtended)){
+                return redirect()->back()
+                        ->with('failed','Work Order Completion Error');
+            }
+            $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
+                'completedbyid' => auth()->user()->userid,
+                'cfullname' => $fullname,
+                'status' => 'For Final Submission',
+                ]);
+                if($workorders){
+                    return redirect()->back()
+                        ->with('success','Work Order Completed');
+                }else{
+                    return redirect()->back()
+                        ->with('failed','Work Order Completion Error');
+                }
+        }elseif($request->input('action') == "deptheadapproval")
+        {
             if(empty($workorder->headid)){
                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
                 'headid' => auth()->user()->userid,
@@ -91,8 +109,41 @@ class TransactionWorkOrderController extends Controller
                         ->with('failed','Work Order Not signed by Personnel');
             }
 
-            
-        }elseif($request->input('action') == "supervisor"){
+        }elseif($request->input('action') == "deptheadmonitor")
+        {
+            if(!empty($workorder->startedbyid) and empty($workorder->dtstarted)){
+                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'monitoredbyid' => auth()->user()->userid,
+                    'mfullname' => $fullname,
+                    'mdtsigned' => $timenow,
+                    'mstatus' => 'Monitoring',
+                    'dtstarted' => $timenow,
+                    'status' => 'Work Started',
+                    ]);
+                if($workorders){
+                    return redirect()->back()
+                        ->with('success','Work Order Started');
+                }else{
+                    return redirect()->back()
+                        ->with('failed','Work Order Start Error');
+                }
+            }elseif(!empty($workorder->startedbyid) and !empty($workorder->dtstarted)){
+                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'dtended' => $timenow,
+                    'mstatus' => 'Completed',
+                    'status' => 'Work Ended',
+                    ]);
+                if($workorders){
+                    return redirect()->back()
+                        ->with('success','Work Order Ended');
+                }else{
+                    return redirect()->back()
+                        ->with('failed','Work Order Ended Error');
+                }
+            }
+
+        }elseif($request->input('action') == "supervisorverify")
+        {
             if(empty($workorder->headid)){
                 return redirect()->back()
                         ->with('failed','Work Order Need Head Deparment Approval');
@@ -105,6 +156,44 @@ class TransactionWorkOrderController extends Controller
 
                 return redirect()->back()
                         ->with('failed','Work Order Need Work Order Referrence ID');
+            }
+        }elseif($request->input('action') == "supervisorfinal")
+        {
+            $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'fsuserid' => auth()->user()->userid,
+                    'fsfullname' => $fullname,
+                    'fsdeptid' => auth()->user()->deptid,
+                    'fseptname' => auth()->user()->deptname,
+                    'fstsigned' => $timenow,
+                    'fsstatus' => 'Finalized',
+                    'status' => 'Work Finalized',
+                    ]);
+
+            if($workorders){
+                return redirect()->back()
+                    ->with('success','Work Order Finalized');
+            }else{
+                return redirect()->back()
+                    ->with('failed','Work Order Finalize Error');
+            }
+        }elseif($request->input('action') == "director")
+        {
+            $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'fduserid' => auth()->user()->userid,
+                    'fdfullname' => $fullname,
+                    'fddeptid' => auth()->user()->deptid,
+                    'fddeptname' => auth()->user()->deptname,
+                    'fddtsigned' => $timenow,
+                    'fdstatus' => 'Finalized',
+                    'status' => 'Completed',
+                    ]);
+
+            if($workorders){
+                return redirect()->back()
+                    ->with('success','Work Order Completed');
+            }else{
+                return redirect()->back()
+                    ->with('failed','Work Order Completed');
             }
         }
 
@@ -233,7 +322,7 @@ class TransactionWorkOrderController extends Controller
             'workclassid' => $workclass->workclassid,
             'workclassdesc' => $workclass->workclassdesc,
             'notes' => $request->notes,
-            'created_by' => auth()->user()->email,
+            'created_by' => $fullname,
             'updated_by' => 'Null',
             'timerecorded' => $timenow,
             'modifiedid' => 0,

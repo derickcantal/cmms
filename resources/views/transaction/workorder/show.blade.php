@@ -119,7 +119,7 @@
                                     
                                     <!-- Noted By -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Department Name -->
+                                        <!-- Department Head -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Noted By:')" />
@@ -134,7 +134,7 @@
                                                 </h5>
                                             </div>
                                         </div>
-                                        <!-- Department Name -->
+                                        <!-- Verified By -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Verified By:')" />
@@ -177,7 +177,7 @@
 
                                     <!-- Completed By -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Department Name -->
+                                        <!-- Completed By -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Completed By')" />
@@ -186,12 +186,18 @@
                                                 </h5>
                                             </div>
                                         </div>
-                                        <!-- Department Name -->
+                                        <!-- Monitored By -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Monitored By')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->mfullname }}
+                                                </h5>
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->mstatus }}
+                                                </h5>
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->mdtsigned }}
                                                 </h5>
                                             </div>
                                         </div>
@@ -199,7 +205,7 @@
 
                                     <!-- Time -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Department Name -->
+                                        <!-- Time Started -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
@@ -208,7 +214,7 @@
                                                 </h5>
                                             </div>
                                         </div>
-                                        <!-- Department Name -->
+                                        <!-- Time Ended -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
@@ -282,34 +288,98 @@
                                         </div>
                                     </div>
 
+                                    <!-- Time -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
+                                        <!-- Time Started -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Supervised By')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->fsfullname }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <!-- Time Ended -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Supervised By')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->fdfullname }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Button -->
                                     <div class="flex items-center justify-center p-4 md:p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        @if(auth()->user()->accessname == 'Personnel')
+                                        @if(auth()->user()->accessname == 'Personnel' and !empty($workorder->dtstarted))
+                                            @if(empty($workorder->completedbyid))
                                             <button type="submit" name='action' value='personnel' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                            </svg>
-                                            Accept
-                                        </button>
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Completed
+                                            </button>
+                                            @endif
                                         @endif
                                         @if(auth()->user()->accessname == 'Dept. Head')
-                                            <button type="submit" name='action' value='depthead' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                            </svg>
-                                            Approve
-                                        </button>
+                                            @if(empty($workorder->headid))
+                                            <button type="submit" name='action' value='deptheadapproval' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Approve
+                                            </button>
+                                            @elseif(!empty($workorder->headid))
+                                                @if($workorder->mstatus == 'Monitoring')
+                                                <button type="submit" name='action' value='deptheadmonitor' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                    <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                    </svg>
+                                                    @if(empty($workorder->dtstarted))
+                                                        Start Monitor
+                                                    @else
+                                                        End Monitor
+                                                    @endif
+                                                </button>
+                                                @endif
+                                            @endif
                                         @endif
                                         @if(auth()->user()->accessname == 'Supervisor')
-                                        <button type="submit" name='action' value='supervisor' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                            <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                            </svg>
-                                            Verify
-                                        </button>
+                                            @if($workorder->mstatus != 'Completed' )
+                                            <button type="submit" name='action' value='supervisorverify' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Verify
+                                            </button>
+                                            @else
+                                                @if($workorder->status == 'For Final Submission')
+                                                <button type="submit" name='action' value='supervisorfinal' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                    <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                    </svg>
+                                                    Finalize
+                                                </button>
+                                                @endif
+                                            @endif
+                                            
+                                        @endif
+                                        @if(auth()->user()->accessname == 'Director')
+                                            @if($workorder->status != 'Completed')
+                                            <button type="submit" name='action' value='director' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Archive
+                                            </button>
+                                            @endif
                                         @endif
                                         
                                         <a href="{{ route('transactionworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
