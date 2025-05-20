@@ -122,6 +122,7 @@
                                             <div class="ps-3">
                                                 
                                                 <x-input-label>{{ $users->lastname }}, {{ $users->firstname }} {{ $users->middlename }}</x-input-label>
+                                                <x-input-label>{{ $users->deptname }}</x-input-label>
                                                 <x-input-label for="email" :value="$users->email"/>
                                         </th>
                                         <td class="px-6 py-4">
