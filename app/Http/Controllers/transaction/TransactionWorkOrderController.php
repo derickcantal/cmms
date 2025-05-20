@@ -30,6 +30,29 @@ class TransactionWorkOrderController extends Controller
 
         // dd($request,$workorder,$personnel);
 
+        if($request->priority == 0)
+        {
+            $priorityid = 0;
+            $prioritydesc = 'Immediate';
+        }elseif($request->priority == 1)
+        {
+            $priorityid = 1;
+            $prioritydesc = 'High';
+        }elseif($request->priority == 2)
+        {
+            $priorityid = 2;
+            $prioritydesc = 'Medium';
+        }elseif($request->priority == 3)
+        {
+            $priorityid = 3;
+            $prioritydesc = 'Low';
+        }else
+        {
+            return redirect()->route('transactionworkorder.index')
+                ->with('failed','Invalid Priority Number');
+        }
+
+
         $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
                 'worfid' => $request->worfid,
                 'verifybyid' => auth()->user()->userid,
@@ -41,8 +64,8 @@ class TransactionWorkOrderController extends Controller
                 'schedule' => $request->schedule,
                 'startedbyid' => $personnel->userid,
                 'sfullname' => $personnel->lastname .', '. $personnel->firstname .' '. $personnel->middlename,
-                'priorityid' => 0,
-                'prioritydesc' => $request->priority,
+                'priorityid' => $priorityid,
+                'prioritydesc' => $prioritydesc,
                 'eworkdays' => $request->eworkdays,
                 'notes' => $request->notes,
                 'mstatus' => 'Monitoring',

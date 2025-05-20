@@ -119,10 +119,10 @@
                                     <div class="form-group mt-4">
                                         <x-input-label for="priority" :value="__('Priority')" />
                                         <select id="priority" name="priority" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('priority')">
-                                            <option value = "Immediate">Immediate</option>
-                                            <option value = "High">High</option>
-                                            <option value = "Medium">Medium</option>
-                                            <option value = "Low">Low</option>
+                                            <option value = "0">Immediate</option>
+                                            <option value = "1">High</option>
+                                            <option value = "2">Medium</option>
+                                            <option value = "3">Low</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('priority')" class="mt-2" />
                                     </div>
