@@ -181,14 +181,14 @@
                                         </th>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
-                                                @if($workorders->status == 'For GSO Approval')
+                                                @if($workorders->status == 'For Approval')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-600"></div>
-                                                @elseif($workorders->status == 'For Approval')
+                                                @elseif($workorders->status == 'For GSO Approval')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-600"></div>
-                                                @elseif($workorders->status == 'Work Started')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
                                                 @elseif($workorders->status == 'On Process')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-600"></div>
+                                                @elseif($workorders->status == 'Work Started')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
                                                 @elseif($workorders->status == 'Work Ended')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-600"></div>
                                                 @elseif($workorders->status == 'For Final Submission')
