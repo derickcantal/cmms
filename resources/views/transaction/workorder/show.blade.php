@@ -194,9 +194,6 @@
                                                     {{ $workorder->mfullname }}
                                                 </h5>
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->mstatus }}
-                                                </h5>
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->mdtsigned }}
                                                 </h5>
                                             </div>

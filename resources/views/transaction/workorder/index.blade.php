@@ -138,7 +138,6 @@
                                             <x-input-label>{{ ++$i }}</x-input-label>
                                         </td>
                                         <td class="px-6 py-4">
-                                            
                                             <x-input-label>{{ $workorders->worfid }}</x-input-label>
                                         </th>
                                         <td class="px-6 py-4">
@@ -155,23 +154,23 @@
                                         </th>
                                         <td class="px-6 py-4">
                                             @if(empty($workorders->prioritydesc))
-                                            <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
+                                            <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Uncategorized 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Immediate')
-                                             <span class="bg-red-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-900 dark:text-primary-300">
+                                             <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Immediate 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'High')
-                                             <span class="bg-orange-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-900 dark:text-primary-300">
+                                             <span class="bg-orange-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-600 dark:text-white">
                                                  High 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Medium')
-                                             <span class="bg-yellow-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-900 dark:text-primary-300">
+                                             <span class="bg-yellow-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-600 dark:text-white">
                                                  Medium 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Low')
-                                             <span class="bg-green-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900 dark:text-primary-300">
+                                             <span class="bg-green-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-600 dark:text-white">
                                                  Low 
                                             </span>
                                             @endif
@@ -182,14 +181,22 @@
                                         </th>
                                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
-                                                @if($workorders->status == 'For Approval')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-700"></div>
-                                                @elseif($workorders->status == 'Open')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-500"></div>
-                                                @elseif($workorders->status == 'On Progress')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-700"></div>
-                                                @elseif($workorders->status == 'Inactive')
-                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
+                                                @if($workorders->status == 'For GSO Approval')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-600"></div>
+                                                @elseif($workorders->status == 'For Approval')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-yellow-600"></div>
+                                                @elseif($workorders->status == 'Work Started')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
+                                                @elseif($workorders->status == 'On Process')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-600"></div>
+                                                @elseif($workorders->status == 'Work Ended')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-600"></div>
+                                                @elseif($workorders->status == 'For Final Submission')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-blue-600"></div>
+                                                @elseif($workorders->status == 'Work Finalized')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
+                                                @elseif($workorders->status == 'Completed')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
                                                 @endif
                                                 <x-input-label for="status" :value="$workorders->status"/>
                                             </div>
