@@ -21,9 +21,9 @@
                     @endif
                     @if(auth()->user()->accessname == 'Administrator' or
                         auth()->user()->accessname == 'Director')
-                    <x-nav-link :href="route('manageaccess.index')" :active="request()->routeIs('manageaccess.index')">
+                    <!-- <x-nav-link :href="route('manageaccess.index')" :active="request()->routeIs('manageaccess.index')">
                         {{ __('Access') }}
-                    </x-nav-link>
+                    </x-nav-link> -->
                     <x-nav-link :href="route('manageworkclass.index')" :active="request()->routeIs('manageworkclass.index')">
                         {{ __('Work Class') }}
                     </x-nav-link>

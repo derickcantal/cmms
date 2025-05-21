@@ -208,6 +208,8 @@
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->dtstarted }}
+                                                    <img class="w-50 h-50 rounded-sm" src="{{ asset("/storage/$workorder->woimage") }}" alt="avatar">
+
                                                 </h5>
                                             </div>
                                         </div>
@@ -217,6 +219,7 @@
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->dtended }}
+                                                    <img class="w-50 h-50 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" alt="avatar">
                                                 </h5>
                                             </div>
                                         </div>
@@ -285,7 +288,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Time -->
+                                    <!-- Supervised -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
                                         <!-- Time Started -->
                                         <div class="col-span-2 sm:col-span-1">
@@ -309,7 +312,26 @@
 
                                     <!-- Button -->
                                     <div class="flex items-center justify-center p-4 md:p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        @if(auth()->user()->accessname == 'Personnel' and !empty($workorder->dtstarted))
+                                        @if(auth()->user()->accessname == 'Personnel' and $workorder->mstatus == 'Monitoring')
+                                            @if(empty($workorder->dtstarted))
+                                            <button type="submit" name='action' value='personnelswork' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                    Start Monitor
+                                            </button>
+                                            @else
+                                            <button type="submit" name='action' value='personnelcwork' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                End Monitor
+                                            </button>
+                                            @endif
+                                        @endif
+                                        @if(auth()->user()->accessname == 'Personnel' and !empty($workorder->dtended))
                                             @if(empty($workorder->completedbyid))
                                             <button type="submit" name='action' value='personnel' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -329,20 +351,14 @@
                                                 </svg>
                                                 Approve
                                             </button>
-                                            @elseif(!empty($workorder->headid))
-                                                @if($workorder->mstatus == 'Monitoring')
-                                                <button type="submit" name='action' value='deptheadmonitor' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                    <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                    </svg>
-                                                    @if(empty($workorder->dtstarted))
-                                                        Start Monitor
-                                                    @else
-                                                        End Monitor
-                                                    @endif
-                                                </button>
-                                                @endif
+                                            @elseif(empty($workorder->monitoredbyid))
+                                            <button type="submit" name='action' value='deptheadwe' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Approve Work
+                                            </button>
                                             @endif
                                         @endif
                                         @if(auth()->user()->accessname == 'Supervisor')

@@ -18,6 +18,46 @@ use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
+    public function cwork(Request $request,$workorderid)
+    {
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $validated = $request->validate([
+            'imagec'=>'required|image|file',
+        ]);
+
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $manager = ImageManager::imagick();
+        $name_gen = hexdec(uniqid()).'.'.$request->file('imagec')->getClientOriginalExtension();
+        
+        $image = $manager->read($request->file('imagec'));
+       
+        $encoded = $image->toWebp()->save(storage_path('app/public/workorder/'.$name_gen.'.webp'));
+        $path = 'workorder/'.$name_gen.'.webp';
+
+        
+        if(!empty($workorder->dtstarted)){
+            $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                'woeimage' => $path,
+                'dtended' => $timenow,
+                'mstatus' => 'Completed',
+                'status' => 'Work Ended',
+                ]);
+
+            if($workorders){
+            return redirect()->route('transactionworkorder.show',$workorder->workorderid)
+                ->with('success','Work Order Ended');
+            }else{
+                return redirect()->route('transactionworkorder.show',$workorder->workorderid)
+                    ->with('failed','Work Order Ended Error');
+            }
+        }else{
+            return redirect()->route('transactionworkorder.show',$workorder->workorderid)
+                ->with('failed','Work Order Ended Error');
+        }
+    }
+
     public function verify(Request $request,$workorderid)
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
@@ -132,39 +172,6 @@ class TransactionWorkOrderController extends Controller
                         ->with('failed','Work Order Not signed by Personnel');
             }
 
-        }elseif($request->input('action') == "deptheadmonitor")
-        {
-            if(!empty($workorder->startedbyid) and empty($workorder->dtstarted)){
-                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
-                    'monitoredbyid' => auth()->user()->userid,
-                    'mfullname' => $fullname,
-                    'mdtsigned' => $timenow,
-                    'mstatus' => 'Monitoring',
-                    'dtstarted' => $timenow,
-                    'status' => 'Work Started',
-                    ]);
-                if($workorders){
-                    return redirect()->back()
-                        ->with('success','Work Order Started');
-                }else{
-                    return redirect()->back()
-                        ->with('failed','Work Order Start Error');
-                }
-            }elseif(!empty($workorder->startedbyid) and !empty($workorder->dtstarted)){
-                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
-                    'dtended' => $timenow,
-                    'mstatus' => 'Completed',
-                    'status' => 'Work Ended',
-                    ]);
-                if($workorders){
-                    return redirect()->back()
-                        ->with('success','Work Order Ended');
-                }else{
-                    return redirect()->back()
-                        ->with('failed','Work Order Ended Error');
-                }
-            }
-
         }elseif($request->input('action') == "supervisorverify")
         {
             if(empty($workorder->headid)){
@@ -180,6 +187,49 @@ class TransactionWorkOrderController extends Controller
                 return redirect()->back()
                         ->with('failed','Work Order Need Work Order Referrence ID');
             }
+        }elseif($request->input('action') == "personnelswork")
+        {
+            if(!empty($workorder->startedbyid) and empty($workorder->dtstarted)){
+                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'dtstarted' => $timenow,
+                    'mstatus' => 'Monitoring',
+                    'status' => 'Work Started',
+                    ]);
+            }else{
+                return redirect()->back()
+                    ->with('failed','Work Order Started Error');
+            }
+                
+            if($workorders){
+                return redirect()->back()
+                    ->with('success','Work Order Started');
+            }else{
+                return redirect()->back()
+                    ->with('failed','Work Order Started Error');
+            }
+        }elseif($request->input('action') == "personnelcwork"){
+
+                return view('transaction.workorder.personnel',compact('workorder'));
+        }elseif($request->input('action') == "deptheadwe")
+        {
+            if(!empty($workorder->dtstarted) and empty(!$workorder->dtended)){
+                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'monitoredbyid' => auth()->user()->userid,
+                    'mfullname' => $fullname,
+                    'mdtsigned' => $timenow,
+                    'status' => 'For Final Submission',
+                    ]);
+                if($workorders){
+                    return redirect()->back()
+                        ->with('success','Work Order Ended');
+                }else{
+                    return redirect()->back()
+                        ->with('failed','Work Order Ended Error');
+                }
+            }
+            
+
+        
         }elseif($request->input('action') == "supervisorfinal")
         {
             $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
