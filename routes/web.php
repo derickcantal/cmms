@@ -11,6 +11,7 @@ use App\Http\Controllers\manage\ManageTempUsersController;
 use App\Http\Controllers\manage\ManageMyProfileController;
 use App\Http\Controllers\transaction\TransactionWorkOrderController;
 use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
+use App\Http\Controllers\transaction\TransactionWOSupplyController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -116,6 +117,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'update'])->name('transactionworkorder.update');
     Route::delete('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'destroy'])->name('transactionworkorder.destroy');
     Route::get('/transaction/work/order/{workorder}/edit', [TransactionWorkOrderController::class, 'edit'])->name('transactionworkorder.edit');
+
+    Route::get('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'index'])->name('transactionsupplydelivery.index');
+    Route::post('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'store'])->name('transactionsupplydelivery.store');
+    Route::get('/transaction/work/order/supply/create', [TransactionWOSupplyController::class, 'create'])->name('transactionsupplydelivery.create');
+    Route::get('/transaction/work/order/supply/search', [TransactionWOSupplyController::class, 'search'])->name('transactionsupplydelivery.search');
+    Route::get('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'show'])->name('transactionsupplydelivery.show');
+    Route::patch('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'update'])->name('transactionsupplydelivery.update');
+    Route::delete('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'destroy'])->name('transactionsupplydelivery.destroy');
+    Route::get('/transaction/work/order/supply/{wosupply}/edit', [TransactionWOSupplyController::class, 'edit'])->name('transactionsupplydelivery.edit');
 
     Route::get('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'index'])->name('transactionsupplydelivery.index');
     Route::post('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'store'])->name('transactionsupplydelivery.store');

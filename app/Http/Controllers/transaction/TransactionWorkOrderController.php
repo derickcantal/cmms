@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
  
 class TransactionWorkOrderController extends Controller
 {
+
     public function cwork(Request $request,$workorderid)
     {
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
@@ -207,7 +208,8 @@ class TransactionWorkOrderController extends Controller
                 return redirect()->back()
                     ->with('failed','Work Order Started Error');
             }
-        }elseif($request->input('action') == "personnelcwork"){
+        }elseif($request->input('action') == "personnelcwork")
+        {
 
                 return view('transaction.workorder.personnel',compact('workorder'));
         }elseif($request->input('action') == "deptheadwe")
