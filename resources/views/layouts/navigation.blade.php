@@ -43,7 +43,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('reportshistoryworkorder.index')" :active="request()->routeIs('reportshistoryworkorder.index')">
                         {{ __('Reports') }}
                     </x-nav-link>
                 </div>
@@ -106,14 +106,14 @@
                 {{ __('Manage') }}
             </x-responsive-nav-link>
             @else
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('managemyprofile.index')" :active="request()->routeIs('managemyprofile.index')">
                 {{ __('Manage') }}
             </x-responsive-nav-link>
             @endif
             <x-responsive-nav-link :href="route('transactionworkorder.index')" :active="request()->routeIs('transactionworkorder.index')">
                 {{ __('Transaction') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('reportshistoryworkorder.index')" :active="request()->routeIs('reportshistoryworkorder.index')">
                 {{ __('Reports') }}
             </x-responsive-nav-link>
         </div>

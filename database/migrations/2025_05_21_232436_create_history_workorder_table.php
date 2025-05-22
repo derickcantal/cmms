@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('history_workorders', function (Blueprint $table) {
-             $table->increments('workorderid')->primary();
+        Schema::create('history_workorder', function (Blueprint $table) {
+            $table->increments('workorderid')->primary();
             $table->string('worfid')->nullable();
             $table->integer('requesterid');
             $table->string('rfullname');
             $table->integer('rdeptid');
             $table->string('rdeptname');
+            $table->string('remail');
             $table->integer('headid')->nullable();
             $table->string('hfullname')->nullable();
+            $table->string('hemail')->nullable();
             $table->integer('hdeptid')->nullable();
             $table->string('hdeptname')->nullable();
             $table->dateTime('hdtsigned')->nullable();
@@ -28,12 +30,12 @@ return new class extends Migration
             $table->string('workclassdesc');
             $table->string('workorderdesc');
             $table->string('woimage')->nullable();
-            $table->string('email');
             $table->string('mobile_primary')->nullable();
             $table->string('mobile_secondary')->nullable();
             $table->string('homeno')->nullable();
             $table->integer('verifybyid')->nullable();
             $table->string('vfullname')->nullable();
+            $table->string('vemail')->nullable();
             $table->integer('vdeptid')->nullable();
             $table->string('vdeptname')->nullable();
             $table->dateTime('vdtsigned')->nullable();
@@ -47,20 +49,25 @@ return new class extends Migration
             $table->string('woeimage')->nullable();
             $table->integer('startedbyid')->nullable();
             $table->string('sfullname')->nullable();
+            $table->string('semail')->nullable();
             $table->integer('completedbyid')->nullable();
             $table->string('cfullname')->nullable();
+            $table->string('cemail')->nullable();
             $table->integer('monitoredbyid')->nullable();
             $table->string('mfullname')->nullable();
+            $table->string('memail')->nullable();
             $table->dateTime('mdtsigned')->nullable();
             $table->string('mstatus')->nullable();
             $table->integer('fsuserid')->nullable();
             $table->string('fsfullname')->nullable();
+            $table->string('fsemail')->nullable();
             $table->integer('fsdeptid')->nullable();
             $table->string('fseptname')->nullable();
             $table->dateTime('fstsigned')->nullable();
             $table->string('fsstatus')->nullable();
             $table->integer('fduserid')->nullable();
             $table->string('fdfullname')->nullable();
+            $table->string('fdemail')->nullable();
             $table->integer('fddeptid')->nullable();
             $table->string('fddeptname')->nullable();
             $table->dateTime('fddtsigned')->nullable();

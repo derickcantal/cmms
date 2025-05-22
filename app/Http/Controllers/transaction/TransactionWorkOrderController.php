@@ -22,6 +22,7 @@ use App\Mail\WODHApproved;
  
 class TransactionWorkOrderController extends Controller
 {
+    
     public function mailwodpapproved($workorderid)
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
@@ -129,6 +130,7 @@ class TransactionWorkOrderController extends Controller
                 'vfullname' => $fullname,
                 'vdeptid' => auth()->user()->deptid,
                 'vdeptname' => auth()->user()->deptname,
+                'vemail' => auth()->user()->email,
                 'vdtsigned' => $timenow,
                 'vstatus' => 'Verified',
                 'schedule' => $request->schedule,
@@ -168,6 +170,7 @@ class TransactionWorkOrderController extends Controller
             $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
                 'completedbyid' => auth()->user()->userid,
                 'cfullname' => $fullname,
+                'cemail' => auth()->user()->email,
                 'status' => 'For Final Submission',
                 ]);
                 if($workorders){
@@ -183,6 +186,7 @@ class TransactionWorkOrderController extends Controller
                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
                 'headid' => auth()->user()->userid,
                 'hfullname' => $fullname,
+                'hemail' => auth()->user()->email,
                 'hdeptid' => auth()->user()->deptid,
                 'hdeptname' => auth()->user()->deptname,
                 'hdtsigned' => $timenow,
@@ -247,6 +251,7 @@ class TransactionWorkOrderController extends Controller
                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'monitoredbyid' => auth()->user()->userid,
                     'mfullname' => $fullname,
+                    'memail' => auth()->user()->email,
                     'mdtsigned' => $timenow,
                     'status' => 'For Final Submission',
                     ]);
@@ -266,6 +271,7 @@ class TransactionWorkOrderController extends Controller
             $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'fsuserid' => auth()->user()->userid,
                     'fsfullname' => $fullname,
+                    'fsemail' => auth()->user()->email,
                     'fsdeptid' => auth()->user()->deptid,
                     'fseptname' => auth()->user()->deptname,
                     'fstsigned' => $timenow,
@@ -285,6 +291,7 @@ class TransactionWorkOrderController extends Controller
             $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'fduserid' => auth()->user()->userid,
                     'fdfullname' => $fullname,
+                    'fdemail' => auth()->user()->email,
                     'fddeptid' => auth()->user()->deptid,
                     'fddeptname' => auth()->user()->deptname,
                     'fddtsigned' => $timenow,
@@ -293,11 +300,28 @@ class TransactionWorkOrderController extends Controller
                     ]);
 
             if($workorders){
-                return redirect()->back()
-                    ->with('success','Work Order Completed');
+                $archived = workorder::query()->where('workorderid',$workorder->workorderid)
+                                        ->where(function(Builder $builder){
+                                            $builder->where('status', "Completed");
+                                        })
+                                        ->each(function ($oldRecord) {
+                                            $newRecord = $oldRecord->replicate();
+                                            $newRecord->setTable('history_workorder');
+                                            $newRecord->save();
+                                            $oldRecord->delete();
+                                        });
+                if($archived)
+                {
+                    return redirect()->back()
+                        ->with('success','Work Order Completed and archived');
+                }else{
+                    return redirect()->back()
+                    ->with('failed','Work Order Archive Failed');
+                }
+                
             }else{
                 return redirect()->back()
-                    ->with('failed','Work Order Completed');
+                    ->with('failed','Work Order Completion Failed');
             }
         }
 
@@ -527,7 +551,7 @@ class TransactionWorkOrderController extends Controller
         return view('transaction.workorder.show')
                     ->with(['wosupplies' => $wosupplies])
                     ->with(['workorder' => $workorder])
-                    ->with('i', (request()->input('page', 1) - 1) * 5); 
+                    ->with('i', (request()->input('page', 1) - 1) * 5);  
     }
 
     /**

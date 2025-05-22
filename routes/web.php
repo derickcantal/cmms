@@ -12,6 +12,7 @@ use App\Http\Controllers\manage\ManageMyProfileController;
 use App\Http\Controllers\transaction\TransactionWorkOrderController;
 use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
 use App\Http\Controllers\transaction\TransactionWOSupplyController;
+use App\Http\Controllers\reports\ReportHistoryWorkOrderController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -139,7 +140,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
+    Route::get('/reports/history/work/order', [ReportHistoryWorkOrderController::class, 'index'])->name('reportshistoryworkorder.index');
+    Route::get('/reports/history/work/search', [ReportHistoryWorkOrderController::class, 'search'])->name('reportshistoryworkorder.search');
+    Route::get('/reports/history/work/{supplydelivery}/order', [ReportHistoryWorkOrderController::class, 'show'])->name('reportshistoryworkorder.show');
 });
 
 require __DIR__.'/auth.php';
