@@ -27,7 +27,7 @@ class WODHApproved extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'W O D H Approved',
+            subject: 'Work Order Approved',
         );
     }
 
@@ -37,7 +37,7 @@ class WODHApproved extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.WODHApproved',
         );
     }
 

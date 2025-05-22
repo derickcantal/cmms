@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WOCreated extends Mailable
+class WOworkstarted extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,7 +27,7 @@ class WOCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Work Order Created',
+            subject: 'Work Started',
         );
     }
 
@@ -37,7 +37,7 @@ class WOCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.WOCreated',
+            view: 'emails.WOworkstarted',
         );
     }
 

@@ -19,17 +19,15 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WOCreated;
 use App\Mail\WODHApproved;
+use App\Mail\WOfinalized;
+use App\Mail\WOfinalsubmission;
+use App\Mail\WOonprocess;
+use App\Mail\WOworkended;
+use App\Mail\WOworkstarted;
  
 class TransactionWorkOrderController extends Controller
 {
-    
-    public function mailwodpapproved($workorderid)
-    {
-        $workorder = workorder::where('workorderid',$workorderid)->first();
-
-         Mail::to($workorder->email)->send(new WODHApproved());
-
-    }
+    // notif for new work order sent to DEPT HEAD
     public function mailwocreated($workorderid)
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
@@ -43,11 +41,91 @@ class TransactionWorkOrderController extends Controller
              Mail::to($u->email)->send(new WOCreated());
         }
 
-        return redirect()->route('transactionworkorder.index')
-                        ->with('success','Work Order created successfully.');
+
        
 
     }
+
+    // notif for approved work order sent to SUPERVISOR
+    public function mailwopapproved($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $user = User::where('deptname', $workorder->rdeptname)
+                        ->where(function(Builder $builder) use($workorder){
+                                    $builder->where('accessname','Supervisor');
+                                    })->get();
+        
+        foreach ($user as $u){
+            Mail::to($u->email)->send(new WODHApproved());
+        }
+    }
+
+    // notif for verified work order sent to DEPT HEAD
+    public function mailwoverified($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->hemail)->send(new WOonprocess());
+    }
+
+    // notif for assigned work order sent to PERSONNEL
+    public function mailwoassigned($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->semail)->send(new WOonprocess());
+    }
+
+    // notif for started work order sent to DEPT HEAD
+    public function mailwostarted($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->hemail)->send(new WOworkstarted());
+    }
+
+         // notif for ended work order sent to DEPT HEAD
+    public function mailwoended($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->hemail)->send(new WOworkended());
+    }
+    
+    // notif for completed work order sent to DEPT HEAD
+    public function mailwofinished($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->hemail)->send(new WOworkended());
+    }
+
+    // notif for monitored work order sent to SUPERVISOR
+    public function mailwomonitored($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        Mail::to($workorder->vemail)->send(new WOfinalized());
+    }
+
+    // notif for Finalized work order sent to DIRECTOR
+    public function mailwofinalized($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $user = User::where('deptname', $workorder->rdeptname)
+                        ->where(function(Builder $builder) use($workorder){
+                                    $builder->where('accessname','Director');
+                                    })->get();
+        
+        foreach ($user as $u){
+            Mail::to($u->email)->send(new WOfinalsubmission());
+        }
+    }
+
+    
+    
 
     public function cwork(Request $request,$workorderid)
     {
@@ -508,7 +586,7 @@ class TransactionWorkOrderController extends Controller
             'workorderdesc' => $request->workorderdesc,
             'requesterid' => auth()->user()->userid,
             'rfullname' => $fullname,
-            'email' => auth()->user()->email,
+            'remail' => auth()->user()->email,
             'rdeptid' => auth()->user()->deptid,
             'rdeptname' => auth()->user()->deptname,
             'workclassid' => $workclass->workclassid,
@@ -528,8 +606,10 @@ class TransactionWorkOrderController extends Controller
 
             $workorderid = $workorders->workorderid;
 
-            return $this->mailwocreated($workorderid);
+            $this->mailwocreated($workorderid);
     
+            return redirect()->route('transactionworkorder.index')
+                        ->with('success','Work Order created successfully.');
             
         }else{
 
