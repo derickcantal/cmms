@@ -120,7 +120,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/transaction/work/order/send/mail', [TransactionWorkOrderController::class, 'mailwocreated'])->name('transactionworkorder.mailwocreated');
 
     Route::get('/transaction/work/order/{woid}/supply/', [TransactionWOSupplyController::class, 'index'])->name('transactionwosupply.index');
-    Route::get('/transaction/work/order/{woid}/supply', [TransactionWOSupplyController::class, 'store'])->name('transactionwosupply.store');
+    Route::get('/transaction/work/order/{woid}/supply/store', [TransactionWOSupplyController::class, 'store'])->name('transactionwosupply.store');
     Route::get('/transaction/work/order/{woid}/supply/create', [TransactionWOSupplyController::class, 'create'])->name('transactionwosupply.create');
     Route::get('/transaction/work/order/supply/search', [TransactionWOSupplyController::class, 'search'])->name('transactionwosupply.search');
     Route::get('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'show'])->name('transactionwosupply.show');
