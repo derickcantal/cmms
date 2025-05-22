@@ -15,9 +15,37 @@ use \Carbon\Carbon;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WOCreated;
+use App\Mail\WODHApproved;
  
 class TransactionWorkOrderController extends Controller
 {
+    public function mailwodpapproved($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+         Mail::to($workorder->email)->send(new WODHApproved());
+
+    }
+    public function mailwocreated($workorderid)
+    {
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $user = User::where('deptname', $workorder->rdeptname)
+                        ->where(function(Builder $builder) use($workorder){
+                                    $builder->where('accessname','Dept. Head');
+                                    })->get();
+        
+        foreach ($user as $u){
+             Mail::to($u->email)->send(new WOCreated());
+        }
+
+        return redirect()->route('transactionworkorder.index')
+                        ->with('success','Work Order created successfully.');
+       
+
+    }
 
     public function cwork(Request $request,$workorderid)
     {
@@ -276,51 +304,107 @@ class TransactionWorkOrderController extends Controller
 
     public function search(Request $request)
     {
+        $workclass = workclass::get();
+
         if(auth()->user()->accessname == 'Administrator' or
             auth()->user()->accessname == 'Director' or
             auth()->user()->accessname == 'Supervisor'
         ){
-            $workorder = workorder::orderBy('priorityid',$request->orderrow)
-                ->where(function(Builder $builder) use($request){
-                    $builder->where('workorderdesc','like',"%{$request->search}%")
-                            ->where('prioritydesc','like',"%{$request->search}%")
-                            ->where('notes','like',"%{$request->search}%")
-                            ->orWhere('status','like',"%{$request->search}%"); 
-                })->paginate($request->pagerow);
+            if($request->workclass != 'all'){
+                $workorder = workorder::where('workclassdesc','like',"%{$request->workclass}%")
+                                ->where(function(Builder $builder) use($request){
+                                    $builder->orwhere('prioritydesc','like',"%{$request->search}%")
+                                            ->orwhere('workorderdesc','like',"%{$request->search}%")
+                                            ->orwhere('notes','like',"%{$request->search}%")
+                                            ->orWhere('status','like',"%{$request->search}%"); 
+                                })->orderBy('priorityid',$request->orderrow)
+                                ->paginate($request->pagerow);
+            }else{
+                $workorder = workorder::orderBy('priorityid',$request->orderrow)
+                                ->where(function(Builder $builder) use($request){
+                                    $builder->orwhere('prioritydesc','like',"%{$request->search}%")
+                                            ->orwhere('workorderdesc','like',"%{$request->search}%")
+                                            ->orwhere('notes','like',"%{$request->search}%")
+                                            ->orWhere('status','like',"%{$request->search}%"); 
+                                })
+                                ->paginate($request->pagerow);
+            }
 
         }elseif(auth()->user()->accessname == 'Dept. Head'){
-            $workorder = workorder::where('rdeptname',auth()->user()->deptname)
+            if($request->workclass != 'all'){
+                $workorder = workorder::where('rdeptname',auth()->user()->deptname)
+                ->where('workclassdesc','like',"%{$request->workclass}%")
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('workorderdesc','like',"%{$request->search}%")
-                            ->where('prioritydesc','like',"%{$request->search}%")
-                            ->where('notes','like',"%{$request->search}%")
-                            ->orWhere('status','like',"%{$request->search}%"); 
-                })->orderBy('priorityid',$request->orderrow)
-                ->paginate($request->pagerow);
-
-        }elseif(auth()->user()->accessname == 'Requester'){
-            $workorder = workorder::where('requesterid',auth()->user()->userid)
-                ->where(function(Builder $builder) use($request){
-                    $builder->where('workorderdesc','like',"%{$request->search}%")
-                            ->where('prioritydesc','like',"%{$request->search}%")
-                            ->where('notes','like',"%{$request->search}%")
+                    $builder->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                 })->orderBy('priorityid',$request->orderrow)
                 ->paginate($request->pagerow);
                 
-        }elseif(auth()->user()->accessname == 'Personnel'){
-            $workorder = workorder::where('startedbyid',auth()->user()->userid)
+            }else{
+                $workorder = workorder::where('rdeptname',auth()->user()->deptname)
                 ->where(function(Builder $builder) use($request){
-                    $builder->where('workorderdesc','like',"%{$request->search}%")
-                            ->where('prioritydesc','like',"%{$request->search}%")
-                            ->where('notes','like',"%{$request->search}%")
+                    $builder->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
                             ->orWhere('status','like',"%{$request->search}%"); 
                 })->orderBy('priorityid',$request->orderrow)
                 ->paginate($request->pagerow);
+            }
+            
+
+        }elseif(auth()->user()->accessname == 'Requester'){
+            if($request->workclass != 'all'){
+                $workorder = workorder::where('requesterid',auth()->user()->userid)
+                ->where('workclassdesc','like',"%{$request->workclass}%")
+                ->where(function(Builder $builder) use($request){
+                    $builder->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%");
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+            }else{
+                $workorder = workorder::where('requesterid',auth()->user()->userid)
+                ->where(function(Builder $builder) use($request){
+                    $builder->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%");
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+            }
+            
+                
+        }elseif(auth()->user()->accessname == 'Personnel'){
+            if($request->workclass != 'all'){
+                $workorder = workorder::where('startedbyid',auth()->user()->userid)
+                ->where('workclassdesc','like',"%{$request->workclass}%")
+                ->where(function(Builder $builder) use($request){
+                    $builder->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%");
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+            }else{
+                $workorder = workorder::where('startedbyid',auth()->user()->userid)
+                ->where(function(Builder $builder) use($request){
+                    $builder->where('workclassdesc','like',"%{$request->workclass}%")
+                            ->orwhere('workorderdesc','like',"%{$request->search}%")
+                            ->orwhere('prioritydesc','like',"%{$request->search}%")
+                            ->orwhere('notes','like',"%{$request->search}%")
+                            ->orWhere('status','like',"%{$request->search}%");
+                })->orderBy('priorityid',$request->orderrow)
+                ->paginate($request->pagerow);
+            }
+            
         }
         
     
         return view('transaction.workorder.index',compact('workorder'))
+            ->with(['workclass' => $workclass])
             ->with('i', (request()->input('page', 1) - 1) * $request->pagerow);
     }
     /**
@@ -328,21 +412,29 @@ class TransactionWorkOrderController extends Controller
      */
     public function index()
     {
+        $workclass = workclass::get();
         if(auth()->user()->accessname == 'Administrator' or
             auth()->user()->accessname == 'Director' or
             auth()->user()->accessname == 'Supervisor'
         ){
             $workorder = workorder::paginate(5);
         }elseif(auth()->user()->accessname == 'Dept. Head'){
-            $workorder = workorder::where('rdeptname',auth()->user()->deptname)->paginate(5);
+            $workorder = workorder::where('rdeptname',auth()->user()->deptname)
+                                        ->latest()
+                                        ->paginate(5);
         }elseif(auth()->user()->accessname == 'Requester'){
-            $workorder = workorder::where('requesterid',auth()->user()->userid)->paginate(5);
+            $workorder = workorder::where('requesterid',auth()->user()->userid)
+                                        ->latest()
+                                        ->paginate(5);
         }elseif(auth()->user()->accessname == 'Personnel'){
-            $workorder = workorder::where('startedbyid',auth()->user()->userid)->paginate(5);
+            $workorder = workorder::where('startedbyid',auth()->user()->userid)
+                                        ->latest()
+                                        ->paginate(5);
         }
 
         return view('transaction.workorder.index')
                         ->with(['workorder' => $workorder])
+                        ->with(['workclass' => $workclass])
                         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -406,9 +498,14 @@ class TransactionWorkOrderController extends Controller
         ]);
     
         if ($workorder) {
+
+            $workorders = workorder::where('woimage',$path)->first();
+
+            $workorderid = $workorders->workorderid;
+
+            return $this->mailwocreated($workorderid);
     
-            return redirect()->route('transactionworkorder.index')
-                        ->with('success','Work Order created successfully.');
+            
         }else{
 
             return redirect()->route('transactionworkorder.index')
@@ -421,6 +518,7 @@ class TransactionWorkOrderController extends Controller
      */
     public function show($workorderid)
     {
+        
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
         return view('transaction.workorder.show')

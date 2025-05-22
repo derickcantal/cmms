@@ -117,6 +117,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'update'])->name('transactionworkorder.update');
     Route::delete('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'destroy'])->name('transactionworkorder.destroy');
     Route::get('/transaction/work/order/{workorder}/edit', [TransactionWorkOrderController::class, 'edit'])->name('transactionworkorder.edit');
+    Route::post('/transaction/work/order/send/mail', [TransactionWorkOrderController::class, 'mailwocreated'])->name('transactionworkorder.mailwocreated');
 
     Route::get('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'index'])->name('transactionsupplydelivery.index');
     Route::post('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'store'])->name('transactionsupplydelivery.store');
