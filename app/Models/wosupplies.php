@@ -23,7 +23,8 @@ class wosupplies extends Model
     }
 
     protected $fillable = [
-        'suppliesdesc',
+        'wosuppliesdesc',
+        'worfid',
         'workorderid',
         'particulars',
         'qty',

@@ -417,7 +417,7 @@ class TransactionWorkOrderController extends Controller
             auth()->user()->accessname == 'Director' or
             auth()->user()->accessname == 'Supervisor'
         ){
-            $workorder = workorder::paginate(5);
+            $workorder = workorder::latest()->paginate(5);
         }elseif(auth()->user()->accessname == 'Dept. Head'){
             $workorder = workorder::where('rdeptname',auth()->user()->deptname)
                                         ->latest()

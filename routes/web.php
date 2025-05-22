@@ -119,14 +119,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/transaction/work/order/{workorder}/edit', [TransactionWorkOrderController::class, 'edit'])->name('transactionworkorder.edit');
     Route::post('/transaction/work/order/send/mail', [TransactionWorkOrderController::class, 'mailwocreated'])->name('transactionworkorder.mailwocreated');
 
-    Route::get('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'index'])->name('transactionsupplydelivery.index');
-    Route::post('/transaction/work/order/supply', [TransactionWOSupplyController::class, 'store'])->name('transactionsupplydelivery.store');
-    Route::get('/transaction/work/order/supply/create', [TransactionWOSupplyController::class, 'create'])->name('transactionsupplydelivery.create');
-    Route::get('/transaction/work/order/supply/search', [TransactionWOSupplyController::class, 'search'])->name('transactionsupplydelivery.search');
-    Route::get('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'show'])->name('transactionsupplydelivery.show');
-    Route::patch('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'update'])->name('transactionsupplydelivery.update');
-    Route::delete('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'destroy'])->name('transactionsupplydelivery.destroy');
-    Route::get('/transaction/work/order/supply/{wosupply}/edit', [TransactionWOSupplyController::class, 'edit'])->name('transactionsupplydelivery.edit');
+    Route::get('/transaction/work/order/{woid}/supply/', [TransactionWOSupplyController::class, 'index'])->name('transactionwosupply.index');
+    Route::get('/transaction/work/order/{woid}/supply', [TransactionWOSupplyController::class, 'store'])->name('transactionwosupply.store');
+    Route::get('/transaction/work/order/{woid}/supply/create', [TransactionWOSupplyController::class, 'create'])->name('transactionwosupply.create');
+    Route::get('/transaction/work/order/supply/search', [TransactionWOSupplyController::class, 'search'])->name('transactionwosupply.search');
+    Route::get('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'show'])->name('transactionwosupply.show');
+    Route::patch('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'update'])->name('transactionwosupply.update');
+    Route::delete('/transaction/work/order/supply/{wosupply}', [TransactionWOSupplyController::class, 'destroy'])->name('transactionwosupply.destroy');
+    Route::get('/transaction/work/order/supply/{wosupply}/edit', [TransactionWOSupplyController::class, 'edit'])->name('transactionwosupply.edit');
 
     Route::get('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'index'])->name('transactionsupplydelivery.index');
     Route::post('/transaction/supply/delivery', [TransactionSupplyDeliveryController::class, 'store'])->name('transactionsupplydelivery.store');
