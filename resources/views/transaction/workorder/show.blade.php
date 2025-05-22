@@ -219,7 +219,7 @@
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->dtended }}
-                                                    <img class="w-50 h-50 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" alt="avatar">
+                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" alt="avatar">
                                                 </h5>
                                             </div>
                                         </div>
