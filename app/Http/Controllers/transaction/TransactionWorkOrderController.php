@@ -41,9 +41,6 @@ class TransactionWorkOrderController extends Controller
              Mail::to($u->email)->send(new WOCreated());
         }
 
-
-       
-
     }
 
     // notif for approved work order sent to SUPERVISOR
@@ -51,10 +48,8 @@ class TransactionWorkOrderController extends Controller
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
-        $user = User::where('deptname', $workorder->rdeptname)
-                        ->where(function(Builder $builder) use($workorder){
-                                    $builder->where('accessname','Supervisor');
-                                    })->get();
+        $user = User::where('accessname','Supervisor')->get();
+                        
         
         foreach ($user as $u){
             Mail::to($u->email)->send(new WODHApproved());
@@ -114,10 +109,7 @@ class TransactionWorkOrderController extends Controller
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
-        $user = User::where('deptname', $workorder->rdeptname)
-                        ->where(function(Builder $builder) use($workorder){
-                                    $builder->where('accessname','Director');
-                                    })->get();
+        $user = User::where('accessname','Director')->get();
         
         foreach ($user as $u){
             Mail::to($u->email)->send(new WOfinalsubmission());
@@ -155,6 +147,8 @@ class TransactionWorkOrderController extends Controller
                 ]);
 
             if($workorders){
+                $this->mailwoended($workorderid);
+
             return redirect()->route('transactionworkorder.show',$workorder->workorderid)
                 ->with('success','Work Order Ended');
             }else{
@@ -214,6 +208,7 @@ class TransactionWorkOrderController extends Controller
                 'schedule' => $request->schedule,
                 'startedbyid' => $personnel->userid,
                 'sfullname' => $personnel->lastname .', '. $personnel->firstname .' '. $personnel->middlename,
+                'semail' => $personnel->email,
                 'priorityid' => $priorityid,
                 'prioritydesc' => $prioritydesc,
                 'eworkdays' => $request->eworkdays,
@@ -222,6 +217,9 @@ class TransactionWorkOrderController extends Controller
                 'status' => 'On Process',
                 ]);
         if($workorders){
+
+            $this->mailwoassigned($workorderid);
+
             return redirect()->route('transactionworkorder.index')
                 ->with('success','Work Order Verified. On Process.');
         }else{
@@ -252,6 +250,9 @@ class TransactionWorkOrderController extends Controller
                 'status' => 'For Final Submission',
                 ]);
                 if($workorders){
+
+                    $this->mailwofinished($workorderid);
+
                     return redirect()->back()
                         ->with('success','Work Order Completed');
                 }else{
@@ -272,6 +273,9 @@ class TransactionWorkOrderController extends Controller
                 'status' => 'For GSO Approval',
                 ]);
                 if($workorders){
+
+                    $this->mailwopapproved($workorderid);
+
                     return redirect()->back()
                         ->with('success','Work Order Approved');
                 }else{
@@ -293,6 +297,8 @@ class TransactionWorkOrderController extends Controller
 
                 $personnel = User::where('accessname','Personnel')->get();
 
+                
+
                 return view('transaction.workorder.verify',compact('workorder'))
                             ->with(['personnel' => $personnel]);
 
@@ -313,6 +319,8 @@ class TransactionWorkOrderController extends Controller
             }
                 
             if($workorders){
+                $this->mailwostarted($workorderid);
+                
                 return redirect()->back()
                     ->with('success','Work Order Started');
             }else{
@@ -334,6 +342,9 @@ class TransactionWorkOrderController extends Controller
                     'status' => 'For Final Submission',
                     ]);
                 if($workorders){
+
+                    $this->mailwomonitored($workorderid);
+
                     return redirect()->back()
                         ->with('success','Work Order Ended');
                 }else{
@@ -358,6 +369,9 @@ class TransactionWorkOrderController extends Controller
                     ]);
 
             if($workorders){
+
+                $this->mailwofinalized($workorderid);
+
                 return redirect()->back()
                     ->with('success','Work Order Finalized');
             }else{
