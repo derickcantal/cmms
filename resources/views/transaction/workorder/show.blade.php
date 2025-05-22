@@ -55,9 +55,10 @@
                                     <!-- Modal header -->
                                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                            Work Order Information
+                                            Work Order Information @if(!empty($workorder->worfid)) (W.O.R.F. ID: {{ $workorder->worfid }})@endif
                                         </h3>
                                     </div>
+
                                     <!-- Work Order Information -->
                                     <div class="grid gap-4 mb-4 grid-cols-2">
                                           <!-- Requested By -->
@@ -69,6 +70,7 @@
                                                 </h5>
                                             </div>
                                         </div>
+                                        
                                         <!-- Department Name -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
@@ -150,7 +152,64 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
+                                    <!-- supply list -->
+                                    <div class="grid gap-4 mb-4 grid-cols-1 border-t rounded-t dark:border-gray-600">
+                                        @csrf
+                                        <!-- table -->
+                                        <div class="max-w-7xl overflow-x-auto sm:rounded-lg mt-4" >
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                Supply List
+                                            </h5>
+                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                    <tr>
+                                                        <th scope="col" class="px-6 py-3">
+                                                            No
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3">
+                                                            Description
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3">
+                                                            Qty
+                                                        </th>
+                                                        <th scope="col" class="px-6 py-3">
+                                                            Remarks
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                    @forelse ($wosupplies as $wosupply)
+                                                    
+                                                <tbody>
+                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    
+                                                        <td class="px-6 py-4">
+                                                            <x-input-label>{{ ++$i }}</x-input-label>
+                                                        </td>
+                                                        <td class="px-6 py-4">
+                                                            <x-input-label>{{ $wosupply->particulars }}</x-input-label>
+                                                            <x-input-label>{{ $wosupply->wosuppliesdesc }}</x-input-label>
+                                                        </th>
+                                                        <td class="px-6 py-4">
+                                                            <x-input-label>{{ $wosupply->qty }}</x-input-label>
+                                                        </th>
+                                                        <td class="px-6 py-4">
+                                                            <x-input-label>{{ $wosupply->remarks }}</x-input-label>
+                                                        </th>
+                                                    </tr>
+                                                
+                                                    @empty
+                                                    <td scope="row" class="px-6 py-4">
+                                                        No Records Found.
+                                                    </td>	
+                                                    @endforelse
+                                                        
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
+                                    </div>
+
                                     <!-- Personnel -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
                                         <!-- Department Name -->
@@ -199,6 +258,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
 
                                     <!-- Time -->
                                     <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
@@ -208,8 +268,9 @@
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->dtstarted }}
-                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woimage") }}" alt="avatar">
-
+                                                    @if(!empty($workorder->woimage))
+                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woimage") }}">
+                                                    @endif
                                                 </h5>
                                             </div>
                                         </div>
@@ -219,7 +280,9 @@
                                                 <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->dtended }}
-                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" alt="avatar">
+                                                    @if(!empty($workorder->woeimage))
+                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" >
+                                                    @endif
                                                 </h5>
                                             </div>
                                         </div>
@@ -406,7 +469,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                
+
                             </div>
                         </form>
                     </div>

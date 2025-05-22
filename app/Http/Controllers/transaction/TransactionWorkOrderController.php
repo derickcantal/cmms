@@ -9,6 +9,7 @@ use App\Models\access;
 use App\Models\department;
 use App\Models\workclass;
 use App\Models\workorder;
+use App\Models\wosupplies;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use \Carbon\Carbon;
@@ -521,8 +522,12 @@ class TransactionWorkOrderController extends Controller
         
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
+        $wosupplies = wosupplies::where('workorderid',$workorder->workorderid)->latest()->get();
+
         return view('transaction.workorder.show')
-                    ->with(['workorder' => $workorder]); 
+                    ->with(['wosupplies' => $wosupplies])
+                    ->with(['workorder' => $workorder])
+                    ->with('i', (request()->input('page', 1) - 1) * 5); 
     }
 
     /**
