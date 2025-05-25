@@ -119,9 +119,9 @@
                                     <div class="form-group mt-4">
                                         <x-input-label for="priority" :value="__('Priority')" />
                                         <select id="priority" name="priority" class="form-select mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" :value="old('priority')">
-                                            <option value = "0">Immediate</option>
+                                            <option value = "0">Emergency</option>
                                             <option value = "1">High</option>
-                                            <option value = "2">Medium</option>
+                                            <option value = "2">Moderate</option>
                                             <option value = "3">Low</option>
                                         </select>
                                         <x-input-error :messages="$errors->get('priority')" class="mt-2" />
@@ -131,9 +131,16 @@
                                 <!-- schedule -->
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
-                                        <x-input-label for="schedule" :value="__('Scheduled On')" />
-                                        <x-text-input id="schedule" class="block mt-1 w-full" type="date" name="schedule" :value="old('schedule',$workorder->schedule)" required autofocus />
-                                        <x-input-error :messages="$errors->get('schedule')" class="mt-2" />
+                                        <x-input-label for="start" :value="__('Scheduled (Start)')" />
+                                        <x-text-input id="start" class="block mt-1 w-full" type="date" name="start" :value="old('start',$workorder->start)" required autofocus />
+                                        <x-input-error :messages="$errors->get('start')" class="mt-2" />
+                                    </div>
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="end" :value="__('Scheduled (End)')" />
+                                        <x-text-input id="end" class="block mt-1 w-full" type="date" name="end" :value="old('end',$workorder->schedule)" required autofocus />
+                                        <x-input-error :messages="$errors->get('end')" class="mt-2" />
                                     </div>
                                 </div>
 

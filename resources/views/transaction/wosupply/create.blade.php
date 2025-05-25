@@ -9,7 +9,8 @@
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <form action="{{ route('transactionwosupply.store',$workorder->workorderid) }}" method="POST" class="p-4 md:p-5">
-                    @csrf   
+                    @csrf
+                    @method('get')   
                     <div class="relative p-4 w-full max-w-full max-h-full">
                         <!-- Breadcrumb -->
                         <nav class="flex px-5 py-3 text-gray-700  bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">

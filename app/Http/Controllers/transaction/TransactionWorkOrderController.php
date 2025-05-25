@@ -176,19 +176,23 @@ class TransactionWorkOrderController extends Controller
         if($request->priority == 0)
         {
             $priorityid = 0;
-            $prioritydesc = 'Immediate';
+            $prioritydesc = 'Emergency';
+            $color = 'Red';
         }elseif($request->priority == 1)
         {
             $priorityid = 1;
             $prioritydesc = 'High';
+            $color = 'Orange';
         }elseif($request->priority == 2)
         {
             $priorityid = 2;
-            $prioritydesc = 'Medium';
+            $prioritydesc = 'Moderate';
+            $color = 'Yellow';
         }elseif($request->priority == 3)
         {
             $priorityid = 3;
             $prioritydesc = 'Low';
+            $color = 'Green';
         }else
         {
             return redirect()->route('transactionworkorder.index')
@@ -205,7 +209,9 @@ class TransactionWorkOrderController extends Controller
                 'vemail' => auth()->user()->email,
                 'vdtsigned' => $timenow,
                 'vstatus' => 'Verified',
-                'schedule' => $request->schedule,
+                'start' => $request->start,
+                'end' => $request->end,
+                'color' => $color,
                 'startedbyid' => $personnel->userid,
                 'sfullname' => $personnel->lastname .', '. $personnel->firstname .' '. $personnel->middlename,
                 'semail' => $personnel->email,
@@ -404,10 +410,10 @@ class TransactionWorkOrderController extends Controller
                                         });
                 if($archived)
                 {
-                    return redirect()->back()
+                    return redirect()->route('transactionworkorder.index')
                         ->with('success','Work Order Completed and archived');
                 }else{
-                    return redirect()->back()
+                    return redirect()->route('transactionworkorder.index')
                     ->with('failed','Work Order Archive Failed');
                 }
                 
@@ -598,6 +604,8 @@ class TransactionWorkOrderController extends Controller
         $workorder = workorder::create([
             'woimage' => $path,
             'workorderdesc' => $request->workorderdesc,
+            'title' => $request->workorderdesc,
+            'description' => $workclass->workclassdesc,
             'requesterid' => auth()->user()->userid,
             'rfullname' => $fullname,
             'remail' => auth()->user()->email,
