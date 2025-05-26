@@ -1,2 +1,2 @@
-<link rel="stylesheet" href="{{ asset("build/app-BLNL2DAp.css") }}" type='text/css'>
-<script src="{{ asset("build/assets/app-DdTydH3k.js") }}"></script>
+<link rel="stylesheet" href="{{ asset("build/app-CPctligy.css") }}" type='text/css'>
+<script src="{{ asset("build/assets/app-CXFnSqdZ.js") }}"></script>

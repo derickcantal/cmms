@@ -163,6 +163,7 @@ class TransactionWorkOrderController extends Controller
 
     public function verify(Request $request,$workorderid)
     {
+        // dd($request,$request->starttime,$request->etime);
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
         $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
@@ -209,8 +210,8 @@ class TransactionWorkOrderController extends Controller
                 'vemail' => auth()->user()->email,
                 'vdtsigned' => $timenow,
                 'vstatus' => 'Verified',
-                'start' => $request->start,
-                'end' => $request->end,
+                'start' => $request->start . ' ' . $request->starttime ,
+                'end' => $request->end . ' ' . $request->etime,
                 'color' => $color,
                 'startedbyid' => $personnel->userid,
                 'sfullname' => $personnel->lastname .', '. $personnel->firstname .' '. $personnel->middlename,
