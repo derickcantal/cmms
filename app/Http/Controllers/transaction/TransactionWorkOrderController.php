@@ -10,6 +10,7 @@ use App\Models\department;
 use App\Models\workclass;
 use App\Models\workorder;
 use App\Models\wosupplies;
+use App\Models\history_workorder;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use \Carbon\Carbon;
@@ -303,17 +304,47 @@ class TransactionWorkOrderController extends Controller
                 return redirect()->back()
                         ->with('failed','Work Order Need Head Deparment Approval');
             }else{
+                $today = Carbon::now();
+                $today->month;
+                $today->year;
+
+                $tyear = $today->year;
 
                 $personnel = User::where('accessname','Personnel')->get();
-
+                // dd($workorder->workclassdesc);
                 $worfidno = workorder::where('workclassdesc',$workorder->workclassdesc)
                                 ->where(function(Builder $builder) use($request){
-                    $builder->where('status','==','On Process'); 
+                        $builder->where('status','On Process'); 
                 })
                 ->latest()->first();
 
-                $n4 = preg_replace('/[-]+/', '', $worfidno->worfid);
-                dd($workorder->workclassdesc,$worfidno,$n4);
+                if(empty($worfidno))
+                {
+                    $worfidno = history_workorder::where('workclassdesc',$workorder->workclassdesc)
+                                ->where(function(Builder $builder) use($request){
+                        $builder->where('status','On Process'); 
+                                })
+                                ->latest()->first();
+                }
+                if(empty($worfidno))
+                {
+                    $num = $worfidno + 1;
+                    $str_length = 3;
+
+                    // Left padding if number < $str_length
+                    $newworfid = $tyear . '-' .substr("0000{$num}", -$str_length);
+                    // echo sprintf($str);
+                }else{
+                    // $n4 = preg_replace('/[-]+/', '', $worfidno->worfid);
+                    // $last3Char = substr($newworfid, -3);
+                    $last3Char = substr($worfidno->worfid, -3);
+                    $newnumber = $last3Char + 1;
+                    $newtotal = $tyear . '-' .substr("0000{$newnumber}", -$str_length);
+                }
+                
+                // dd($workorder->workclassdesc,$worfidno,$newworfid,$last3Char,$newnumber,$newtotal);
+
+               
                 
 
                 return view('transaction.workorder.verify',compact('workorder'))
