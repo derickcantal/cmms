@@ -12,6 +12,7 @@ use App\Http\Controllers\manage\ManageMyProfileController;
 use App\Http\Controllers\transaction\TransactionWorkOrderController;
 use App\Http\Controllers\transaction\TransactionSupplyDeliveryController;
 use App\Http\Controllers\transaction\TransactionWOSupplyController;
+use App\Http\Controllers\transaction\TransactionCalendarController;
 use App\Http\Controllers\reports\ReportHistoryWorkOrderController;
 use App\Http\Controllers\dashboard\DashboardOverviewController;
 
@@ -141,6 +142,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/transaction/supply/delivery/{supplydelivery}', [TransactionSupplyDeliveryController::class, 'update'])->name('transactionsupplydelivery.update');
     Route::delete('/transaction/supply/delivery/{supplydelivery}', [TransactionSupplyDeliveryController::class, 'destroy'])->name('transactionsupplydelivery.destroy');
     Route::get('/transaction/supply/delivery/{supplydelivery}/edit', [TransactionSupplyDeliveryController::class, 'edit'])->name('transactionsupplydelivery.edit');
+
+    Route::get('/transaction/calendar', [TransactionCalendarController::class, 'index'])->name('transactioncalendar.index');
+    Route::get('/events', [TransactionCalendarController::class, 'getevents']);
 });
 
 Route::middleware('auth')->group(function () {

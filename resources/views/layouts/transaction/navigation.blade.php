@@ -13,8 +13,8 @@
                         {{ __('Supply Delivery') }}
                     </x-nav-link> -->
                     @endif
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <!-- {{ __('Department') }} -->
+                    <x-nav-link :href="route('transactioncalendar.index')" :active="request()->routeIs('transactioncalendar.index')">
+                        {{ __('Calendar') }}
                     </x-nav-link>
                     <x-nav-link :href="route('manageaccess.index')" :active="request()->routeIs('manageaccess.index')">
                         <!-- {{ __('Access') }} -->

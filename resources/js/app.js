@@ -11,8 +11,8 @@ window.myFunctionName = function(parameter){
   let calendarEl = document.getElementById('calendar');
   let calendar = new Calendar(calendarEl, {
     dateClick: function() {
-      alert('a day has been clicked!');
-      // alert("The view's title is " + view.description);
+    //   alert('a day has been clicked!');
+      alert("The view's title is " + view.description);
     },
   plugins: [  dayGridPlugin,
               timeGridPlugin,

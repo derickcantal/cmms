@@ -1,7 +1,4 @@
 <x-app-layout>
-    <script type="module">
-        myFunctionName();
-    </script>
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @include('layouts.dashboard.navigation')
@@ -15,7 +12,7 @@
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                             <!-- Breadcrumb -->
-                            <nav class="flex px-5 py-3 text-gray-700  bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+                            <nav class="flex px-5 py-3 text-gray-700  bg-white dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
                                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                                     <li class="inline-flex items-center">
                                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
@@ -37,11 +34,79 @@
                                 </ol>
                             </nav>
 
-                            <div class="flex px-5 py-3 text-white bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                                <div class="container">
-                                    <div id='calendar'></div>
-                                    
-                                </div>
+                            <div class="max-w-7xl overflow-x-auto shadow-md sm:rounded-lg " >
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">
+                                                REQUEST TYPE
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                COUNT
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>New</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $wonew }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Unprocessed</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $woup }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Emergency</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $woem }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Immediate</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $woim }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Moderate</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $womod }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Low</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $wolow }}</x-input-label>
+                                            </td>
+                                        </tr>
+                                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <th class="px-6 py-4">
+                                                <x-input-label>Completed</x-input-label>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <x-input-label>{{ $wocom }}</x-input-label>
+                                            </td>
+                                        </tr>
+                    
+                                        
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

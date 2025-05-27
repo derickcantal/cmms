@@ -170,6 +170,8 @@ class TransactionWorkOrderController extends Controller
 
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
+        
+
         $personnel = User::where('userid',$request->personnel)->first();
 
         // dd($request,$workorder,$personnel);
@@ -304,6 +306,14 @@ class TransactionWorkOrderController extends Controller
 
                 $personnel = User::where('accessname','Personnel')->get();
 
+                $worfidno = workorder::where('workclassdesc',$workorder->workclassdesc)
+                                ->where(function(Builder $builder) use($request){
+                    $builder->where('status','==','On Process'); 
+                })
+                ->latest()->first();
+
+                $n4 = preg_replace('/[-]+/', '', $worfidno->worfid);
+                dd($workorder->workclassdesc,$worfidno,$n4);
                 
 
                 return view('transaction.workorder.verify',compact('workorder'))

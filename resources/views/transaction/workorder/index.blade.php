@@ -11,7 +11,7 @@
 				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 					<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <!-- Breadcrumb -->
-                        <nav class="flex px-5 py-3 text-gray-700  bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+                        <nav class="flex px-5 py-3 text-gray-700 bg-white dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
                             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                                 <li class="inline-flex items-center">
                                 <a href="{{ route('transactionworkorder.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
@@ -161,23 +161,23 @@
                                         </th>
                                         <td class="px-6 py-4">
                                             @if(empty($workorders->prioritydesc))
-                                            <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
+                                            <span class="bg-red-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Uncategorized 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Emergency')
-                                             <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
+                                             <span class="bg-red-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Emergency 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'High')
-                                             <span class="bg-orange-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-600 dark:text-white">
+                                             <span class="bg-orange-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-600 dark:text-white">
                                                  High 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Moderate')
-                                             <span class="bg-yellow-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-600 dark:text-white">
+                                             <span class="bg-yellow-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-600 dark:text-white">
                                                  Moderate 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Low')
-                                             <span class="bg-green-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-600 dark:text-white">
+                                             <span class="bg-green-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-green-600 dark:text-white">
                                                  Low 
                                             </span>
                                             @endif
