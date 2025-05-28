@@ -711,7 +711,7 @@ class TransactionWorkOrderController extends Controller
      */
     public function show($workorderid)
     {
-        
+       
         $workorder = workorder::where('workorderid',$workorderid)->first();
 
         $wosupplies = wosupplies::where('workorderid',$workorder->workorderid)->latest()->get();

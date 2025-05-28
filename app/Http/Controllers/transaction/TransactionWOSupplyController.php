@@ -22,7 +22,10 @@ class TransactionWOSupplyController extends Controller
     public function index($workorderid)
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
-
+        if(empty($workorder->worfid)){
+            return redirect()->route('transactionworkorder.index')
+                    ->with('failed','Supervisor Approval Needed to Add and List Supplies');
+        }
         $wosupplies = wosupplies::where('workorderid',$workorder->workorderid)
                                         ->latest()
                                         ->paginate(5);
@@ -40,7 +43,10 @@ class TransactionWOSupplyController extends Controller
     public function create($workorderid)
     {
         $workorder = workorder::where('workorderid',$workorderid)->first();
-
+        if(empty($workorder->worfid)){
+            return redirect()->route('transactionworkorder.index')
+                    ->with('failed','Supervisor Approval Needed to Add and List Supplies');
+        }
         return view('transaction.wosupply.create')
                     ->with(['workorder' => $workorder]);
     }
