@@ -25,9 +25,31 @@ use App\Mail\WOfinalsubmission;
 use App\Mail\WOonprocess;
 use App\Mail\WOworkended;
 use App\Mail\WOworkstarted;
+use Barryvdh\DomPDF\Facade\Pdf;
  
 class TransactionWorkOrderController extends Controller
 {
+
+    public function printPDF($workorderid){
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $wosupplies = wosupplies::where('workorderid',$workorder->workorderid)->latest()->get();
+        // dd($workorder->worfid .'-'. $workorder->rdeptname.'.pdf');
+
+        $newfilename = $workorder->worfid .'-'. $workorder->rdeptname.'.pdf';
+        
+        return view('transaction.workorder.form')->with(['workorder' => $workorder])
+        ->with(['wosupplies' => $wosupplies]);
+
+        $printthis = true;
+        
+        $pdf = PDF::loadView('transaction.workorder.form', compact('printthis','workorder','wosupplies'))
+                    ->setPaper('a4', 'portrait');
+                    
+        return $pdf->download($newfilename);
+        
+    }
+
     // notif for new work order sent to DEPT HEAD
     public function mailwocreated($workorderid)
     {
@@ -116,9 +138,6 @@ class TransactionWorkOrderController extends Controller
             Mail::to($u->email)->send(new WOfinalsubmission());
         }
     }
-
-    
-    
 
     public function cwork(Request $request,$workorderid)
     {
@@ -343,12 +362,17 @@ class TransactionWorkOrderController extends Controller
                 }
                 
                 // dd($workorder->workclassdesc,$worfidno,$newworfid,$last3Char,$newnumber,$newtotal);
-
+                if (!empty($newworfid)){
+                    $setnewworf = $newworfid;
+                }elseif(!empty($newtotal)){
+                    $setnewworf = $newtotal;
+                }
                
-                
+                // dd($setnewworf);
 
                 return view('transaction.workorder.verify',compact('workorder'))
-                            ->with(['personnel' => $personnel]);
+                            ->with(['personnel' => $personnel])
+                            ->with(['setnewworf' => $setnewworf]);
 
                 return redirect()->back()
                         ->with('failed','Work Order Need Work Order Referrence ID');

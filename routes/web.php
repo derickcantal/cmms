@@ -124,6 +124,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/transaction/work/order/{workorder}', [TransactionWorkOrderController::class, 'destroy'])->name('transactionworkorder.destroy');
     Route::get('/transaction/work/order/{workorder}/edit', [TransactionWorkOrderController::class, 'edit'])->name('transactionworkorder.edit');
     Route::post('/transaction/work/order/send/mail', [TransactionWorkOrderController::class, 'mailwocreated'])->name('transactionworkorder.mailwocreated');
+    Route::get('/transaction/work/order/print/{workorder}/PDF', [TransactionWorkOrderController::class, 'printPDF'])->name('transactionworkorder.printpdf');
 
     Route::get('/transaction/work/order/{woid}/supply/', [TransactionWOSupplyController::class, 'index'])->name('transactionwosupply.index');
     Route::get('/transaction/work/order/{woid}/supply/store', [TransactionWOSupplyController::class, 'store'])->name('transactionwosupply.store');

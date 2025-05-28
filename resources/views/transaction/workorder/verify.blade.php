@@ -64,7 +64,7 @@
                                 <div class="col-span-2 sm:col-span-1">
                                     <div class="form-group mt-4">
                                         <x-input-label for="worfid" :value="__('Work Order Referrence ID')" />
-                                        <x-text-input id="worfid" class="block mt-1 w-full" type="text" name="worfid" :value="old('worfid',$workorder->worfid)" required autofocus />
+                                        <x-text-input id="worfid" class="block mt-1 w-full" type="text" name="worfid" :value="old('worfid',$setnewworf)" required readonly  />
                                         <x-input-error :messages="$errors->get('worfid')" class="mt-2" />
                                     </div>
                                 </div>
