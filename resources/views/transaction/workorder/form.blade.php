@@ -11,13 +11,13 @@
         <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-2">
                 <img class="w-10 h-10 rounded-full mx-auto" src="{{ asset("/storage/logo/slsu-logo.jpg") }}" >
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     Southern Luzon State University
                 </h5>
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     GENERAL SERVICES OFFICE
                 </h5>
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     Lucban, Quezon
                 </h5>
             </div>
@@ -28,8 +28,8 @@
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1 border-4 border-solid">
-                <x-input-label class="text-center text-gray-900">W.O.R.F ID</x-input-label>
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <x-input-label class="text-center text-gray-900 dark:text-white">W.O.R.F ID</x-input-label>
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     {{ $workorder->worfid }}
                 </h5>
             </div>
@@ -38,7 +38,7 @@
         <!-- title -->
         <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-2">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     WORK ORDER REQUEST FORM
                 </h5>
             </div>
@@ -47,10 +47,10 @@
         <!-- requesters line 1 -->
         <div class="grid gap-4 mb-4 grid-cols-5">
             <div class="col-span-1 sm:col-span-1">
-                <x-input-label class="text-right text-lg" for="workorderdesc" :value="__('Requesters Name:')" />
+                <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('Requesters Name:')" />
             </div>
             <div class="col-span-2 sm:col-span-2 border-b">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     {{ $workorder->rfullname }}
                 </h5>
             </div>
@@ -58,7 +58,7 @@
                 <x-input-label class="text-center text-gray-900 text-lg" for="workorderdesc" :value="__('Date')" />
             </div>
             <div class="col-span-1 sm:col-span-1 border-b">
-                <h5 class="text-center text-md font-semibold text-gray-900 ">
+                <h5 class="text-center text-md font-semibold text-gray-900 dark:text-white">
                     {{ $workorder->timerecorded }}
                 </h5>
             </div>
@@ -66,10 +66,10 @@
         <!-- requesters line 2 -->
         <div class="grid gap-4 mb-4 grid-cols-5">
             <div class="col-span-1 sm:col-span-1">
-                <x-input-label class="text-right text-lg" for="workorderdesc" :value="__('College/Department:')" />
+                <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('College/Department:')" />
             </div>
             <div class="col-span-2 sm:col-span-2 border-b">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->rdeptname }}
                 </h5>
             </div>
@@ -84,7 +84,7 @@
         <div class="grid gap-4 mb-4 grid-cols-3">
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1 border-4 border-solid">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     SERVICE CLASSIFICATION
                 </h5>
             </div>
@@ -95,7 +95,7 @@
         <div class="grid gap-4 mb-4 grid-cols-3">
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1 border-b border-solid">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     {{ $workorder->workclassdesc }}
                 </h5>
             </div>
@@ -108,7 +108,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Description of facility to be inspected: (please attached picture)')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->workorderdesc }}
                     </h5>
                 </div>
@@ -118,7 +118,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Image')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         @if(!empty($workorder->woimage))
                         <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woimage") }}">
                         @endif
@@ -133,11 +133,11 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Noted By:')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->hfullname }}
                     </h5>
                     <x-input-label>College/Dept. Head</x-input-label>
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->hdtsigned }}
                     </h5>
                 </div>
@@ -146,11 +146,11 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Verified By:')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->vfullname }}
                     </h5>
                     <x-input-label>GSO Supervisor</x-input-label>
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->vdtsigned }}
                     </h5>
                 </div>
@@ -163,11 +163,11 @@
             @csrf
             <!-- table -->
             <div class="max-w-7xl overflow-x-auto sm:rounded-lg mt-4" >
-                <h5 class="text-lg font-semibold text-gray-900 ">
+                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                     List & Supplies Needed
                 </h5>
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                    <thead class="text-xs text-gray-900 uppercase bg-gray-50 ">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white">
+                    <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 No
@@ -186,7 +186,7 @@
                         @forelse ($wosupplies as $wosupply)
                         
                     <tbody>
-                        <tr class="bg-white border-b hover:bg-gray-50 ">
+                        <tr class="bg-white border-b dark:bg-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
                         
                             <td class="px-6 py-4">
                                 <x-input-label>{{ ++$i }}</x-input-label>
@@ -217,7 +217,7 @@
             <div class="grid gap-4 mb-4 grid-cols-2 ">
                 <div class="col-span-2 sm:col-span-1">
                     <div class="form-group mt-4">
-                        <x-input-label class="text-lg font-semibold text-gray-900 ">Estimated No. of Working Days: {{ $workorder->eworkdays }}</x-input-label>
+                        <x-input-label class="text-lg font-semibold text-gray-900 dark:text-white">Estimated No. of Working Days: {{ $workorder->eworkdays }}</x-input-label>
                     </div>
                 </div>
             </div>
@@ -227,7 +227,7 @@
         <div class="grid gap-4 mb-4 grid-cols-3">
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1 border-4 border-solid">
-                <h5 class="text-center text-lg font-semibold text-gray-900 ">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
                     INSPECTION AND ACCEPTANCE
                 </h5>
             </div>
@@ -241,7 +241,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group">
                     <x-input-label for="workorderdesc" :value="__('Completed By')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->cfullname }}
                     </h5>
                     <x-input-label>GSO Supervisor</x-input-label>
@@ -251,11 +251,11 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group">
                     <x-input-label for="workorderdesc" :value="__('Completed By:')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->mfullname }}
                     </h5>
                     <x-input-label>College/Dept. Head</x-input-label>
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->mdtsigned }}
                     </h5>
                 </div>
@@ -272,7 +272,7 @@
             </div>
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->dtstarted }}
                     </h5>
                 </div>
@@ -285,7 +285,7 @@
             </div>
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->dtended }}
                     </h5>
                 </div>
@@ -298,7 +298,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Assigned Personnel')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->sfullname }}
                     </h5>
                 </div>
@@ -308,7 +308,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="Schedule" :value="__('Scheduled On')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->schedule }}
                     </h5>
                 </div>
@@ -323,7 +323,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Priority')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->prioritydesc }}
                     </h5>
                 </div>
@@ -333,7 +333,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="status" :value="__('Status')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->status }}
                     </h5>
                 </div>
@@ -346,7 +346,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Supervised By')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->fsfullname }}
                     </h5>
                 </div>
@@ -355,7 +355,7 @@
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Supervised By')" />
-                    <h5 class="text-lg font-semibold text-gray-900 ">
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->fdfullname }}
                     </h5>
                 </div>

@@ -43,7 +43,7 @@ class TransactionWorkOrderController extends Controller
 
         $printthis = true;
         
-        $pdf = PDF::loadView('transaction.workorder.form', compact('printthis','workorder','wosupplies'))
+        $pdf = PDF::loadView('transaction.workorder.show', compact('printthis','workorder','wosupplies'))
                     ->setPaper('a4', 'portrait');
                     
         return $pdf->download($newfilename);
