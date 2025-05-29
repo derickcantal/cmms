@@ -25,7 +25,16 @@
 
         <!-- worfid -->
         <div class="grid gap-4 mb-4 grid-cols-3">
-            <div class="col-span-1 sm:col-span-1"></div>
+            <div class="col-span-1 sm:col-span-1 border-4 border-solid">
+                <x-input-label class="text-center text-gray-900 dark:text-white">Priority</x-input-label>
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                    @if(empty($workorder->prioritydesc))
+                    To be filled
+                    @else
+                    {{ $workorder->prioritydesc }}
+                    @endif
+                </h5>
+            </div>
             <div class="col-span-1 sm:col-span-1"></div>
             <div class="col-span-1 sm:col-span-1 border-4 border-solid">
                 <x-input-label class="text-center text-gray-900 dark:text-white">W.O.R.F ID</x-input-label>
@@ -55,7 +64,7 @@
                 </h5>
             </div>
             <div class="col-span-1 sm:col-span-1">
-                <x-input-label class="text-center text-gray-900 text-lg" for="workorderdesc" :value="__('Date')" />
+                <x-input-label class="text-right text-gray-900 text-lg" for="workorderdesc" :value="__('Date:')" />
             </div>
             <div class="col-span-1 sm:col-span-1 border-b">
                 <h5 class="text-center text-md font-semibold text-gray-900 dark:text-white">
@@ -74,9 +83,12 @@
                 </h5>
             </div>
             <div class="col-span-1 sm:col-span-1">
+                <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('W.O. Status:')" />
             </div>
-            <div class="col-span-1 sm:col-span-1">
-                
+            <div class="col-span-1 sm:col-span-1 border-4">
+                <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                        {{ $workorder->status }}
+                </h5>
             </div>
         </div>
 
@@ -102,22 +114,12 @@
             <div class="col-span-1 sm:col-span-1"></div>
         </div>
                 
-        <!-- Work Order Description & Image -->
+        <!-- Work Order  Images -->
         <div class="grid gap-4 mb-4 grid-cols-2">
-            <!-- Work Order Description -->
+            <!-- Submitted Image -->
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
-                    <x-input-label for="workorderdesc" :value="__('Description of facility to be inspected: (please attached picture)')" />
-                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        {{ $workorder->workorderdesc }}
-                    </h5>
-                </div>
-            </div>
-            
-            <!-- Image -->
-            <div class="col-span-2 sm:col-span-1">
-                <div class="form-group mt-4">
-                    <x-input-label for="workorderdesc" :value="__('Image')" />
+                    <x-input-label for="workorderdesc" :value="__('Submitted Image')" />
                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         @if(!empty($workorder->woimage))
                         <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woimage") }}">
@@ -125,10 +127,34 @@
                     </h5>
                 </div>
             </div>
+            
+            <!-- Image -->
+            <div class="col-span-2 sm:col-span-1">
+                <div class="form-group mt-4">
+                    <x-input-label for="workorderdesc" :value="__('Completed Work Image')" />
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        @if(!empty($workorder->woemage))
+                        <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woimage") }}">
+                        @endif
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid gap-4 mb-4 grid-cols-2">
+            <!-- Work Order Description -->
+            <div class="col-span-2 sm:col-span-2">
+                <div class="form-group mt-4">
+                    <x-input-label for="workorderdesc" :value="__('Description of facility to be inspected: (please attached picture)')" />
+                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        {{ $workorder->workorderdesc }}. {{ $workorder->notes }}  
+                    </h5>
+                </div>
+            </div>
         </div>
 
         <!-- Noted By -->
-        <div class="grid gap-4 mb-4 grid-cols-2">
+        <div class="grid gap-4 mb-4 grid-cols-4">
             <!-- Department Head -->
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group mt-4">
@@ -141,6 +167,12 @@
                         {{ $workorder->hdtsigned }}
                     </h5>
                 </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+                <x-input-label>College/Dept. Head - Signature</x-input-label>
+                @if(!empty($workorder->hdsignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->hdsignimage") }}">
+                @endif
             </div>
             <!-- Verified By -->
             <div class="col-span-2 sm:col-span-1">
@@ -155,9 +187,15 @@
                     </h5>
                 </div>
             </div>
+            <div class="col-span-2 sm:col-span-1">
+                <x-input-label>College/Dept. Head - Signature</x-input-label>
+                @if(!empty($workorder->vsignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->vsignimage") }}">
+                @endif
+            </div>
         </div>
 
-        <div class="grid gap-4 mb-4 grid-cols-3 border-t border-dashed "></div>
+        <div class="grid gap-4 mb-4 grid-cols-1 border-t border-dashed "></div>
         <!-- supply list & EWD -->
         <div class="grid gap-4 mb-4 grid-cols-1">
             @csrf
@@ -233,10 +271,14 @@
             </div>
             <div class="col-span-1 sm:col-span-1"></div>
         </div>
+        <!-- agree -->
         <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2 sm:col-span-2">
                 <x-input-label>I aggree and Accept that all works has been performed to my satisfaction.</x-input-label>
             </div>
+        </div>
+        <!-- signed by -->
+        <div class="grid gap-4 mb-4 grid-cols-4">
             <!-- Completed By -->
             <div class="col-span-2 sm:col-span-1">
                 <div class="form-group">
@@ -246,6 +288,12 @@
                     </h5>
                     <x-input-label>GSO Supervisor</x-input-label>
                 </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+                <x-input-label>GSO Supervisor- Signature</x-input-label>
+                @if(!empty($workorder->ssignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->ssignimage") }}">
+                @endif
             </div>
             <!-- Monitored By -->
             <div class="col-span-2 sm:col-span-1">
@@ -259,6 +307,12 @@
                         {{ $workorder->mdtsigned }}
                     </h5>
                 </div>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+                <x-input-label>College/Dept. Head - Signature</x-input-label>
+                @if(!empty($workorder->msignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->msignimage") }}">
+                @endif
             </div>
         </div>
 
@@ -309,56 +363,46 @@
                 <div class="form-group mt-4">
                     <x-input-label for="Schedule" :value="__('Scheduled On')" />
                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        {{ $workorder->schedule }}
+                        {{ $workorder->start }} - {{ $workorder->end }}
                     </h5>
                 </div>
             </div>
             
         </div>
 
-        <!-- Work Description -->
-        <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t ">
-
-            <!-- Priority -->
-            <div class="col-span-2 sm:col-span-1">
-                <div class="form-group mt-4">
-                    <x-input-label for="workorderdesc" :value="__('Priority')" />
-                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        {{ $workorder->prioritydesc }}
-                    </h5>
-                </div>
-            </div>
-
-            <!-- status -->
-            <div class="col-span-2 sm:col-span-1">
-                <div class="form-group mt-4">
-                    <x-input-label for="status" :value="__('Status')" />
-                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        {{ $workorder->status }}
-                    </h5>
-                </div>
-            </div>
-        </div>
-
         <!-- Supervised -->
-        <div class="grid gap-4 mb-4 grid-cols-2 border-t ">
-            <!-- Time Started -->
-            <div class="col-span-2 sm:col-span-1">
+        <div class="grid gap-4 mb-4 grid-cols-4 border-t ">
+            <!-- Supervisor -->
+            <div class="col-span-1 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Supervised By')" />
                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->fsfullname }}
                     </h5>
+                    <x-input-label>GSO Supervisor</x-input-label>
                 </div>
             </div>
-            <!-- Time Ended -->
-            <div class="col-span-2 sm:col-span-1">
+            <div class="col-span-1 sm:col-span-1">
+                <x-input-label>GSO Supervisor - Signature</x-input-label>
+                @if(!empty($workorder->fssignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->fssignimage") }}">
+                @endif
+            </div>
+            <!-- Director -->
+            <div class="col-span-1 sm:col-span-1">
                 <div class="form-group mt-4">
                     <x-input-label for="workorderdesc" :value="__('Supervised By')" />
                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                         {{ $workorder->fdfullname }}
                     </h5>
+                    <x-input-label>Director, General Services Office</x-input-label>
                 </div>
+            </div>
+            <div class="col-span-1 sm:col-span-1">
+                <x-input-label>GSO Director - Signature</x-input-label>
+                @if(!empty($workorder->fdsignimage))
+                    <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->fdsignimage") }}">
+                @endif
             </div>
         </div>
 

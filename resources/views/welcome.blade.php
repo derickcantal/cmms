@@ -73,9 +73,15 @@
                 <div class="bg-white dark:bg-white relative lg:-ml-px -mb-px lg:mb-0 rounded-full lg:rounded-full lg:rounded-full aspect-[335/335] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
                     {{-- SLSU Logo --}}
                     <img class="" src="{{ asset("/storage/logo/slsu-logo.jpg") }}" alt="logo" />
-                   
+                    
                 </div>
+                
+                
             </main>
+            
+        </div>
+        <div>
+            <p class="text-gray-900 text-3xl dark:text-white">General Services Office</p>
         </div>
 
         @if (Route::has('login'))
