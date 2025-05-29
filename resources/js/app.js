@@ -22,6 +22,7 @@ window.myFunctionName = function(parameter){
   initialView: 'dayGridMonth',
   selectable: true,
   events: '/events',
+  eventTextColor: 'black',
   editable: false,
 
   headerToolbar: {

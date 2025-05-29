@@ -47,6 +47,7 @@ class User extends Authenticatable
         'deptname',
         'password',
         'notes',
+        'usersignimage',
         'modifiedid',
         'timerecorded',
         'created_by',

@@ -29,6 +29,63 @@ use Barryvdh\DomPDF\Facade\Pdf;
  
 class TransactionWorkOrderController extends Controller
 {
+    public function feedback(Request $request,$workorderid)
+    {
+        // dd($request,$workorderid);
+        $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'monitoredbyid' => auth()->user()->userid,
+                    'mfullname' => $fullname,
+                    'memail' => auth()->user()->email,
+                    'mdtsigned' => $timenow,
+                    'remarks' => $request->remarks,
+                    'status' => 'For Final Submission',
+                    ]);
+                if($workorders){
+
+                    $this->mailwomonitored($workorderid);
+
+                    return redirect()->route('transactionworkorder.show',$workorder->workorderid)
+                        ->with('success','Work Order Ended');
+                }else{
+                    return redirect()->route('transactionworkorder.show',$workorder->workorderid)
+                        ->with('failed','Work Order Ended Error');
+                }
+    }
+
+    public function disapprove(Request $request,$workorderid){
+
+        $fullname = auth()->user()->lastname . ', ' . auth()->user()->firstname . ' ' . auth()->user()->middlename;
+        $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
+
+        $workorder = workorder::where('workorderid',$workorderid)->first();
+
+        // dd('disapprove!!',$request,$workorderid,$fullname);
+        
+        $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
+                'verifybyid' => auth()->user()->userid,
+                'vfullname' => $fullname,
+                'vdeptid' => auth()->user()->deptid,
+                'vdeptname' => auth()->user()->deptname,
+                'vemail' => auth()->user()->email,
+                'vdtsigned' => $timenow,
+                'vstatus' => 'Disapproved',
+                'remarks' => $request->remarks,
+                'status' => 'Disapproved',
+                ]);
+        
+        if($workorders){
+            return redirect()->route('transactionworkorder.index')
+                ->with('success','Work Order Rejected. Disapproved.');
+        }else{
+            return redirect()->route('transactionworkorder.index')
+                ->with('failed','Work Order Rejection Error');
+        }
+        
+    }
 
     public function printPDF($workorderid){
         $workorder = workorder::where('workorderid',$workorderid)->first();
@@ -340,11 +397,10 @@ class TransactionWorkOrderController extends Controller
                 if(empty($worfidno))
                 {
                     $worfidno = history_workorder::where('workclassdesc',$workorder->workclassdesc)
-                                ->where(function(Builder $builder) use($request){
-                        $builder->where('status','On Process'); 
-                                })
                                 ->latest()->first();
                 }
+
+
                 if(empty($worfidno))
                 {
                     $num = $worfidno + 1;
@@ -361,13 +417,14 @@ class TransactionWorkOrderController extends Controller
                     $newnumber = $last3Char + 1;
                     $newtotal = $tyear . '-' .substr("0000{$newnumber}", -$str_length);
                 }
+
                 
-                // dd($workorder->workclassdesc,$worfidno,$newworfid,$last3Char,$newnumber,$newtotal);
                 if (!empty($newworfid)){
                     $setnewworf = $newworfid;
                 }elseif(!empty($newtotal)){
                     $setnewworf = $newtotal;
                 }
+                // dd($workorder->workclassdesc,$setnewworf);
                
                 // dd($setnewworf);
 
@@ -402,28 +459,12 @@ class TransactionWorkOrderController extends Controller
             }
         }elseif($request->input('action') == "personnelcwork")
         {
-
                 return view('transaction.workorder.personnel',compact('workorder'));
         }elseif($request->input('action') == "deptheadwe")
         {
             if(!empty($workorder->dtstarted) and empty(!$workorder->dtended)){
-                $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
-                    'monitoredbyid' => auth()->user()->userid,
-                    'mfullname' => $fullname,
-                    'memail' => auth()->user()->email,
-                    'mdtsigned' => $timenow,
-                    'status' => 'For Final Submission',
-                    ]);
-                if($workorders){
-
-                    $this->mailwomonitored($workorderid);
-
-                    return redirect()->back()
-                        ->with('success','Work Order Ended');
-                }else{
-                    return redirect()->back()
-                        ->with('failed','Work Order Ended Error');
-                }
+                return view('transaction.workorder.feedback', compact('workorder'));
+                
             }
             
 
@@ -451,9 +492,48 @@ class TransactionWorkOrderController extends Controller
                 return redirect()->back()
                     ->with('failed','Work Order Finalize Error');
             }
+        }elseif($request->input('action') == "supervisordisapprove")
+        {
+
+            return view('transaction.workorder.disapprove',compact('workorder'));
+
         }elseif($request->input('action') == "director")
         {
-            $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+            if($workorder->status == 'Disapproved'){
+                // dd('Disapproved',$workorder->workorderid);
+                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
+                    'fduserid' => auth()->user()->userid,
+                    'fdfullname' => $fullname,
+                    'fdemail' => auth()->user()->email,
+                    'fddeptid' => auth()->user()->deptid,
+                    'fddeptname' => auth()->user()->deptname,
+                    'fddtsigned' => $timenow,
+                    ]);
+
+                    if($workorders){
+                        $archived = workorder::query()->where('workorderid',$workorder->workorderid)
+                                                ->each(function ($oldRecord) {
+                                                    $newRecord = $oldRecord->replicate();
+                                                    $newRecord->setTable('history_workorder');
+                                                    $newRecord->save();
+                                                    $oldRecord->delete();
+                                                });
+                        if($archived)
+                        {
+                            return redirect()->route('transactionworkorder.index')
+                                ->with('success','Work Order Completed and archived');
+                        }else{
+                            return redirect()->route('transactionworkorder.index')
+                            ->with('failed','Work Order Archive Failed');
+                        }
+                        
+                    }else{
+                        return redirect()->back()
+                            ->with('failed','Work Order Completion Failed');
+                    }
+
+            }else{
+                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'fduserid' => auth()->user()->userid,
                     'fdfullname' => $fullname,
                     'fdemail' => auth()->user()->email,
@@ -464,30 +544,32 @@ class TransactionWorkOrderController extends Controller
                     'status' => 'Completed',
                     ]);
 
-            if($workorders){
-                $archived = workorder::query()->where('workorderid',$workorder->workorderid)
-                                        ->where(function(Builder $builder){
-                                            $builder->where('status', "Completed");
-                                        })
-                                        ->each(function ($oldRecord) {
-                                            $newRecord = $oldRecord->replicate();
-                                            $newRecord->setTable('history_workorder');
-                                            $newRecord->save();
-                                            $oldRecord->delete();
-                                        });
-                if($archived)
-                {
-                    return redirect()->route('transactionworkorder.index')
-                        ->with('success','Work Order Completed and archived');
-                }else{
-                    return redirect()->route('transactionworkorder.index')
-                    ->with('failed','Work Order Archive Failed');
-                }
-                
-            }else{
-                return redirect()->back()
-                    ->with('failed','Work Order Completion Failed');
+                    if($workorders){
+                        $archived = workorder::query()->where('workorderid',$workorder->workorderid)
+                                                ->where(function(Builder $builder){
+                                                    $builder->where('status', "Completed");
+                                                })
+                                                ->each(function ($oldRecord) {
+                                                    $newRecord = $oldRecord->replicate();
+                                                    $newRecord->setTable('history_workorder');
+                                                    $newRecord->save();
+                                                    $oldRecord->delete();
+                                                });
+                        if($archived)
+                        {
+                            return redirect()->route('transactionworkorder.index')
+                                ->with('success','Work Order Completed and archived');
+                        }else{
+                            return redirect()->route('transactionworkorder.index')
+                            ->with('failed','Work Order Archive Failed');
+                        }
+                        
+                    }else{
+                        return redirect()->back()
+                            ->with('failed','Work Order Completion Failed');
+                    }
             }
+           
         }
 
     }

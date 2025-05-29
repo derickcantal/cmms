@@ -152,23 +152,23 @@
                                         </th>
                                         <td class="px-6 py-4">
                                             @if(empty($workorders->prioritydesc))
-                                            <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
+                                            <span class="bg-red-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Uncategorized 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Immediate')
-                                             <span class="bg-red-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
+                                             <span class="bg-red-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-red-600 dark:text-white">
                                                  Immediate 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'High')
-                                             <span class="bg-orange-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-600 dark:text-white">
+                                             <span class="bg-orange-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-orange-600 dark:text-white">
                                                  High 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Medium')
-                                             <span class="bg-yellow-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-600 dark:text-white">
+                                             <span class="bg-yellow-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-yellow-600 dark:text-white">
                                                  Medium 
                                             </span>
                                             @elseif($workorders->prioritydesc == 'Low')
-                                             <span class="bg-green-600 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-600 dark:text-white">
+                                             <span class="bg-green-600 text-white text-xs font-medium px-2 py-0.5 rounded dark:bg-green-600 dark:text-white">
                                                  Low 
                                             </span>
                                             @endif
@@ -195,6 +195,8 @@
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
                                                 @elseif($workorders->status == 'Completed')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
+                                                @elseif($workorders->status == 'Disapproved')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-600"></div>
                                                 @endif
                                                 <x-input-label for="status" :value="$workorders->status"/>
                                             </div>

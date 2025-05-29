@@ -367,38 +367,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Time -->
-                                    <div class="grid gap-4 mb-4 grid-cols-4 border-t">
-                                        <!-- Time Started -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
-                                            </div>
-                                        </div>
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtstarted }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Time Ended -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
-                                            </div>
-                                        </div>
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtended }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <!-- Personnel -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 ">
+                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t">
                                         <!-- Department Name -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
@@ -419,6 +389,37 @@
                                             </div>
                                         </div>
                                         
+                                    </div>
+
+                                    <!-- Time -->
+                                    <div class="grid gap-4 mb-4 grid-cols-4 ">
+                                        <!-- Time Started -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtstarted }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                               <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtended }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <!-- Time Ended -->
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Remarks')" />
+                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->remarks }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                       
                                     </div>
 
                                     <!-- Supervised -->
@@ -498,7 +499,7 @@
                                                 </svg>
                                                 Approve
                                             </button>
-                                            @elseif(empty($workorder->monitoredbyid) and !empty($workorder->dtended))
+                                            @elseif(empty($workorder->monitoredbyid) and !empty($workorder->dtended) and $workorder->status != 'Disapproved')
                                             <button type="submit" name='action' value='deptheadwe' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
@@ -508,7 +509,7 @@
                                             </button>
                                             @endif
                                         @endif
-                                        @if(auth()->user()->accessname == 'Supervisor')
+                                        @if(auth()->user()->accessname == 'Supervisor' and $workorder->status != 'Disapproved')
                                             @if($workorder->mstatus != 'Completed' and empty($workorder->startedbyid))
                                             <button type="submit" name='action' value='supervisorverify' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -516,6 +517,14 @@
                                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                                 </svg>
                                                 Verify
+                                            </button>
+
+                                            <button type="submit" name='action' value='supervisordisapprove' class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
+                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                </svg>
+                                                Disapprove
                                             </button>
                                             @else
                                                 @if($workorder->status == 'For Final Submission' and !empty($workorder->monitoredbyid) )
@@ -530,8 +539,8 @@
                                             @endif
                                             
                                         @endif
-                                        @if(auth()->user()->accessname == 'Director')
-                                            @if(!empty($workorder->fsdeptid))
+                                        @if(auth()->user()->accessname == 'Director' )
+                                            @if(!empty($workorder->fsdeptid) or $workorder->status == 'Disapproved')
                                             <button type="submit" name='action' value='director' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
@@ -542,7 +551,7 @@
                                             @endif
                                         @endif
                                         <a href="{{ route('transactionworkorder.printpdf',$workorder->workorderid) }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium px-5 py-2.5 text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z"/>
                                         </svg>
                                             Print

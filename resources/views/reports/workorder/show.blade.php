@@ -368,38 +368,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Time -->
-                                    <div class="grid gap-4 mb-4 grid-cols-4 border-t">
-                                        <!-- Time Started -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
-                                            </div>
-                                        </div>
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtstarted }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Time Ended -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
-                                            </div>
-                                        </div>
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtended }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Personnel -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 ">
+                                        <!-- Personnel -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t">
                                         <!-- Department Name -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
@@ -416,6 +386,37 @@
                                                 <x-input-label for="Schedule" :value="__('Scheduled On')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->start }} - {{ $workorder->end }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- Time -->
+                                    <div class="grid gap-4 mb-4 grid-cols-4 ">
+                                        <!-- Time Started -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
+                                                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtstarted }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
+                                                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtended }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <!-- Time Ended -->
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Remarks')" />
+                                                    <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->remarks }}
                                                 </h5>
                                             </div>
                                         </div>

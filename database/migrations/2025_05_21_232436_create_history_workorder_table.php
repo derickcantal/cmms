@@ -88,6 +88,7 @@ return new class extends Migration
             $table->string('prioritydesc')->nullable();
             $table->timestamps();
             $table->string('notes')->nullable();
+            $table->string('remarks')->nullable();
             $table->integer('modifiedid');
             $table->dateTime('timerecorded');
             $table->string('created_by');

@@ -72,6 +72,7 @@ class workorder extends Model
         'memail',
         'msignimage',
         'notes',
+        'remarks',
         'fsuserid',
         'fsfullname',
         'fsemail',

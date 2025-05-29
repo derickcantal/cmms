@@ -204,6 +204,8 @@
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
                                                 @elseif($workorders->status == 'Completed')
                                                     <div class="h-4 w-4 rounded-full inline-block mr-2 bg-green-600"></div>
+                                                @elseif($workorders->status == 'Disapproved')
+                                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-600"></div>
                                                 @endif
                                                 <x-input-label for="status" :value="$workorders->status"/>
                                             </div>
@@ -221,13 +223,15 @@
                                                     auth()->user()->accessname == 'Administrator' or
                                                     auth()->user()->accessname == 'Director'
                                                 )
+                                                @if(!empty($workorders->worfid))
                                                 <a href="{{ route('transactionwosupply.index',$workorders->workorderid) }}" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                                   <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"/>
                                                     </svg>
+
                                                     Supply
                                                 </a>
+                                                @endif
                                                 @endif
 
                                                 <a href="{{ route('transactionworkorder.show',$workorders->workorderid) }}" class="py-2 px-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">

@@ -67,6 +67,7 @@ class history_workorder extends Model
         'memail',
         'msignimage',
         'notes',
+        'remarks',
         'fsuserid',
         'fsfullname',
         'fsemail',
