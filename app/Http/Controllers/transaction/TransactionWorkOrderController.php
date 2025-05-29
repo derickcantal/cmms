@@ -39,7 +39,7 @@ class TransactionWorkOrderController extends Controller
         $newfilename = $workorder->worfid .'-'. $workorder->rdeptname.'.pdf';
         
         return view('transaction.workorder.form')->with(['workorder' => $workorder])
-        ->with(['wosupplies' => $wosupplies]);
+        ->with(['wosupplies' => $wosupplies])->with('i', (request()->input('page', 1) - 1) * 5);
 
         $printthis = true;
         
@@ -357,6 +357,7 @@ class TransactionWorkOrderController extends Controller
                     // $n4 = preg_replace('/[-]+/', '', $worfidno->worfid);
                     // $last3Char = substr($newworfid, -3);
                     $last3Char = substr($worfidno->worfid, -3);
+                    $str_length = 3;
                     $newnumber = $last3Char + 1;
                     $newtotal = $tyear . '-' .substr("0000{$newnumber}", -$str_length);
                 }

@@ -59,68 +59,154 @@
                                         </h3>
                                     </div>
 
-                                    <!-- Work Order Information -->
+                                    <!-- header -->
                                     <div class="grid gap-4 mb-4 grid-cols-2">
-                                          <!-- Requested By -->
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <img class="w-10 h-10 rounded-full mx-auto" src="{{ asset("/storage/logo/slsu-logo.jpg") }}" >
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                Southern Luzon State University
+                                            </h5>
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                GENERAL SERVICES OFFICE
+                                            </h5>
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                Lucban, Quezon
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <!-- worfid -->
+                                    <div class="grid gap-4 mb-4 grid-cols-3">
+                                        <div class="col-span-1 sm:col-span-1 border-4 border-solid">
+                                            <x-input-label class="text-center text-gray-900 dark:text-white">Priority</x-input-label>
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                @if(empty($workorder->prioritydesc))
+                                                To be filled
+                                                @else
+                                                {{ $workorder->prioritydesc }}
+                                                @endif
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                        <div class="col-span-1 sm:col-span-1 border-4 border-solid">
+                                            <x-input-label class="text-center text-gray-900 dark:text-white">W.O.R.F ID</x-input-label>
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->worfid }}
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <!-- title -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                WORK ORDER REQUEST FORM
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <!-- requesters line 1 -->
+                                    <div class="grid gap-4 mb-4 grid-cols-5">
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('Requesters Name:')" />
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-2 border-b">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->rfullname }}
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label class="text-right text-gray-900 text-lg" for="workorderdesc" :value="__('Date:')" />
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1 border-b">
+                                            <h5 class="text-center text-md font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->timerecorded }}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <!-- requesters line 2 -->
+                                    <div class="grid gap-4 mb-4 grid-cols-5">
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('College/Department:')" />
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-2 border-b">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->rdeptname }}
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label class="text-right text-lg dark:text-white" for="workorderdesc" :value="__('W.O. Status:')" />
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1 border-4">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->status }}
+                                            </h5>
+                                        </div>
+                                    </div>
+
+                                    <!-- Service Classification -->
+                                    <div class="grid gap-4 mb-4 grid-cols-3">
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                        <div class="col-span-1 sm:col-span-1 border-4 border-solid">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                SERVICE CLASSIFICATION
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                    </div>
+
+                                    <!-- Service Classification -->
+                                    <div class="grid gap-4 mb-4 grid-cols-3">
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                        <div class="col-span-1 sm:col-span-1 border-b border-solid">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                {{ $workorder->workclassdesc }}
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                    </div>
+                                            
+                                    <!-- Work Order  Images -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                        <!-- Submitted Image -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Requested By:')" />
+                                                <x-input-label for="workorderdesc" :value="__('Submitted Image')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->rfullname }}
+                                                    @if(!empty($workorder->woimage))
+                                                    <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woimage") }}">
+                                                    @endif
                                                 </h5>
                                             </div>
                                         </div>
                                         
-                                        <!-- Department Name -->
+                                        <!-- Image -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Department')" />
+                                                <x-input-label for="workorderdesc" :value="__('Completed Work Image')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->rdeptname }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Work Class Description -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Work Class Description')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->workclassdesc }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Work Order Description -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Work Order Description')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->workorderdesc }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                      
-                                        <!-- Mobile -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Mobile No.')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->mobile_primary }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Email -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('email')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->email }}
+                                                    @if(!empty($workorder->woeimage))
+                                                    <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woeimage") }}">
+                                                    @endif
                                                 </h5>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
+                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                        <!-- Work Order Description -->
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Description of facility to be inspected: (please attached picture)')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->workorderdesc }}. {{ $workorder->notes }}  
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Noted By -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
+                                    <div class="grid gap-4 mb-4 grid-cols-4">
                                         <!-- Department Head -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
@@ -128,13 +214,17 @@
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->hfullname }}
                                                 </h5>
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->hstatus }}
-                                                </h5>
+                                                <x-input-label>College/Dept. Head</x-input-label>
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->hdtsigned }}
                                                 </h5>
                                             </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <x-input-label>College/Dept. Head - Signature</x-input-label>
+                                            @if(!empty($workorder->hdsignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->hdsignimage") }}">
+                                            @endif
                                         </div>
                                         <!-- Verified By -->
                                         <div class="col-span-2 sm:col-span-1">
@@ -143,26 +233,31 @@
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->vfullname }}
                                                 </h5>
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->vstatus }}
-                                                </h5>
+                                                <x-input-label>GSO Supervisor</x-input-label>
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->vdtsigned }}
                                                 </h5>
                                             </div>
                                         </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <x-input-label>College/Dept. Head - Signature</x-input-label>
+                                            @if(!empty($workorder->vsignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->vsignimage") }}">
+                                            @endif
+                                        </div>
                                     </div>
 
-                                    <!-- supply list -->
-                                    <div class="grid gap-4 mb-4 grid-cols-1 border-t rounded-t dark:border-gray-600">
+                                    <div class="grid gap-4 mb-4 grid-cols-1 border-t border-dashed "></div>
+                                    <!-- supply list & EWD -->
+                                    <div class="grid gap-4 mb-4 grid-cols-1">
                                         @csrf
                                         <!-- table -->
                                         <div class="max-w-7xl overflow-x-auto sm:rounded-lg mt-4" >
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                Supply List
+                                                List & Supplies Needed
                                             </h5>
-                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-white">
+                                                <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                     <tr>
                                                         <th scope="col" class="px-6 py-3">
                                                             No
@@ -181,7 +276,7 @@
                                                     @forelse ($wosupplies as $wosupply)
                                                     
                                                 <tbody>
-                                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <tr class="bg-white border-b dark:bg-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                     
                                                         <td class="px-6 py-4">
                                                             <x-input-label>{{ ++$i }}</x-input-label>
@@ -208,10 +303,103 @@
                                                 
                                             </table>
                                         </div>
+                                        <!-- Estimated Work Days -->
+                                        <div class="grid gap-4 mb-4 grid-cols-2 ">
+                                            <div class="col-span-2 sm:col-span-1">
+                                                <div class="form-group mt-4">
+                                                    <x-input-label class="text-lg font-semibold text-gray-900 dark:text-white">Estimated No. of Working Days: {{ $workorder->eworkdays }}</x-input-label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid gap-4 mb-4 grid-cols-3 border-t border-dashed "></div>
+                                    <!-- inspection and acceptance -->
+                                    <div class="grid gap-4 mb-4 grid-cols-3">
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                        <div class="col-span-1 sm:col-span-1 border-4 border-solid">
+                                            <h5 class="text-center text-lg font-semibold text-gray-900 dark:text-white">
+                                                INSPECTION AND ACCEPTANCE
+                                            </h5>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1"></div>
+                                    </div>
+                                    <!-- agree -->
+                                    <div class="grid gap-4 mb-4 grid-cols-2">
+                                        <div class="col-span-2 sm:col-span-2">
+                                            <x-input-label>I aggree and Accept that all works has been performed to my satisfaction.</x-input-label>
+                                        </div>
+                                    </div>
+                                    <!-- signed by -->
+                                    <div class="grid gap-4 mb-4 grid-cols-4">
+                                        <!-- Completed By -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group">
+                                                <x-input-label for="workorderdesc" :value="__('Completed By')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->cfullname }}
+                                                </h5>
+                                                <x-input-label>GSO Supervisor</x-input-label>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <x-input-label>GSO Supervisor- Signature</x-input-label>
+                                            @if(!empty($workorder->ssignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->ssignimage") }}">
+                                            @endif
+                                        </div>
+                                        <!-- Monitored By -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group">
+                                                <x-input-label for="workorderdesc" :value="__('Completed By:')" />
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->mfullname }}
+                                                </h5>
+                                                <x-input-label>College/Dept. Head</x-input-label>
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->mdtsigned }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <x-input-label>College/Dept. Head - Signature</x-input-label>
+                                            @if(!empty($workorder->msignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->msignimage") }}">
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <!-- Time -->
+                                    <div class="grid gap-4 mb-4 grid-cols-4 border-t">
+                                        <!-- Time Started -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtstarted }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <!-- Time Ended -->
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
+                                            </div>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1">
+                                            <div class="form-group mt-4">
+                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                    {{ $workorder->dtended }}
+                                                </h5>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Personnel -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
+                                    <div class="grid gap-4 mb-4 grid-cols-2 ">
                                         <!-- Department Name -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
@@ -222,243 +410,63 @@
                                             </div>
                                         </div>
 
-                                         <!-- Schedule -->
+                                            <!-- Schedule -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="Schedule" :value="__('Scheduled On')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->schedule }}
+                                                    {{ $workorder->start }} - {{ $workorder->end }}
                                                 </h5>
                                             </div>
                                         </div>
                                         
                                     </div>
 
-                                    <!-- Completed By -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Completed By -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Completed By')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->cfullname }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Monitored By -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Monitored By')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->mfullname }}
-                                                </h5>
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->mdtsigned }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-
-                                    <!-- Time -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Time Started -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Started')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtstarted }}
-                                                    @if(!empty($workorder->woimage))
-                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woimage") }}">
-                                                    @endif
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <!-- Time Ended -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Date Time Ended')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->dtended }}
-                                                    @if(!empty($workorder->woeimage))
-                                                    <img class="w-20 h-20 rounded-sm" src="{{ asset("/storage/$workorder->woeimage") }}" >
-                                                    @endif
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Work Description -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Work Order Referrence No. -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Work Order Referrence No.')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->worfid }}
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <!-- Estimated Work Days -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Estimated Work Days')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->eworkdays }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                
-                                        <!-- createdby -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="created_by" :value="__('Registered By')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->created_by }}
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <!-- TimeDate -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="timerecorded" :value="__('Registered Date')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->timerecorded }}
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <!-- Priority -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="workorderdesc" :value="__('Priority')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->prioritydesc }}
-                                                </h5>
-                                            </div>
-                                        </div>
-
-                                        <!-- status -->
-                                        <div class="col-span-2 sm:col-span-1">
-                                            <div class="form-group mt-4">
-                                                <x-input-label for="status" :value="__('Status')" />
-                                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    {{ $workorder->status }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <!-- Supervised -->
-                                    <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
-                                        <!-- Time Started -->
-                                        <div class="col-span-2 sm:col-span-1">
+                                    <div class="grid gap-4 mb-4 grid-cols-4 border-t ">
+                                        <!-- Supervisor -->
+                                        <div class="col-span-1 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Supervised By')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->fsfullname }}
                                                 </h5>
+                                                <x-input-label>GSO Supervisor</x-input-label>
                                             </div>
                                         </div>
-                                        <!-- Time Ended -->
-                                        <div class="col-span-2 sm:col-span-1">
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label>GSO Supervisor - Signature</x-input-label>
+                                            @if(!empty($workorder->fssignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->fssignimage") }}">
+                                            @endif
+                                        </div>
+                                        <!-- Director -->
+                                        <div class="col-span-1 sm:col-span-1">
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Supervised By')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->fdfullname }}
                                                 </h5>
+                                                <x-input-label>Director, General Services Office</x-input-label>
                                             </div>
+                                        </div>
+                                        <div class="col-span-1 sm:col-span-1">
+                                            <x-input-label>GSO Director - Signature</x-input-label>
+                                            @if(!empty($workorder->fdsignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->fdsignimage") }}">
+                                            @endif
                                         </div>
                                     </div>
 
                                     <!-- Button -->
                                     <div class="flex items-center justify-center p-4 md:p-4 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        @if(auth()->user()->accessname == 'Personnel' and $workorder->mstatus == 'Monitoring')
-                                            @if(empty($workorder->dtstarted))
-                                            <button type="submit" name='action' value='personnelswork' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                    Start Monitor
-                                            </button>
-                                            @else
-                                            <button type="submit" name='action' value='personnelcwork' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                End Monitor
-                                            </button>
-                                            @endif
-                                        @endif
-                                        @if(auth()->user()->accessname == 'Personnel' and !empty($workorder->dtended))
-                                            @if(empty($workorder->completedbyid))
-                                            <button type="submit" name='action' value='personnel' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                Completed
-                                            </button>
-                                            @endif
-                                        @endif
-                                        @if(auth()->user()->accessname == 'Dept. Head')
-                                            @if(empty($workorder->headid))
-                                            <button type="submit" name='action' value='deptheadapproval' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                Approve
-                                            </button>
-                                            @elseif(empty($workorder->monitoredbyid) and !empty($workorder->dtended))
-                                            <button type="submit" name='action' value='deptheadwe' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                Approve Work
-                                            </button>
-                                            @endif
-                                        @endif
-                                        @if(auth()->user()->accessname == 'Supervisor')
-                                            @if($workorder->mstatus != 'Completed' and empty($workorder->startedbyid))
-                                            <button type="submit" name='action' value='supervisorverify' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                Verify
-                                            </button>
-                                            @else
-                                                @if($workorder->status == 'For Final Submission' and !empty($workorder->monitoredbyid) )
-                                                <button type="submit" name='action' value='supervisorfinal' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                    <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                    </svg>
-                                                    Finalize
-                                                </button>
-                                                @endif
-                                            @endif
-                                            
-                                        @endif
-                                        @if(auth()->user()->accessname == 'Director')
-                                            @if($workorder->status != 'Completed')
-                                            <button type="submit" name='action' value='director' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                                <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>
-                                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 4h8v4H8V4Zm7 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                                                </svg>
-                                                Archive
-                                            </button>
-                                            @endif
-                                        @endif
-                                        
-                                        <a href="{{ route('reportshistoryworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                        <a href="{{ route('reportshistoryworkorder.printpdf',$workorder->workorderid) }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium px-5 py-2.5 text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z"/>
+                                        </svg>
+                                            Print
+                                        </a>
+                                        <a href="{{ route('transactionworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                             <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                                             </svg>

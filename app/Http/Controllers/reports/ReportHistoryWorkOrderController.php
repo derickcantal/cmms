@@ -17,6 +17,26 @@ use \Carbon\Carbon;
 
 class ReportHistoryWorkOrderController extends Controller
 {
+    public function printPDF($workorderid){
+        $workorder = history_workorder::where('workorderid',$workorderid)->first();
+
+        $wosupplies = wosupplies::where('workorderid',$workorder->workorderid)->latest()->get();
+        // dd($workorder->worfid .'-'. $workorder->rdeptname.'.pdf');
+
+        $newfilename = $workorder->worfid .'-'. $workorder->rdeptname.'.pdf';
+        
+        return view('transaction.workorder.form')->with(['workorder' => $workorder])
+        ->with(['wosupplies' => $wosupplies])->with('i', (request()->input('page', 1) - 1) * 5);
+
+        $printthis = true;
+        
+        $pdf = PDF::loadView('transaction.workorder.show', compact('printthis','workorder','wosupplies'))
+                    ->setPaper('a4', 'portrait');
+                    
+        return $pdf->download($newfilename);
+        
+    }
+
     public function search(Request $request)
     {
         $workclass = workclass::get();

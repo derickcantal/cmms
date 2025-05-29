@@ -184,8 +184,8 @@
                                             <div class="form-group mt-4">
                                                 <x-input-label for="workorderdesc" :value="__('Completed Work Image')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                    @if(!empty($workorder->woemage))
-                                                    <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woimage") }}">
+                                                    @if(!empty($workorder->woeimage))
+                                                    <img class="h-auto max-w-xs rounded-lg" src="{{ asset("/storage/$workorder->woeimage") }}">
                                                     @endif
                                                 </h5>
                                             </div>
@@ -531,7 +531,7 @@
                                             
                                         @endif
                                         @if(auth()->user()->accessname == 'Director')
-                                            @if(!empty($workorder->fddeptid))
+                                            @if(!empty($workorder->fsdeptid))
                                             <button type="submit" name='action' value='director' class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                                 <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h11.586a1 1 0 0 1 .707.293l2.414 2.414a1 1 0 0 1 .293.707V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Z"/>

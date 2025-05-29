@@ -152,6 +152,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/history/work/order', [ReportHistoryWorkOrderController::class, 'index'])->name('reportshistoryworkorder.index');
     Route::get('/reports/history/work/search', [ReportHistoryWorkOrderController::class, 'search'])->name('reportshistoryworkorder.search');
     Route::get('/reports/history/work/{supplydelivery}/order', [ReportHistoryWorkOrderController::class, 'show'])->name('reportshistoryworkorder.show');
+    Route::get('/reports/history/work/order/print/{workorder}/PDF', [ReportHistoryWorkOrderController::class, 'printPDF'])->name('reportshistoryworkorder.printpdf');
 });
 
 require __DIR__.'/auth.php';
