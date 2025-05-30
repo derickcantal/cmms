@@ -98,6 +98,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/manage/users/temp/{tempusers}/edit', [ManageTempUsersController::class, 'edit'])->name('managetempusers.edit');
 
     Route::get('/manage/myprofile', [ManageMyProfileController::class, 'index'])->name('managemyprofile.index');
+    Route::get('/manage/myprofile/changepassword', [ManageMyProfileController::class, 'changepassword'])->name('managemyprofile.changepassword');
+    Route::get('/manage/myprofile/signature', [ManageMyProfileController::class, 'signature'])->name('managemyprofile.signature');
+    Route::get('/manage/myprofile/avatar', [ManageMyProfileController::class, 'myavatar'])->name('managemyprofile.myavatar');
+    Route::patch('/manage/myprofile/avatar/update/{myprofile}', [ManageMyProfileController::class, 'savemyavatar'])->name('managemyprofile.savemyavatar');
+    Route::patch('/manage/myprofile/signature/update/{myprofile}', [ManageMyProfileController::class, 'savesignature'])->name('managemyprofile.savesignature');
     Route::post('/manage/myprofile', [ManageMyProfileController::class, 'store'])->name('managemyprofile.store');
     Route::get('/manage/myprofile/create', [ManageMyProfileController::class, 'create'])->name('managemyprofile.create');
     Route::get('/manage/myprofile/search', [ManageMyProfileController::class, 'search'])->name('managemyprofile.search');

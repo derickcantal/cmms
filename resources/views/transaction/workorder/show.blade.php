@@ -239,7 +239,7 @@
                                             </div>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
-                                            <x-input-label>College/Dept. Head - Signature</x-input-label>
+                                            <x-input-label>GSO Supervisor - Signature</x-input-label>
                                             @if(!empty($workorder->vsignimage))
                                                 <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->vsignimage") }}">
                                             @endif
@@ -337,13 +337,13 @@
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->cfullname }}
                                                 </h5>
-                                                <x-input-label>GSO Supervisor</x-input-label>
+                                                <x-input-label>GSO Personnel</x-input-label>
                                             </div>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
-                                            <x-input-label>GSO Supervisor- Signature</x-input-label>
-                                            @if(!empty($workorder->ssignimage))
-                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->ssignimage") }}">
+                                            <x-input-label>GSO Personnel - Signature</x-input-label>
+                                            @if(!empty($workorder->csignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->csignimage") }}">
                                             @endif
                                         </div>
                                         <!-- Monitored By -->

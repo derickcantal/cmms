@@ -40,6 +40,7 @@ class TransactionWorkOrderController extends Controller
                     'monitoredbyid' => auth()->user()->userid,
                     'mfullname' => $fullname,
                     'memail' => auth()->user()->email,
+                    'msignimage' => auth()->user()->usersignimage,
                     'mdtsigned' => $timenow,
                     'remarks' => $request->remarks,
                     'status' => 'For Final Submission',
@@ -71,6 +72,7 @@ class TransactionWorkOrderController extends Controller
                 'vdeptid' => auth()->user()->deptid,
                 'vdeptname' => auth()->user()->deptname,
                 'vemail' => auth()->user()->email,
+                'vsignimage' => auth()->user()->usersignimage,
                 'vdtsigned' => $timenow,
                 'vstatus' => 'Disapproved',
                 'remarks' => $request->remarks,
@@ -240,6 +242,7 @@ class TransactionWorkOrderController extends Controller
 
     public function verify(Request $request,$workorderid)
     {
+        
         // dd($request,$request->starttime,$request->etime);
         $timenow = Carbon::now()->timezone('Asia/Manila')->format('Y-m-d H:i:s');
 
@@ -287,6 +290,7 @@ class TransactionWorkOrderController extends Controller
                 'vdeptid' => auth()->user()->deptid,
                 'vdeptname' => auth()->user()->deptname,
                 'vemail' => auth()->user()->email,
+                'vsignimage' => auth()->user()->usersignimage,
                 'vdtsigned' => $timenow,
                 'vstatus' => 'Verified',
                 'start' => $request->start . ' ' . $request->starttime ,
@@ -324,6 +328,11 @@ class TransactionWorkOrderController extends Controller
         // dd($workorder);
         if($request->input('action') == "personnel")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             // dd('I am a personnel');
             if(empty($workorder->dtstarted) and empty($workorder->dtended)){
                 return redirect()->back()
@@ -333,6 +342,7 @@ class TransactionWorkOrderController extends Controller
                 'completedbyid' => auth()->user()->userid,
                 'cfullname' => $fullname,
                 'cemail' => auth()->user()->email,
+                'csignimage' => auth()->user()->usersignimage,
                 'status' => 'For Final Submission',
                 ]);
                 if($workorders){
@@ -347,6 +357,11 @@ class TransactionWorkOrderController extends Controller
                 }
         }elseif($request->input('action') == "deptheadapproval")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             if(empty($workorder->headid)){
                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([
                 'headid' => auth()->user()->userid,
@@ -354,6 +369,7 @@ class TransactionWorkOrderController extends Controller
                 'hemail' => auth()->user()->email,
                 'hdeptid' => auth()->user()->deptid,
                 'hdeptname' => auth()->user()->deptname,
+                'hdsignimage' => auth()->user()->usersignimage,
                 'hdtsigned' => $timenow,
                 'hstatus' => 'Approved',
                 'status' => 'For GSO Approval',
@@ -376,6 +392,11 @@ class TransactionWorkOrderController extends Controller
 
         }elseif($request->input('action') == "supervisorverify")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             if(empty($workorder->headid)){
                 return redirect()->back()
                         ->with('failed','Work Order Need Head Deparment Approval');
@@ -397,13 +418,15 @@ class TransactionWorkOrderController extends Controller
                 if(empty($worfidno))
                 {
                     $worfidno = history_workorder::where('workclassdesc',$workorder->workclassdesc)
-                                ->latest()->first();
+                    ->where(function(Builder $builder) use($request){
+                        $builder->where('status','Completed'); 
+                                })->latest()->first();
                 }
 
 
-                if(empty($worfidno))
+                if(empty($worfidno->worfid))
                 {
-                    $num = $worfidno + 1;
+                    $num = $worfidno->worfid + 1;
                     $str_length = 3;
 
                     // Left padding if number < $str_length
@@ -437,6 +460,11 @@ class TransactionWorkOrderController extends Controller
             }
         }elseif($request->input('action') == "personnelswork")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             if(!empty($workorder->startedbyid) and empty($workorder->dtstarted)){
                 $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'dtstarted' => $timenow,
@@ -459,9 +487,19 @@ class TransactionWorkOrderController extends Controller
             }
         }elseif($request->input('action') == "personnelcwork")
         {
-                return view('transaction.workorder.personnel',compact('workorder'));
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
+            return view('transaction.workorder.personnel',compact('workorder'));
         }elseif($request->input('action') == "deptheadwe")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             if(!empty($workorder->dtstarted) and empty(!$workorder->dtended)){
                 return view('transaction.workorder.feedback', compact('workorder'));
                 
@@ -471,12 +509,18 @@ class TransactionWorkOrderController extends Controller
         
         }elseif($request->input('action') == "supervisorfinal")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
                     'fsuserid' => auth()->user()->userid,
                     'fsfullname' => $fullname,
                     'fsemail' => auth()->user()->email,
                     'fsdeptid' => auth()->user()->deptid,
                     'fseptname' => auth()->user()->deptname,
+                    'fssignimage' => auth()->user()->usersignimage,
                     'fstsigned' => $timenow,
                     'fsstatus' => 'Finalized',
                     'status' => 'Work Finalized',
@@ -494,11 +538,20 @@ class TransactionWorkOrderController extends Controller
             }
         }elseif($request->input('action') == "supervisordisapprove")
         {
-
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             return view('transaction.workorder.disapprove',compact('workorder'));
 
         }elseif($request->input('action') == "director")
         {
+            if(empty(auth()->user()->usersignimage))
+            {
+                return redirect()->back()
+                        ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+            }
             if($workorder->status == 'Disapproved'){
                 // dd('Disapproved',$workorder->workorderid);
                  $workorders = workorder::where('workorderid',$workorder->workorderid)->update([ 
@@ -507,6 +560,7 @@ class TransactionWorkOrderController extends Controller
                     'fdemail' => auth()->user()->email,
                     'fddeptid' => auth()->user()->deptid,
                     'fddeptname' => auth()->user()->deptname,
+                    'fdsignimage' => auth()->user()->usersignimage,
                     'fddtsigned' => $timenow,
                     ]);
 
@@ -539,6 +593,7 @@ class TransactionWorkOrderController extends Controller
                     'fdemail' => auth()->user()->email,
                     'fddeptid' => auth()->user()->deptid,
                     'fddeptname' => auth()->user()->deptname,
+                    'fdsignimage' => auth()->user()->usersignimage,
                     'fddtsigned' => $timenow,
                     'fdstatus' => 'Finalized',
                     'status' => 'Completed',
@@ -715,6 +770,11 @@ class TransactionWorkOrderController extends Controller
      */
     public function create()
     {
+        if(empty(auth()->user()->usersignimage))
+        {
+            return redirect()->back()
+                    ->with('failed','Please Upload Your signature in Manage > My Profile > Signature');
+        }
         $workclass = workclass::get();
 
         return view('transaction.workorder.create')
@@ -760,6 +820,7 @@ class TransactionWorkOrderController extends Controller
             'remail' => auth()->user()->email,
             'rdeptid' => auth()->user()->deptid,
             'rdeptname' => auth()->user()->deptname,
+            'rsignimage' => auth()->user()->usersignimage,
             'workclassid' => $workclass->workclassid,
             'workclassdesc' => $workclass->workclassdesc,
             'notes' => $request->notes,

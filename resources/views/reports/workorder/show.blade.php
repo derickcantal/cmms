@@ -240,7 +240,7 @@
                                             </div>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
-                                            <x-input-label>College/Dept. Head - Signature</x-input-label>
+                                            <x-input-label>GSO Supervisor - Signature</x-input-label>
                                             @if(!empty($workorder->vsignimage))
                                                 <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->vsignimage") }}">
                                             @endif
@@ -331,20 +331,20 @@
                                     </div>
                                     <!-- signed by -->
                                     <div class="grid gap-4 mb-4 grid-cols-4">
-                                        <!-- Completed By -->
+                                         <!-- Completed By -->
                                         <div class="col-span-2 sm:col-span-1">
                                             <div class="form-group">
                                                 <x-input-label for="workorderdesc" :value="__('Completed By')" />
                                                 <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     {{ $workorder->cfullname }}
                                                 </h5>
-                                                <x-input-label>GSO Supervisor</x-input-label>
+                                                <x-input-label>GSO Personnel</x-input-label>
                                             </div>
                                         </div>
                                         <div class="col-span-2 sm:col-span-1">
-                                            <x-input-label>GSO Supervisor- Signature</x-input-label>
-                                            @if(!empty($workorder->ssignimage))
-                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->ssignimage") }}">
+                                            <x-input-label>GSO Personnel - Signature</x-input-label>
+                                            @if(!empty($workorder->csignimage))
+                                                <img class="h-18 w-36 object-contain rounded-lg" src="{{ asset("/storage/$workorder->csignimage") }}">
                                             @endif
                                         </div>
                                         <!-- Monitored By -->
@@ -467,7 +467,7 @@
                                         </svg>
                                             Print
                                         </a>
-                                        <a href="{{ route('transactionworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                        <a href="{{ route('reportshistoryworkorder.index') }}" class="py-2 px-3 ms-3 flex items-center text-sm font-medium text-center text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                             <svg class="w-4 h-4 mr-2 -ml-0.5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                                             </svg>

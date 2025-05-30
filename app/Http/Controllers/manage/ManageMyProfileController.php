@@ -11,9 +11,103 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use \Carbon\Carbon; 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Illuminate\Support\Facades\Storage;
 
 class ManageMyProfileController extends Controller
 {
+    public function savemyavatar(Request $request,$userid)
+    {
+        $validated = $request->validate([
+            'myavatar'=>'required|image|file',
+        ]);
+        // dd($request,$userid);
+
+        $ipath = 'avatar/';
+
+        if(!Storage::disk('public')->exists($ipath)){
+            Storage::disk('public')->makeDirectory($ipath);
+            // dd('path created');
+        }
+        $manager = ImageManager::imagick();
+        $name_gen = hexdec(uniqid()).'.'.$request->file('myavatar')->getClientOriginalExtension();
+        
+        $image = $manager->read($request->file('myavatar'));
+       
+        $encoded = $image->toWebp()->save(storage_path('app/public/avatar/'.$name_gen.'.webp'));
+        $path = 'avatar/'.$name_gen.'.webp';
+
+        // $path = Storage::disk('public')->put('avatars',$request->file('avatar'));
+
+        // $path = $request->file('avatar')->store('avatars','public');
+        
+        if($oldavatar = $request->user()->avatar){
+            Storage::disk('public')->delete($oldavatar);
+        }
+        
+        auth()->user()->update(['avatar' => $path]);
+
+        return redirect()->back()
+                                ->with('success','Avatar updated');
+    }
+    public function myavatar()
+    {
+        $user = User::where('userid',auth()->user()->userid)->first();
+        
+        return view('manage.myprofile.avatar')
+                ->with(['user' => $user]);
+    }
+
+    public function savesignature(Request $request,$userid)
+    {
+        $validated = $request->validate([
+            'usersignimage'=>'required|image|file',
+        ]);
+        // dd($request,$userid);
+
+        $ipath = 'signature/';
+
+        if(!Storage::disk('public')->exists($ipath)){
+            Storage::disk('public')->makeDirectory($ipath);
+            // dd('path created');
+        }
+        $manager = ImageManager::imagick();
+        $name_gen = hexdec(uniqid()).'.'.$request->file('usersignimage')->getClientOriginalExtension();
+        
+        $image = $manager->read($request->file('usersignimage'));
+       
+        $encoded = $image->toWebp()->save(storage_path('app/public/signature/'.$name_gen.'.webp'));
+        $path = 'signature/'.$name_gen.'.webp';
+
+        // $path = Storage::disk('public')->put('avatars',$request->file('avatar'));
+
+        // $path = $request->file('avatar')->store('avatars','public');
+        
+        if($oldavatar = $request->user()->usersignimage){
+            Storage::disk('public')->delete($oldavatar);
+        }
+        
+        auth()->user()->update(['usersignimage' => $path]);
+
+        return redirect()->back()
+                                ->with('success','Signature updated');
+    }
+    public function changepassword()
+    {
+        $user = User::where('userid',auth()->user()->userid)->first();
+        
+        return view('manage.myprofile.changepassword')
+                ->with(['user' => $user]);
+    }
+
+    public function signature()
+    {
+        $user = User::where('userid',auth()->user()->userid)->first();
+        
+        return view('manage.myprofile.signature')
+                ->with(['user' => $user]);
+    }
     /**
      * Display a listing of the resource.
      */

@@ -28,7 +28,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                                     </svg>
                                     <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                                        My Information
+                                        My Informations
                                     </span>
                                 </div>
                                 </li>
@@ -45,6 +45,28 @@
                                 </li>
                             </ol>
                         </nav>
+
+                        <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                            <ul class="flex flex-wrap -mb-px">
+                                <li class="me-2">
+                                    <a href="{{ route('managemyprofile.index') }}" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">
+                                        Profile</a>
+                                </li>
+                                 <li class="me-2">
+                                    <a href="{{ route('managemyprofile.myavatar') }}" class="inline-block p-4 text-gray-600 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                        Avatar</a>
+                                </li>
+                                <li class="me-2">
+                                    <a href="{{ route('managemyprofile.changepassword') }}" class="inline-block p-4 text-gray-600 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                        Change Password</a>
+                                </li>
+                                <li class="me-2">
+                                    <a href="{{ route('managemyprofile.signature') }}" class="inline-block p-4 text-gray-600 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                        Signature</a>
+                                </li>
+                            </ul>
+                        </div>
+
                         <form action="{{ route('managemyprofile.update',$user->userid) }}" method="POST" class="p-4 md:p-5">
                             @csrf
                             @method('PATCH')  
@@ -53,17 +75,8 @@
                                 @include('layouts.notifications') 
                                 <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg dark:bg-gray-800">
-                                    <!-- Modal header -->
-                                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                            User Profile Information
-                                        </h3>
-                                    </div>
                                     <!-- Modal body -->
-                                    @php
-                                        $myavatar = $user->avatar;
-                                    @endphp
-                                    <img width="100" height="100" class="rounded-full mt-4" src="{{ asset("/storage/$myavatar") }}" alt="user avatar" />
+                                    
                                     <div class="grid gap-4 mb-4 grid-cols-2">
                                         
 
@@ -223,19 +236,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="py-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="max-w-xl">
-                        @include('profile.partials.update-password-form')
-                    </div>
-                </div>
-            </div>
-        </div>                   
     </div>
 </div>
 </x-app-layout>
