@@ -1,15 +1,15 @@
 <x-app-layout>
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
             @include('layouts.transaction.navigation')
         </div>
     </div>
 <div class="py-8">
-	<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+	<div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 			<div class="py-8">
 				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-					<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+					<div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
                        <form action="{{ route('transactionworkorder.approve',$workorder->workorderid) }}" enctype="multipart/form-data" method="POST" class="p-4 md:p-5">
                             @csrf   
                             <!-- Breadcrumb -->
@@ -252,7 +252,7 @@
                                     <div class="grid gap-4 mb-4 grid-cols-1">
                                         @csrf
                                         <!-- table -->
-                                        <div class="max-w-7xl overflow-x-auto sm:rounded-lg mt-4" >
+                                        <div class="max-w-screen-2xl overflow-x-auto sm:rounded-lg mt-4" >
                                             <h5 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                 List & Supplies Needed
                                             </h5>
