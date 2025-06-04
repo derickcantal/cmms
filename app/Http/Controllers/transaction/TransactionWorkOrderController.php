@@ -426,7 +426,7 @@ class TransactionWorkOrderController extends Controller
 
                 if(empty($worfidno->worfid))
                 {
-                    $num = $worfidno->worfid + 1;
+                    $num = 1;
                     $str_length = 3;
 
                     // Left padding if number < $str_length
