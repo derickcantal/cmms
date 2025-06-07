@@ -4,12 +4,9 @@
             @include('layouts.manage.navigation')
         </div>
     </div>
-<div class="py-8">
-	<div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
+	<div class="py-8 max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
 		<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-			<div class="py-8">
-				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-					<div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="py-8 max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
                         <!-- Breadcrumb -->
                         <nav class="flex px-5 py-3 text-gray-700 bg-white dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
                             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -46,6 +43,7 @@
                             </ol>
                         </nav>
 
+                        <!-- submenu -->
                         <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                             <ul class="flex flex-wrap -mb-px">
                                 <li class="me-2">
@@ -68,10 +66,7 @@
                         </div>
 
                          @include('profile.partials.update-password-form')
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-</div>
 </x-app-layout>
