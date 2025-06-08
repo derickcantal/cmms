@@ -3,8 +3,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> -->
         <!-- <link href="{{ public_path('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> -->
-        <link rel="stylesheet" href="{{ URL::asset('build/assets/app-ClcKTmTF.css') }}" type='text/css'>
-        <script src="{{ URL::asset('build/assets/app-COT6p2Iw.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset("build/assets/app-B-0vp1YP.css") }}" type='text/css'>
+        <script src="{{ asset("build/assets/app-COT6p2Iw.js") }}"></script>
     </head>
     <body >
         <!-- header -->

@@ -107,9 +107,7 @@
                                     <x-input-error :messages="$errors->get('personnel')" class="mt-2" />
                                 </div>
                             </div>
-
                         </div>
-
                         <!-- Prioritization -->
                         <div class="grid gap-4 mb-4 grid-cols-2 border-t rounded-t dark:border-gray-600">
                             
@@ -124,9 +122,9 @@
                             </div>
 
                             <!-- start time -->
-                            <div class="col-span-2 sm:col-span-1">
-                                <div class="form-group mt-4">
-                                    <form class="max-w-[8.5rem] mx-auto">
+                            <form class="max-w-[8.5rem] mx-auto">
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
                                         <label for="starttime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select time: (Start)</label>
                                         <div class="flex">
                                             <input type="time" id="starttime" name="starttime" class="rounded-none rounded-s-lg bg-gray-50 border text-gray-900 leading-none focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="05:00" max="18:00" value="00:00" required>
@@ -136,35 +134,33 @@
                                                 </svg>
                                             </span>
                                         </div>
-                                    <!-- </form> -->
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- end date -->
-                            <div class="col-span-2 sm:col-span-1">
-                                <div class="form-group mt-4">
-                                    <x-input-label for="end" :value="__('Scheduled (End)')" />
-                                    <x-text-input id="end" class="block mt-1 w-full" type="date" name="end" :value="old('end',$workorder->schedule)" required autofocus />
-                                    <x-input-error :messages="$errors->get('end')" class="mt-2" />
+                                <!-- end date -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <x-input-label for="end" :value="__('Scheduled (End)')" />
+                                        <x-text-input id="end" class="block mt-1 w-full" type="date" name="end" :value="old('end',$workorder->schedule)" required autofocus />
+                                        <x-input-error :messages="$errors->get('end')" class="mt-2" />
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- end time -->
-                            <div class="col-span-2 sm:col-span-1">
-                                <div class="form-group mt-4">
-                                    <!-- <form class="max-w-[8.5rem] mx-auto"> -->
-                                        <label for="endtime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select time: (end)</label>
-                                        <div class="flex">
-                                            <input type="time" id="etime" name="etime" class="rounded-none rounded-s-lg bg-gray-50 border text-gray-900 leading-none focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="05:00" max="18:00" value="00:00" required>
-                                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-s-0 border-s-0 border-gray-300 rounded-e-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </form>
+                                <!-- end time -->
+                                <div class="col-span-2 sm:col-span-1">
+                                    <div class="form-group mt-4">
+                                        <!-- <form class="max-w-[8.5rem] mx-auto"> -->
+                                            <label for="endtime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select time: (end)</label>
+                                            <div class="flex">
+                                                <input type="time" id="etime" name="etime" class="rounded-none rounded-s-lg bg-gray-50 border text-gray-900 leading-none focus:ring-blue-500 focus:border-blue-500 block flex-1 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="05:00" max="18:00" value="00:00" required>
+                                                <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-s-0 border-s-0 border-gray-300 rounded-e-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                    </div>
                                 </div>
-                            </div>
                             
                             <!-- priority -->
                             <div class="col-span-2 sm:col-span-1">
@@ -199,9 +195,6 @@
                             </div>
 
                         </div>
-
-                        
-                        
                     </div>
                     <!-- Button -->
                     <div class="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
